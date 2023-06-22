@@ -29,10 +29,12 @@ flutter:
 
   uses-material-design: true
 
+# assets
   assets:
     - assets/images/
     - assets/icons/
 
+# fonts
   fonts:
     - family: Inter
       fonts:
@@ -42,7 +44,14 @@ flutter:
         - asset: assets/fonts/inter/Inter-ExtraLight.ttf
           weight: 200
 
+# flutter launcher icon settings
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icons/logo.png"
+
+# flutter_native_splash settings
+flutter_native_splash:
+  image: assets/images/large_logo.png
+  background_image: assets/images/bg.png
+  fullscreen: true
