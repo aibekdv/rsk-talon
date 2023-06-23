@@ -14,9 +14,9 @@ dependencies:
 
 
   cupertino_icons: ^1.0.2
-  select_form_field: ^2.2.0
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.3.1
+  dropdown_button2: ^2.3.3
 
 dev_dependencies:
   flutter_test:
@@ -53,5 +53,5 @@ flutter_launcher_icons:
 # flutter_native_splash settings
 flutter_native_splash:
   image: assets/images/large_logo.png
-  background_image: assets/images/bg.png
+  background_image: assets/images/splash_bg.png
   fullscreen: true
