@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rsk_talon/pages/legal_page.dart';
 import 'package:rsk_talon/widgets/custom_button_widget.dart';
 
 class ThirddStepPage extends StatefulWidget {
@@ -57,7 +58,7 @@ class _ThirddStepPageState extends State<ThirddStepPage> {
                     const Flexible(
                       flex: 1,
                       child: Text(
-                        'ОАО "РСК Банк" Октябрьский филиал филиалфилиал филиал',
+                        'ОАО "РСК Банк" Октябрьский  филиал',
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.white,
@@ -87,7 +88,12 @@ class _ThirddStepPageState extends State<ThirddStepPage> {
                     ),
                     const SizedBox(height: 15),
                     CustomButtonWidget(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => const LegalPage())));
+                      },
                       title: 'Далее',
                       textStyle: const TextStyle(
                         color: Colors.white,
