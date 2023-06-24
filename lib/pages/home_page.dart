@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/pages/second_step_page.dart';
+import 'package:rsk_talon/pages/select_branch_page.dart';
 import 'package:rsk_talon/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -54,9 +54,12 @@ class _HomePageState extends State<HomePage> {
                   height: 100,
                 ),
                 Center(
-                  child: Image.asset(
-                    'assets/images/large_logo.png',
-                    width: 162.0,
+                  child: SizedBox(
+                    height: 120,
+                    child: Image.asset(
+                      'assets/images/large_logo.png',
+                      width: 162.0,
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -83,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const SecondStepPage(),
+                            builder: (context) => const SelectBranchPage(),
                           ),
                         );
                       },
@@ -123,45 +126,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-/**
- * if (disdorodList)
-                  Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(15),
-                        ),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 1,
-                            blurRadius: 3,
-                          ),
-                        ]),
-                    child: ListView.builder(
-                      itemCount: gorodyList.length,
-                      itemBuilder: ((context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              controller.text = (gorodyList[index]).toString();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const HomePage(),
-                                ),
-                              );
-                            });
-                          },
-                          child: ListTile(
-                            title: Text(gorodyList[index]),
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
-                
- * 
- */

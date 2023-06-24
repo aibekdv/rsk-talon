@@ -1,17 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/pages/legal_page.dart';
+import 'package:rsk_talon/pages/select_type_client_page.dart';
 import 'package:rsk_talon/widgets/custom_button_widget.dart';
 
-class ThirddStepPage extends StatefulWidget {
-  const ThirddStepPage({
+class AboutBranchPage extends StatefulWidget {
+  const AboutBranchPage({
     super.key,
   });
 
   @override
-  State<ThirddStepPage> createState() => _ThirddStepPageState();
+  State<AboutBranchPage> createState() => _AboutBranchPageState();
 }
 
-class _ThirddStepPageState extends State<ThirddStepPage> {
+class _AboutBranchPageState extends State<AboutBranchPage> {
+  List<Map<String, dynamic>> schedule = [
+    {
+      'weekDay': 'Понедельник',
+      'time': '10:00-20:00',
+    },
+    {
+      'weekDay': 'Вторник',
+      'time': '10:00-20:00',
+    },
+    {
+      'weekDay': 'Среда',
+      'time': '10:00-20:00',
+    },
+    {
+      'weekDay': 'Четверг',
+      'time': '10:00-20:00',
+    },
+    {
+      'weekDay': 'Пятница',
+      'time': '10:00-20:00',
+    },
+    {
+      'weekDay': 'Суббота',
+      'time': '10:00-20:00',
+    },
+    {
+      'weekDay': 'Вскресенье',
+      'time': 'не работет',
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,12 +117,48 @@ class _ThirddStepPageState extends State<ThirddStepPage> {
                       ),
                     ),
                     const SizedBox(height: 15),
+                    Center(
+                      child: SizedBox(
+                        width: 230,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ...schedule
+                                .map((item) => Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          item['weekDay'],
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        Text(
+                                          item['time'],
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
+                                    ))
+                                .toList(),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
                     CustomButtonWidget(
                       onTap: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: ((context) => const LegalPage())));
+                                builder: ((context) =>
+                                    const SelectTypeClientPage())));
                       },
                       title: 'Далее',
                       textStyle: const TextStyle(

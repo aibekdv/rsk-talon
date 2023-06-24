@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/pages/third_step_page.dart';
+import 'package:rsk_talon/pages/about_branch_page.dart';
 import 'package:rsk_talon/widgets/widgets.dart';
 
-class SecondStepPage extends StatefulWidget {
-  const SecondStepPage({
+class SelectBranchPage extends StatefulWidget {
+  const SelectBranchPage({
     super.key,
   });
 
   @override
-  State<SecondStepPage> createState() => _SecondStepPageState();
+  State<SelectBranchPage> createState() => _SelectBranchPageState();
 }
 
-class _SecondStepPageState extends State<SecondStepPage> {
+class _SelectBranchPageState extends State<SelectBranchPage> {
   List<String> brachsOfBank = [
     'ОАО "РСК Банк" Октябрьский филиал',
     'ОАО "РСК Банк" Чуйский филиал',
@@ -95,7 +95,7 @@ class _SecondStepPageState extends State<SecondStepPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ThirddStepPage(),
+                                builder: (context) => const AboutBranchPage(),
                               ),
                             );
                           },
