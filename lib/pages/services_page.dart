@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/pages/queue_time_page.dart';
+import 'package:rsk_talon/pages/fourth_step_page.dart';
+
 import 'package:rsk_talon/widgets/widgets.dart';
 
 class ServicesPage extends StatefulWidget {
@@ -65,7 +66,7 @@ class _ServicesPageState extends State<ServicesPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const QueueTimePage(),
+                          builder: (context) => const FourthPage(),
                         ),
                       );
                     },
