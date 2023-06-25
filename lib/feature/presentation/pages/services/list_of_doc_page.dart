@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/feature/presentation/pages/pages.dart';
+import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class ListOfDocPage extends StatefulWidget {
@@ -35,9 +35,17 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 25),
-              Image.asset(
-                'assets/icons/appar.png',
-                width: 162.0,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    RouteConst.homePage,
+                  );
+                },
+                child: Image.asset(
+                  'assets/icons/appar.png',
+                  width: 162.0,
+                ),
               ),
               const SizedBox(
                 height: 25,
@@ -107,11 +115,10 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
                     ),
                     CustomButtonWidget(
                       onTap: () {
-                        Navigator.push(
+                        Navigator.pushNamed(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => const MyTicketsPage(),
-                          ),
+                          RouteConst.myTicketsPage,
+                          arguments: ScreenRouteArgs(isCreatedTicket: true),
                         );
                       },
                       title: 'Выбрать очередь',

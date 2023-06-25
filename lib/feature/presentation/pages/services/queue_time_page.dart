@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/presentation/pages/pages.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
@@ -29,9 +30,17 @@ class _QueueTimePageState extends State<QueueTimePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 25),
-              Image.asset(
-                'assets/icons/appar.png',
-                width: 162.0,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    RouteConst.homePage,
+                  );
+                },
+                child: Image.asset(
+                  'assets/icons/appar.png',
+                  width: 162.0,
+                ),
               ),
               const SizedBox(
                 height: 25,

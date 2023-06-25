@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/feature/presentation/pages/pages.dart';
+import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
+  final bool? isGotTicket;
+
   const HomePage({
     super.key,
+    this.isGotTicket = false,
   });
 
   @override
@@ -28,7 +31,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    isOpenDropdown = false;
     super.dispose();
   }
 
@@ -83,11 +86,9 @@ class _HomePageState extends State<HomePage> {
                     Future.delayed(
                       const Duration(milliseconds: 100),
                       () {
-                        Navigator.push(
+                        Navigator.pushNamed(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => const SelectBranchPage(),
-                          ),
+                          RouteConst.selectBranchPage,
                         );
                       },
                     );
@@ -110,7 +111,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SizedBox(width: 10),
                     CustomButtonWidget(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          RouteConst.myTicketsPage,
+                        );
+                      },
                       textStyle: const TextStyle(
                         color: Colors.white,
                       ),

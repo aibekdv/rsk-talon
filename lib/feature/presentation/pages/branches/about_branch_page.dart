@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/feature/presentation/pages/pages.dart';
+import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class AboutBranchPage extends StatefulWidget {
@@ -128,11 +128,10 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
                     const SizedBox(height: 15),
                     CustomButtonWidget(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) =>
-                                    const SelectTypeClientPage())));
+                        Navigator.pushNamed(
+                          context,
+                          RouteConst.selectClientTypePage,
+                        );
                       },
                       title: 'Далее',
                       textStyle: const TextStyle(

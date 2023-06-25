@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:rsk_talon/common/routes/routes.dart';
 
 import 'feature/presentation/pages/pages.dart';
 
@@ -37,7 +38,13 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
         fontFamily: 'Inter',
       ),
-      home: const HomePage(),
+      initialRoute: 'homePage',
+      onGenerateRoute: OnGenerateRoute.route,
+      routes: {
+        "homePage": (context) {
+          return const HomePage();
+        }
+      },
     );
   }
 }

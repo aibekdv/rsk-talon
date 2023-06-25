@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/feature/presentation/pages/pages.dart';
+import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class SelectTypeClientPage extends StatefulWidget {
@@ -28,9 +28,17 @@ class _SelectTypeClientPageState extends State<SelectTypeClientPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 25),
-              Image.asset(
-                'assets/icons/appar.png',
-                width: 162.0,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    RouteConst.homePage,
+                  );
+                },
+                child: Image.asset(
+                  'assets/icons/appar.png',
+                  width: 162.0,
+                ),
               ),
               const SizedBox(
                 height: 25,
@@ -59,21 +67,25 @@ class _SelectTypeClientPageState extends State<SelectTypeClientPage> {
                       height: 20,
                     ),
                     CustomButtonWidget(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ServicesPage(),
-                          ),
-                        );
-                      },
+                      onTap: isCompleted
+                          ? () {}
+                          : () {
+                              Navigator.pushNamed(
+                                context,
+                                RouteConst.selectServicePage,
+                              );
+                            },
                       title: 'Юридическое лицо',
                       width: double.infinity,
                       height: 70.0,
-                      bgColor: Colors.white,
+                      bgColor: isCompleted
+                          ? Colors.black.withOpacity(.2)
+                          : Colors.white,
                       borderRadius: 20,
-                      textStyle: const TextStyle(
-                        color: Color(0xff0E3584),
+                      textStyle: TextStyle(
+                        color: isCompleted
+                            ? Colors.white.withOpacity(.2)
+                            : const Color(0xff0E3584),
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                       ),
@@ -83,11 +95,9 @@ class _SelectTypeClientPageState extends State<SelectTypeClientPage> {
                     ),
                     CustomButtonWidget(
                       onTap: () {
-                        Navigator.push(
+                        Navigator.pushNamed(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => const ServicesPage(),
-                          ),
+                          RouteConst.selectServicePage,
                         );
                       },
                       title: 'Физическое лицо',

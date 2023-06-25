@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rsk_talon/common/common.dart';
 
 class TicketItemWidget extends StatelessWidget {
   const TicketItemWidget({super.key});
@@ -154,7 +155,12 @@ class TicketItemWidget extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        RouteConst.mapBranchPage,
+                      );
+                    },
                     icon: const Icon(Icons.location_on_outlined),
                     color: Colors.white,
                   ),
@@ -195,7 +201,9 @@ class TicketItemWidget extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _dialogForRemoveTicket(context);
+                  },
                   color: Colors.white,
                   icon: const Icon(
                     CupertinoIcons.delete_simple,
@@ -208,6 +216,59 @@ class TicketItemWidget extends StatelessWidget {
           ],
         )
       ],
+    );
+  }
+
+  Future<void> _dialogForRemoveTicket(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: const Text(
+            'Удалить талон?',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          contentPadding: const EdgeInsets.all(25),
+          actionsPadding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text(
+                'ОК',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text(
+                'Отменить',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
