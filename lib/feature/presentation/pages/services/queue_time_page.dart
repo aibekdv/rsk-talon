@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/widgets/widgets.dart';
+import 'package:rsk_talon/feature/presentation/pages/pages.dart';
+import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class QueueTimePage extends StatefulWidget {
   const QueueTimePage({super.key});
@@ -43,7 +44,7 @@ class _QueueTimePageState extends State<QueueTimePage> {
                 height: 60,
               ),
               Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -78,8 +79,10 @@ class _QueueTimePageState extends State<QueueTimePage> {
                             )),
                             const SizedBox(height: 10),
                             CustomButtonWidget(
-                              onTap: () {},
-                              title: 'Сегодня, 10:00',
+                              onTap: () {
+                                _dialogBuilder(context);
+                              },
+                              title: 'Выбрать время',
                               textStyle: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
@@ -93,7 +96,14 @@ class _QueueTimePageState extends State<QueueTimePage> {
                       ),
                       const SizedBox(height: 60),
                       CustomButtonWidget(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MyTicketsPage(),
+                            ),
+                          );
+                        },
                         title: 'Создать талон',
                         textStyle: const TextStyle(
                           color: Colors.white,
@@ -108,6 +118,82 @@ class _QueueTimePageState extends State<QueueTimePage> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Выберите время'),
+          content: const SizedBox(
+            height: 100,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Сегодня'),
+                      Text('10 00'),
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Сб, июнь 17'),
+                      Text('12 00'),
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Вс, июнь 18'),
+                      Text('11 05'),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text(
+                'ОК',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text(
+                'Отменить',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

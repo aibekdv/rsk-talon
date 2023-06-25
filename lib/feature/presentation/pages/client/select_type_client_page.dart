@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/pages/services_page.dart';
-import 'package:rsk_talon/widgets/widgets.dart';
+import 'package:rsk_talon/feature/presentation/pages/pages.dart';
+import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class SelectTypeClientPage extends StatefulWidget {
   const SelectTypeClientPage({super.key});
@@ -43,7 +43,7 @@ class _SelectTypeClientPageState extends State<SelectTypeClientPage> {
                 height: 80,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

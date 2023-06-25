@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/pages/select_type_client_page.dart';
-import 'package:rsk_talon/widgets/custom_button_widget.dart';
+import 'package:rsk_talon/feature/presentation/pages/pages.dart';
+import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class AboutBranchPage extends StatefulWidget {
   const AboutBranchPage({
@@ -70,39 +70,13 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
               const SizedBox(
                 height: 60,
               ),
-              Container(
-                width: double.infinity,
-                color: const Color(0xff386AA7),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    const Flexible(
-                      flex: 1,
-                      child: Text(
-                        'ОАО "РСК Банк" Октябрьский  филиал',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    )
-                  ],
-                ),
+              const CustomAppBarWidget(
+                title: 'ОАО "РСК Банк" Октябрьский филиал',
+                centerTitle: true,
               ),
               const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

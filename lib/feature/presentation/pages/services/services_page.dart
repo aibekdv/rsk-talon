@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/pages/fourth_step_page.dart';
-
-import 'package:rsk_talon/widgets/widgets.dart';
+import 'package:rsk_talon/feature/presentation/pages/pages.dart';
+import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class ServicesPage extends StatefulWidget {
   const ServicesPage({super.key});
@@ -45,7 +44,7 @@ class _ServicesPageState extends State<ServicesPage> {
                 height: 60,
               ),
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   'Шаг 4/5',
                   style: TextStyle(color: Colors.white),
@@ -66,7 +65,7 @@ class _ServicesPageState extends State<ServicesPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const FourthPage(),
+                          builder: (context) => const ListOfDocPage(),
                         ),
                       );
                     },

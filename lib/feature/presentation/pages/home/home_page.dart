@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/pages/select_branch_page.dart';
-import 'package:rsk_talon/widgets/widgets.dart';
+import 'package:rsk_talon/feature/presentation/pages/pages.dart';
+import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
             color: Color(0xff0D3584),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
