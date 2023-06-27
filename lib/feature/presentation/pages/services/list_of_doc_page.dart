@@ -117,8 +117,7 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
                       onTap: () {
                         Navigator.pushNamed(
                           context,
-                          RouteConst.myTicketsPage,
-                          arguments: ScreenRouteArgs(isCreatedTicket: true),
+                          RouteConst.selectQueuePage,
                         );
                       },
                       title: 'Выбрать очередь',

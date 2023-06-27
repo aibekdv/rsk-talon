@@ -62,6 +62,7 @@ class OnGenerateRoute {
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
+      
 
       default:
         return PageTransition(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rsk_talon/common/common.dart';
-import 'package:rsk_talon/feature/presentation/pages/pages.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class QueueTimePage extends StatefulWidget {
@@ -69,7 +68,14 @@ class _QueueTimePageState extends State<QueueTimePage> {
                             ),
                             const SizedBox(height: 20),
                             CustomButtonWidget(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  RouteConst.myTicketsPage,
+                                  arguments:
+                                      ScreenRouteArgs(isCreatedTicket: true),
+                                );
+                              },
                               title: 'Встать в конец очереди',
                               textStyle: const TextStyle(
                                 color: Colors.white,
@@ -106,11 +112,10 @@ class _QueueTimePageState extends State<QueueTimePage> {
                       const SizedBox(height: 60),
                       CustomButtonWidget(
                         onTap: () {
-                          Navigator.push(
+                          Navigator.pushNamed(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => const MyTicketsPage(),
-                            ),
+                            RouteConst.myTicketsPage,
+                            arguments: ScreenRouteArgs(isCreatedTicket: true),
                           );
                         },
                         title: 'Создать талон',
