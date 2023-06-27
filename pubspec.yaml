@@ -23,6 +23,7 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   page_transition: ^2.0.9
   get_it: ^7.6.0
+  star_rating: ^0.11.0
 
 dev_dependencies:
   flutter_test:
