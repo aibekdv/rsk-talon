@@ -1,0 +1,1 @@
+export 'branch_model.dart';
