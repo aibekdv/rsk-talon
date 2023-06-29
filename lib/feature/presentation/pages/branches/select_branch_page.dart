@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/pages/third_step_page.dart';
-import 'package:rsk_talon/widgets/widgets.dart';
+import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
-class SecondStepPage extends StatefulWidget {
-  const SecondStepPage({
+class SelectBranchPage extends StatefulWidget {
+  const SelectBranchPage({
     super.key,
   });
 
   @override
-  State<SecondStepPage> createState() => _SecondStepPageState();
+  State<SelectBranchPage> createState() => _SelectBranchPageState();
 }
 
-class _SecondStepPageState extends State<SecondStepPage> {
+class _SelectBranchPageState extends State<SelectBranchPage> {
   List<String> brachsOfBank = [
     'ОАО "РСК Банк" Октябрьский филиал',
     'ОАО "РСК Банк" Чуйский филиал',
@@ -47,31 +47,10 @@ class _SecondStepPageState extends State<SecondStepPage> {
               const SizedBox(
                 height: 60,
               ),
-              Container(
-                width: double.infinity,
-                color: const Color(0xff386AA7),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    const Text(
-                      'Бишкек',
-                      style: TextStyle(fontSize: 15, color: Colors.white),
-                    )
-                  ],
-                ),
-              ),
+              const CustomAppBarWidget(title: 'Бишкек'),
               const SizedBox(height: 25),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -92,11 +71,9 @@ class _SecondStepPageState extends State<SecondStepPage> {
                         Future.delayed(
                           const Duration(milliseconds: 100),
                           () {
-                            Navigator.push(
+                            Navigator.pushNamed(
                               context,
-                              MaterialPageRoute(
-                                builder: (context) => const ThirddStepPage(),
-                              ),
+                              RouteConst.aboutBranchPage,
                             );
                           },
                         );
