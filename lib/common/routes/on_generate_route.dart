@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/feature/domain/entities/branch_entity.dart';
+import 'package:rsk_talon/feature/domain/entities/service_entity.dart';
 import 'package:rsk_talon/feature/presentation/pages/pages.dart';
 
 class OnGenerateRoute {
@@ -16,37 +18,51 @@ class OnGenerateRoute {
         );
       case RouteConst.selectBranchPage:
         return PageTransition(
-          child: const SelectBranchPage(),
+          child: SelectBranchPage(branchEntity: args!.branchItems!),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
       case RouteConst.aboutBranchPage:
         return PageTransition(
-          child: const AboutBranchPage(),
+          child: AboutBranchPage(branchItem: args!.selectBranchItem!),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
       case RouteConst.selectClientTypePage:
         return PageTransition(
-          child: const SelectTypeClientPage(),
+          child: SelectTypeClientPage(branchItem: args!.selectBranchItem!),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
       case RouteConst.selectServicePage:
         return PageTransition(
-          child: const ServicesPage(),
+          child: ServicesPage(
+            clientType: args!.clientType!,
+            isPensioner: args.isPensioner!,
+            branchItem: args.selectBranchItem!,
+          ),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
       case RouteConst.listOfDocPage:
         return PageTransition(
-          child: const ListOfDocPage(),
+          child: ListOfDocPage(
+            branchItem: args!.selectBranchItem!,
+            clientType: args.clientType!,
+            isPensioner: args.isPensioner!,
+            serviceItem: args.selectServiceItem!,
+          ),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
       case RouteConst.selectQueuePage:
         return PageTransition(
-          child: const QueueTimePage(),
+          child: QueueTimePage(
+            branchItem: args!.selectBranchItem!,
+            clientType: args.clientType!,
+            isPensioner: args.isPensioner!,
+            serviceItem: args.selectServiceItem!,
+          ),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
@@ -74,17 +90,20 @@ class OnGenerateRoute {
 }
 
 class ErrorPage extends StatelessWidget {
-  const ErrorPage({super.key});
+  final String? message;
+  const ErrorPage({super.key, this.message = 'ErrorPage'});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.blue,
-      body: Center(
-        child: Text(
-          'ErrorPage',
-          style: TextStyle(
-            color: Colors.white,
+      body: SafeArea(
+        child: Center(
+          child: Text(
+            message.toString(),
+            style: const TextStyle(
+              color: Colors.white,
+            ),
           ),
         ),
       ),
@@ -94,6 +113,18 @@ class ErrorPage extends StatelessWidget {
 
 class ScreenRouteArgs {
   final bool? isCreatedTicket;
+  final List<BranchEntity>? branchItems;
+  final BranchEntity? selectBranchItem;
+  final ServiceEntity? selectServiceItem;
+  final String? clientType;
+  final bool? isPensioner;
 
-  ScreenRouteArgs({this.isCreatedTicket});
+  ScreenRouteArgs({
+    this.branchItems,
+    this.selectBranchItem,
+    this.isCreatedTicket,
+    this.clientType,
+    this.isPensioner,
+    this.selectServiceItem,
+  });
 }
