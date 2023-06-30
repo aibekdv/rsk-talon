@@ -1,9 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/feature/domain/entities/branch_entity.dart';
 
 class TicketItemWidget extends StatelessWidget {
-  const TicketItemWidget({super.key});
+  final String numberTalon;
+  final String serviceType;
+  final BranchEntity branch;
+
+  const TicketItemWidget({
+    super.key,
+    required this.numberTalon,
+    required this.serviceType,
+    required this.branch,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +34,11 @@ class TicketItemWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     "Ваш номер:",
                     style: TextStyle(
                       color: Colors.white,
@@ -36,11 +46,11 @@ class TicketItemWidget extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      "Q20234856",
-                      style: TextStyle(
+                      numberTalon.toUpperCase(),
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 26,
@@ -61,9 +71,9 @@ class TicketItemWidget extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const Text(
-                "Услуга 1",
-                style: TextStyle(
+              Text(
+                serviceType,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -131,9 +141,9 @@ class TicketItemWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   RichText(
-                    text: const TextSpan(
+                    text: TextSpan(
                       children: [
-                        TextSpan(
+                        const TextSpan(
                           text: 'Адрес:\n',
                           style: TextStyle(
                             height: 1.5,
@@ -143,8 +153,8 @@ class TicketItemWidget extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: '48 просп. Чуй, Бишкек',
-                          style: TextStyle(
+                          text: '${branch.city}:  ${branch.address}',
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,

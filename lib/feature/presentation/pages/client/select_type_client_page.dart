@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/feature/domain/entities/entities.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class SelectTypeClientPage extends StatefulWidget {
-  const SelectTypeClientPage({super.key});
+  final BranchEntity branchItem;
+
+  const SelectTypeClientPage({super.key, required this.branchItem});
 
   @override
   State<SelectTypeClientPage> createState() => _SelectTypeClientPageState();
@@ -11,6 +14,7 @@ class SelectTypeClientPage extends StatefulWidget {
 
 class _SelectTypeClientPageState extends State<SelectTypeClientPage> {
   bool isCompleted = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,6 +77,11 @@ class _SelectTypeClientPageState extends State<SelectTypeClientPage> {
                               Navigator.pushNamed(
                                 context,
                                 RouteConst.selectServicePage,
+                                arguments: ScreenRouteArgs(
+                                  clientType: 'Юр. лицо',
+                                  isPensioner: isCompleted,
+                                  selectBranchItem: widget.branchItem,
+                                ),
                               );
                             },
                       title: 'Юридическое лицо',
@@ -98,6 +107,11 @@ class _SelectTypeClientPageState extends State<SelectTypeClientPage> {
                         Navigator.pushNamed(
                           context,
                           RouteConst.selectServicePage,
+                          arguments: ScreenRouteArgs(
+                            clientType: 'Физ. лицо',
+                            isPensioner: isCompleted,
+                            selectBranchItem: widget.branchItem,
+                          ),
                         );
                       },
                       title: 'Физическое лицо',

@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/feature/domain/entities/entities.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class ListOfDocPage extends StatefulWidget {
-  const ListOfDocPage({super.key});
+  final BranchEntity branchItem;
+  final bool isPensioner;
+  final String clientType;
+  final ServiceEntity serviceItem;
+
+  const ListOfDocPage({
+    super.key,
+    required this.branchItem,
+    required this.isPensioner,
+    required this.clientType,
+    required this.serviceItem,
+  });
 
   @override
   State<ListOfDocPage> createState() => _ListOfDocPageState();
@@ -50,8 +62,9 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
               const SizedBox(
                 height: 25,
               ),
-              const CustomAppBarWidget(
-                title: 'Услуга 1 < Список документов',
+              CustomAppBarWidget(
+                title:
+                    ' ${widget.clientType} < ${widget.serviceItem.name} < Список документов',
                 centerTitle: true,
               ),
               const SizedBox(height: 30),
@@ -117,8 +130,13 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
                       onTap: () {
                         Navigator.pushNamed(
                           context,
-                          RouteConst.myTicketsPage,
-                          arguments: ScreenRouteArgs(isCreatedTicket: true),
+                          RouteConst.selectQueuePage,
+                          arguments: ScreenRouteArgs(
+                            clientType: widget.clientType,
+                            isPensioner: widget.isPensioner,
+                            selectBranchItem: widget.branchItem,
+                            selectServiceItem: widget.serviceItem,
+                          ),
                         );
                       },
                       title: 'Выбрать очередь',

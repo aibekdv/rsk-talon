@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/feature/domain/entities/entities.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class SelectBranchPage extends StatefulWidget {
+  final List<BranchEntity> branchEntity;
+
   const SelectBranchPage({
     super.key,
+    required this.branchEntity,
   });
 
   @override
@@ -12,12 +16,14 @@ class SelectBranchPage extends StatefulWidget {
 }
 
 class _SelectBranchPageState extends State<SelectBranchPage> {
-  List<String> brachsOfBank = [
-    'ОАО "РСК Банк" Октябрьский филиал',
-    'ОАО "РСК Банк" Чуйский филиал',
-    'ОАО "РСК Банк" Головной офис',
-  ];
+  List<String>? brachesOfBank;
   bool isOpenDropdown = false;
+
+  @override
+  void initState() {
+    brachesOfBank = widget.branchEntity.map((e) => e.address!).toList();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,18 +74,33 @@ class _SelectBranchPageState extends State<SelectBranchPage> {
                         setState(() {});
                       },
                       onTapItem: (value) {
+                        late BranchEntity listBranch;
+                        for (var branche in widget.branchEntity) {
+                          if (branche.address == value) {
+                            listBranch = BranchEntity(
+                              address: branche.address,
+                              city: branche.city,
+                              id: branche.id,
+                              maxTalonWaitTime: branche.maxTalonWaitTime,
+                              terminal: branche.terminal,
+                              workTimeStart: branche.workTimeStart,
+                            );
+                          }
+                        }
                         Future.delayed(
                           const Duration(milliseconds: 100),
                           () {
                             Navigator.pushNamed(
                               context,
                               RouteConst.aboutBranchPage,
+                              arguments:
+                                  ScreenRouteArgs(selectBranchItem: listBranch),
                             );
                           },
                         );
                       },
                       isOpenDropdown: isOpenDropdown,
-                      items: brachsOfBank,
+                      items: brachesOfBank!,
                     ),
                   ],
                 ),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/feature/domain/entities/entities.dart';
+import 'package:rsk_talon/feature/presentation/cubit/cubit.dart';
 import 'package:rsk_talon/feature/presentation/pages/tickets/widgets/widgets.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
@@ -17,11 +20,16 @@ class MyTicketsPage extends StatefulWidget {
 
 class _MyTicketsPageState extends State<MyTicketsPage> {
   bool? isSuccess;
-  bool isEmpty = false;
+  List<TalonEntity> talonList = [];
+  late bool isEmpty;
+  late List<ServiceEntity> serviceList;
+  late List<BranchEntity> branchList;
 
   @override
   void initState() {
     isSuccess = widget.isCreatedTicket;
+    isEmpty = talonList.isEmpty;
+    setState(() {});
     Future.delayed(
       const Duration(milliseconds: 500),
       () {
@@ -30,6 +38,14 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
       },
     );
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    BlocProvider.of<TalonCubit>(context).getCachedTalons();
+    BlocProvider.of<BranchCubit>(context).loadBranches();
+    BlocProvider.of<TalonCubit>(context).fetchServicesFromServer();
+    super.didChangeDependencies();
   }
 
   @override
@@ -51,11 +67,43 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
             ),
             color: Color(0xff0D3584),
           ),
-          child: isEmpty
-              ? _ticketEmpty()
-              : isSuccess != null && isSuccess == true
-                  ? _ticketSuccess()
-                  : _ticketBuilder(),
+          child: BlocBuilder<BranchCubit, BranchState>(
+            builder: (context, state) {
+              if (state is BranchLoading) {
+                return const Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  ),
+                );
+              } else if (state is BranchSuccess) {
+                branchList = state.brancheList;
+              }
+
+              return BlocBuilder<TalonCubit, TalonState>(
+                builder: (context, state) {
+                  if (state is TalonCacheLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    );
+                  } else if (state is TalonCacheSuccess) {
+                    talonList = state.talonList;
+                    isEmpty = talonList.isEmpty;
+                  } else if (state is ServiceSuccess) {
+                    serviceList = state.serviceList;
+                  }
+                  return isEmpty
+                      ? _ticketEmpty()
+                      : isSuccess != null && isSuccess == true
+                          ? _ticketSuccess()
+                          : _ticketBuilder();
+                },
+              );
+            },
+          ),
         ),
       ),
     );
@@ -89,10 +137,19 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
             child: ListView.separated(
+              itemCount: talonList.length,
               itemBuilder: (context, index) => Padding(
                 padding: EdgeInsets.fromLTRB(
-                    0, index == 0 ? 20 : 0, 0, index == 3 ? 15 : 0),
-                child: const TicketItemWidget(),
+                  0,
+                  index == 0 ? 20 : 0,
+                  0,
+                  index == 3 ? 15 : 0,
+                ),
+                child: TicketItemWidget(
+                  branch: const BranchEntity(),
+                  numberTalon: talonList[index].token!,
+                  serviceType: talonList[index].service.toString(),
+                ),
               ),
               separatorBuilder: (context, index) => Column(
                 children: [
@@ -102,7 +159,6 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
                   const SizedBox(height: 10),
                 ],
               ),
-              itemCount: 4,
             ),
           ),
         ),
@@ -162,7 +218,7 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  "У вас пока не талоны",
+                  "У вас пока нет талоны",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -188,3 +244,7 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
     );
   }
 }
+
+// BranchEntity selectRegionTalon(List<BranchEntity> branches, int? id) {
+//   branches.contains(id);
+// }

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/feature/domain/entities/entities.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 import 'package:star_rating/star_rating.dart';
 
 class HomePage extends StatefulWidget {
   final bool? isGotTicket;
+  final List<BranchEntity>? branchesList;
 
   const HomePage({
     super.key,
     this.isGotTicket = false,
+    this.branchesList,
   });
 
   @override
@@ -20,22 +23,21 @@ class _HomePageState extends State<HomePage> {
   int starLength = 5;
   double _rating = 0;
 
-  List<String> cityOfList = [
-    'Бишкек',
-    'Ош',
-    'Жалал-абад',
-    'Кара-кол',
-    'Талас',
-    'Кара-Балта',
-    'Кемин',
-    // 'Кызыл-Кия',
-    // 'Токмок',
-    // 'Чолпон-Ата'
-  ];
   bool isOpenDropdown = false;
+  List<String> cityOfList = [];
+  List<BranchEntity>? branchesList;
 
   @override
   void initState() {
+    branchesList = widget.branchesList ?? [];
+    if (branchesList != null && branchesList!.isNotEmpty) {
+      for (var element in branchesList!) {
+        cityOfList.add(element.city!);
+      }
+      cityOfList = uniqueArray(cityOfList);
+      setState(() {});
+    }
+
     if (isReviewVisible) {
       Future.delayed(
         const Duration(seconds: 3),
@@ -170,6 +172,12 @@ class _HomePageState extends State<HomePage> {
                         setState(() {});
                       },
                       onTapItem: (value) {
+                        List<BranchEntity> listBranch = [];
+                        for (var branche in branchesList!) {
+                          if (branche.city == value) {
+                            listBranch.add(branche);
+                          }
+                        }
                         print(value);
                         Future.delayed(
                           const Duration(milliseconds: 100),
@@ -177,6 +185,8 @@ class _HomePageState extends State<HomePage> {
                             Navigator.pushNamed(
                               context,
                               RouteConst.selectBranchPage,
+                              arguments:
+                                  ScreenRouteArgs(branchItems: listBranch),
                             );
                           },
                         );
@@ -221,4 +231,15 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+List<String> uniqueArray(List<String> arr) {
+  List<String> newArr = [];
+  for (var obj in arr) {
+    if (newArr.contains(obj)) {
+      continue;
+    }
+    newArr.add(obj);
+  }
+  return newArr;
 }

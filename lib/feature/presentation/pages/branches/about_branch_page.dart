@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/feature/domain/entities/branch_entity.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class AboutBranchPage extends StatefulWidget {
+  final BranchEntity branchItem;
+
   const AboutBranchPage({
     super.key,
+    required this.branchItem,
   });
 
   @override
@@ -15,27 +19,27 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
   List<Map<String, dynamic>> schedule = [
     {
       'weekDay': 'Понедельник',
-      'time': '10:00-20:00',
+      'time': '09:00-17:00',
     },
     {
       'weekDay': 'Вторник',
-      'time': '10:00-20:00',
+      'time': '09:00-17:00',
     },
     {
       'weekDay': 'Среда',
-      'time': '10:00-20:00',
+      'time': '09:00-17:00',
     },
     {
       'weekDay': 'Четверг',
-      'time': '10:00-20:00',
+      'time': '09:00-17:00',
     },
     {
       'weekDay': 'Пятница',
-      'time': '10:00-20:00',
+      'time': '09:00-17:00',
     },
     {
       'weekDay': 'Суббота',
-      'time': '10:00-20:00',
+      'time': '10:00-15:00',
     },
     {
       'weekDay': 'Вскресенье',
@@ -70,8 +74,8 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
               const SizedBox(
                 height: 60,
               ),
-              const CustomAppBarWidget(
-                title: 'ОАО "РСК Банк" Октябрьский филиал',
+               const CustomAppBarWidget(
+                title:'Филиал банка' ,
                 centerTitle: true,
               ),
               const SizedBox(height: 20),
@@ -80,10 +84,10 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Center(
+                     Center(
                       child: Text(
-                        "Адрес: 48 просп. Чуй, Бишкек",
-                        style: TextStyle(
+                        "Адрес: ${widget.branchItem.address}",
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
@@ -131,6 +135,7 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
                         Navigator.pushNamed(
                           context,
                           RouteConst.selectClientTypePage,
+                          arguments: ScreenRouteArgs(selectBranchItem: widget.branchItem),
                         );
                       },
                       title: 'Далее',

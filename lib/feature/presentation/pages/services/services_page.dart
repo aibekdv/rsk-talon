@@ -1,16 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/feature/domain/entities/entities.dart';
+import 'package:rsk_talon/feature/presentation/cubit/talon/talon_cubit.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class ServicesPage extends StatefulWidget {
-  const ServicesPage({super.key});
+  final BranchEntity branchItem;
+  final bool isPensioner;
+  final String clientType;
+
+  const ServicesPage({
+    super.key,
+    required this.branchItem,
+    required this.isPensioner,
+    required this.clientType,
+  });
 
   @override
   State<ServicesPage> createState() => _ServicesPageState();
 }
 
 class _ServicesPageState extends State<ServicesPage> {
-  final List numbers = List.generate(30, (index) => "Item ${++index}");
+  @override
+  void didChangeDependencies() {
+    BlocProvider.of<TalonCubit>(context).fetchServicesFromServer();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,49 +75,86 @@ class _ServicesPageState extends State<ServicesPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              Expanded(
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: MediaQuery.of(context).size.width / 2,
-                    childAspectRatio: 3 / 1.2,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20,
-                  ),
-                  itemCount: numbers.length,
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        RouteConst.listOfDocPage,
-                      );
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: index % 2 == 0
-                            ? const BorderRadius.only(
-                                bottomRight: Radius.circular(15),
-                                topRight: Radius.circular(15),
-                              )
-                            : const BorderRadius.only(
-                                bottomLeft: Radius.circular(15),
-                                topLeft: Radius.circular(15),
+              BlocBuilder<TalonCubit, TalonState>(
+                builder: (context, state) {
+                  List<ServiceEntity> serviceList = [];
+
+                  if (state is ServiceLoading) {
+                    return const Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(color: Colors.white),
+                      ),
+                    );
+                  } else if (state is ServiceFailure) {
+                    return ErrorPage(message: state.message);
+                  } else if (state is ServiceSuccess) {
+                    serviceList = state.serviceList;
+                  }
+                  return Expanded(
+                    child: serviceList.isNotEmpty
+                        ? GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent:
+                                  MediaQuery.of(context).size.width / 2,
+                              childAspectRatio: 3 / 1.2,
+                              crossAxisSpacing: 20,
+                              mainAxisSpacing: 20,
+                            ),
+                            itemCount: serviceList.length,
+                            itemBuilder: (context, index) => GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  RouteConst.listOfDocPage,
+                                  arguments: ScreenRouteArgs(
+                                    clientType: widget.clientType,
+                                    isPensioner: widget.isPensioner,
+                                    selectBranchItem: widget.branchItem,
+                                    selectServiceItem: serviceList[index],
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: index % 2 == 0
+                                      ? const BorderRadius.only(
+                                          bottomRight: Radius.circular(15),
+                                          topRight: Radius.circular(15),
+                                        )
+                                      : const BorderRadius.only(
+                                          bottomLeft: Radius.circular(15),
+                                          topLeft: Radius.circular(15),
+                                        ),
+                                ),
+                                child: Text(
+                                  serviceList[index].name!,
+                                  style: const TextStyle(
+                                    color: Color(0xff0E3584),
+                                    fontSize: 16,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
-                      ),
-                      child: Text(
-                        numbers[index],
-                        style: const TextStyle(
-                          color: Color(0xff0E3584),
-                          fontSize: 18,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ),
-                ),
+                            ),
+                          )
+                        : const Center(
+                            child: Text(
+                              'Services not found',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                  );
+                },
               ),
             ],
           ),

@@ -41,12 +41,20 @@ class TheBranchMapPage extends StatelessWidget {
                 title: 'Карта',
                 centerTitle: true,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [Text("Hello world!")],
+                  children: [
+                    Text(
+                      "Здесь бутет карта филиала",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

@@ -1,3 +1,4 @@
+
 class TalonEntity {
   int? id;
   String? appointmentDate;

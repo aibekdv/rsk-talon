@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsk_talon/common/common.dart';
-import 'package:rsk_talon/feature/presentation/pages/pages.dart';
+import 'package:rsk_talon/feature/domain/entities/entities.dart';
+import 'package:rsk_talon/feature/presentation/cubit/talon/talon_cubit.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 
 class QueueTimePage extends StatefulWidget {
-  const QueueTimePage({super.key});
+  final BranchEntity branchItem;
+  final bool isPensioner;
+  final String clientType;
+  final ServiceEntity serviceItem;
+
+  const QueueTimePage({
+    super.key,
+    required this.branchItem,
+    required this.isPensioner,
+    required this.clientType,
+    required this.serviceItem,
+  });
 
   @override
   State<QueueTimePage> createState() => _QueueTimePageState();
 }
 
 class _QueueTimePageState extends State<QueueTimePage> {
-  final List numbers = List.generate(30, (index) => "Item ${++index}");
+  bool isSelectedTime = false;
+  bool isCreatedTicket = false;
 
   @override
   Widget build(BuildContext context) {
@@ -45,84 +59,157 @@ class _QueueTimePageState extends State<QueueTimePage> {
               const SizedBox(
                 height: 25,
               ),
-              const CustomAppBarWidget(
-                title: 'Юр.лицо < Услуга 1 < Очередь',
+              CustomAppBarWidget(
+                title:
+                    '${widget.clientType} < ${widget.serviceItem.name?.substring(0, 12)} < Очередь',
                 centerTitle: true,
               ),
               const SizedBox(
                 height: 60,
               ),
               Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Шаг 5/5',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          const SizedBox(height: 20),
+                          BlocBuilder<TalonCubit, TalonState>(
+                            builder: (context, state) {
+                              bool isLoading = false;
+
+                              if (state is TalonLoading) {
+                                isLoading = true;
+                              } else if (state is TalonFailure) {
+                                isLoading = false;
+                                toast(msg: state.message, isError: true);
+                              } else if (state is TalonSuccess) {
+                                isLoading = false;
+                                isCreatedTicket = true;
+                                print("created: " + isCreatedTicket.toString());
+                              }
+
+                              return CustomButtonWidget(
+                                onTap: () {
+                                  BlocProvider.of<TalonCubit>(context)
+                                      .createNewTalon(
+                                    TalonEntity(
+                                      branch: widget.branchItem.id,
+                                      isPensioner: widget.isPensioner,
+                                      clientType: widget.clientType,
+                                      service: widget.serviceItem.id,
+                                    ),
+                                  );
+
+                                  Future.delayed(
+                                      const Duration(
+                                        seconds: 2,
+                                      ), () {
+                                    if (isCreatedTicket == true) {
+                                      return Navigator.pushNamed(
+                                        context,
+                                        RouteConst.myTicketsPage,
+                                        arguments: ScreenRouteArgs(
+                                          isCreatedTicket: isCreatedTicket,
+                                        ),
+                                      );
+                                    }
+                                  });
+                                },
+                                isLoading: isLoading,
+                                title: 'Встать в конец очереди',
+                                textStyle: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                                width: double.infinity,
+                                height: 48,
+                                bgColor: Colors.transparent,
+                                borderColor: Colors.white,
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 10),
+                          const Center(
+                              child: Text(
+                            "или",
+                            style: TextStyle(color: Colors.white),
+                          )),
+                          const SizedBox(height: 10),
+                          CustomButtonWidget(
+                            onTap: () {
+                              _dialogBuilder(context);
+                            },
+                            title: 'Выбрать время',
+                            textStyle: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                            ),
+                            width: double.infinity,
+                            height: 48,
+                            bgColor: Colors.white,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 60),
+                    CustomButtonWidget(
+                      onTap: isSelectedTime
+                          ? () {
+                              Navigator.pushNamed(
+                                context,
+                                RouteConst.myTicketsPage,
+                                arguments:
+                                    ScreenRouteArgs(isCreatedTicket: true),
+                              );
+                            }
+                          : () {},
+                      title: 'Создать талон',
+                      width: double.infinity,
+                      height: 54,
+                      bgColor:
+                          !isSelectedTime ? Colors.black.withOpacity(.2) : null,
+                      borderRadius: 20,
+                      textStyle: TextStyle(
+                        color: !isSelectedTime
+                            ? Colors.white.withOpacity(.2)
+                            : Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Center(
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: const TextSpan(
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
                           children: [
-                            const Text(
-                              'Шаг 5/5',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            const SizedBox(height: 20),
-                            CustomButtonWidget(
-                              onTap: () {},
-                              title: 'Встать в конец очереди',
-                              textStyle: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
+                            TextSpan(text: 'Пожалуйста выберите время\n'),
+                            TextSpan(
+                              text: 'или\n',
+                              style: TextStyle(
+                                color: Colors.red,
                               ),
-                              width: double.infinity,
-                              height: 48,
-                              bgColor: Colors.transparent,
-                              borderColor: Colors.white,
                             ),
-                            const SizedBox(height: 10),
-                            const Center(
-                                child: Text(
-                              "или",
-                              style: TextStyle(color: Colors.white),
-                            )),
-                            const SizedBox(height: 10),
-                            CustomButtonWidget(
-                              onTap: () {
-                                _dialogBuilder(context);
-                              },
-                              title: 'Выбрать время',
-                              textStyle: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                              ),
-                              width: double.infinity,
-                              height: 48,
-                              bgColor: Colors.white,
-                            ),
+                            TextSpan(text: 'Нажмите встать в конец очереди'),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 60),
-                      CustomButtonWidget(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MyTicketsPage(),
-                            ),
-                          );
-                        },
-                        title: 'Создать талон',
-                        textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                        width: double.infinity,
-                        height: 54,
-                      ),
-                    ],
-                  )),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
