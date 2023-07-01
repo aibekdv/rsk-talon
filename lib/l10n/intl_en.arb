@@ -1,3 +1,57 @@
 {
-    "hello":"Hello!"
+    "hello":"Hello!",
+    "selectLanguageText":"Please seleact your langauge.",
+    "step": "Step",
+    "firstatickerpage":"You already have a ticker?",
+    "yes": "Yes",
+    "leavefeedback":"leave feedback",
+    "LeaveText": "Please rate the service in the bank",
+    "selectCity": "select city",
+    "selectbranch":"Select branch",
+    "bankbranch":"Bank branch",
+    "address": "Address:",
+    "monday":"Monday",
+    "tuesday":"Tuesday",
+    "wednesday":"Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday":"Saturday",
+    "sunday": "Sunday",
+    "next": "Next",
+    "clientType": "Select client type",
+    "legal":"Legal entity,",
+    "individual": "Individual",
+    "pensioner":"I'm a pensioner",
+    "seleckservis": "Select a service",
+    "listofdocuments": "List of Documents",
+    "selectqueue": "Select queue",
+    "or":"or",
+    "togetinline":"Stand at the end of the queue",
+    "selectTime" :"Select time",
+    "createaticket": "Create a ticket",
+    "mytickets": "My tickets",
+    "yournumber":"Your number",
+    "date":"Date",
+    "time":"time",
+    "minutes": "19 minutes left",
+    "map":"Map",
+    "deleteticket":"Delete ticket?",
+    "cancel":"Cancel",
+    "add":"Add",
+    "ticketCreated":"Ticket created successfully!"
+
+
+
+
+
+
+    
+
+
+
+
+
+
+    
+    
 }

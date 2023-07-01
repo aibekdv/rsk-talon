@@ -1,1 +1,58 @@
-{}
+{
+    "hello":"Салам!",
+    "selectLanguageText":"Сураныч тилди танданыз.",
+    "step": "Кадам",
+    "firstatickerpage":"Сизде талон барбы?",
+    "yes": "Ооба",
+    "leavefeedback":"Пикир калтыруу",
+    "LeaveText": "Сураныч банктын тейлөөсүн баалаңыз",
+    "selectCity": "Шаарды танданыз",
+    "selectbranch":"Филиалды танданыз",
+    "bankbranch":"Банктын филиалы",
+    "address": "Дареги:",
+    "monday":"Дүйшөмбү",
+    "tuesday":"Шейшемби",
+    "wednesday":"Шаршемби",
+    "thursday": "Бейшемби",
+    "friday": "Жума",
+    "saturday":"Ишемби",
+    "sunday": "Жекшемби",
+    "notOpen":"Дем алуу",
+    "next": "Кийинки",
+    "clientType": "Кардардын түрүн тандоо",
+    "legal":"Юридикалык жак,",
+    "individual": "Жекелик жак",
+    "pensioner":"Мен пенсионермин",
+    "seleckservis": "Кызматты танданыз",
+    "listofdocuments": "Документтердин тизмеси",
+    "selectqueue": "Кезекти танданыз",
+    "or":"же",
+    "togetinline":"Саптын аягына туруу",
+    "selectTime" :"Убакытты тандоо",
+    "createaticket": "Талон түзүү",
+    "mytickets": "Менин талондорум",
+    "yournumber":"Сиздин номериңиз",
+    "date":"дата",
+    "time":"Убакыт",
+    "minutes": " 19 минут калды",
+    "map":"Карта",
+    "deleteticket":"Өчүрүү?",
+    "cаncel":"Жокко чыгаруу",
+    "add":"Кошуу",
+    "ticketCreated":"Талон ийгиликтүү  түзүлдү!"
+
+
+
+
+
+
+    
+
+
+
+
+
+
+    
+    
+}

@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:rsk_talon/common/routes/routes.dart';
 import 'package:rsk_talon/feature/presentation/cubit/cubit.dart';
+
 import 'package:rsk_talon/service_locator.dart' as di;
 import 'generated/l10n.dart';
 

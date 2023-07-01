@@ -22,6 +22,51 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "hello": MessageLookupByLibrary.simpleMessage("Привет!")
+        "LeaveText": MessageLookupByLibrary.simpleMessage(
+            "Пожалуйста, оцените обслуживание в банке"),
+        "add": MessageLookupByLibrary.simpleMessage("Добавить"),
+        "address": MessageLookupByLibrary.simpleMessage("Адрес:"),
+        "bankbranch": MessageLookupByLibrary.simpleMessage("Филиал банка"),
+        "clientType":
+            MessageLookupByLibrary.simpleMessage("Выберите тип клиента"),
+        "createaticket": MessageLookupByLibrary.simpleMessage("Создат талон"),
+        "date": MessageLookupByLibrary.simpleMessage("Дата"),
+        "deleteticket": MessageLookupByLibrary.simpleMessage("Удалить талон?"),
+        "firstatickerpage":
+            MessageLookupByLibrary.simpleMessage("У вас уже есть талон?"),
+        "friday": MessageLookupByLibrary.simpleMessage("Пятница"),
+        "hello": MessageLookupByLibrary.simpleMessage("Привет!"),
+        "individual": MessageLookupByLibrary.simpleMessage("Физическое лицо"),
+        "leavefeedback": MessageLookupByLibrary.simpleMessage("Оставить отзыв"),
+        "legal": MessageLookupByLibrary.simpleMessage("Юридическое лицо,"),
+        "listofdocuments":
+            MessageLookupByLibrary.simpleMessage("Список документов"),
+        "map": MessageLookupByLibrary.simpleMessage("Карта"),
+        "minutes": MessageLookupByLibrary.simpleMessage("Осталась 19 мин"),
+        "monday": MessageLookupByLibrary.simpleMessage("Понедельник"),
+        "mytickets": MessageLookupByLibrary.simpleMessage("Мои талоны"),
+        "next": MessageLookupByLibrary.simpleMessage("Далее"),
+        "or": MessageLookupByLibrary.simpleMessage("или"),
+        "pensioner": MessageLookupByLibrary.simpleMessage("Я пенсионер(-ка)"),
+        "saturday": MessageLookupByLibrary.simpleMessage("Суббота"),
+        "seleckservis": MessageLookupByLibrary.simpleMessage("Выберите услугу"),
+        "selectCity": MessageLookupByLibrary.simpleMessage("Выберите город"),
+        "selectLanguageText":
+            MessageLookupByLibrary.simpleMessage("Пожалуйста выберите язык."),
+        "selectTime": MessageLookupByLibrary.simpleMessage("Выбрать время"),
+        "selectbranch": MessageLookupByLibrary.simpleMessage("Выберите филиал"),
+        "selectqueue": MessageLookupByLibrary.simpleMessage("Выбрать очередь"),
+        "step": MessageLookupByLibrary.simpleMessage("Шаг"),
+        "sunday": MessageLookupByLibrary.simpleMessage("Воскресенье"),
+        "thursday": MessageLookupByLibrary.simpleMessage("Четверг"),
+        "ticketCreated":
+            MessageLookupByLibrary.simpleMessage("Талон успешно создан!"),
+        "time": MessageLookupByLibrary.simpleMessage("Время"),
+        "togetinline":
+            MessageLookupByLibrary.simpleMessage("Встать в конец очереди"),
+        "tuesday": MessageLookupByLibrary.simpleMessage("Вторник"),
+        "wednesday": MessageLookupByLibrary.simpleMessage("Среда"),
+        "yes": MessageLookupByLibrary.simpleMessage("да"),
+        "yournumber": MessageLookupByLibrary.simpleMessage("Ваш номер")
       };
 }

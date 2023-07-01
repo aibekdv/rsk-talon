@@ -1,3 +1,58 @@
 {
-    "hello":"Привет!"
-}
+        "hello":"Привет!",
+        "selectLanguageText":"Пожалуйста выберите язык.",
+        "step": "Шаг",
+        "firstatickerpage":"У вас уже есть талон?",
+        "yes": "да",
+        "leavefeedback":"Оставить отзыв",
+        "LeaveText": "Пожалуйста, оцените обслуживание в банке",
+        "selectCity": "Выберите город",
+        "selectbranch":"Выберите филиал",
+        "bankbranch":"Филиал банка",
+        "address": "Адрес:",
+        "monday":"Понедельник",
+        "tuesday":"Вторник",
+        "wednesday":"Среда",
+        "thursday": "Четверг",
+        "friday": "Пятница",
+        "saturday":"Суббота",
+        "sunday": "Воскресенье",
+        "notOpen":"Не работает",
+        "next": "Далее",
+        "clientType": "Выберите тип клиента",
+        "legal":"Юридическое лицо,",
+        "individual": "Физическое лицо",
+        "pensioner":"Я пенсионер(-ка)",
+        "seleckservis": "Выберите услугу",
+        "listofdocuments": "Список документов",
+        "selectqueue": "Выбрать очередь",
+        "or":"или",
+        "togetinline":"Встать в конец очереди",
+        "selectTime" :"Выбрать время",
+        "createaticket": "Создат талон",
+        "mytickets": "Мои талоны",
+        "yournumber":"Ваш номер",
+        "date":"Дата",
+        "time":"Время",
+        "minutes": "Осталась 19 мин",
+        "map":"Карта",
+        "deleteticket":"Удалить талон?",
+        "cаncel":"Отмена",
+        "add":"Добавить",
+    "ticketCreated":"Талон успешно создан!"
+    
+    
+    
+    
+    
+    
+        
+    
+    
+    
+    
+    
+    
+        
+        
+    }
