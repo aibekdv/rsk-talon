@@ -27,6 +27,7 @@ dependencies:
   fluttertoast: ^8.2.2
   flutter_localizations:
         sdk: flutter
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:
