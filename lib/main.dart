@@ -6,6 +6,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:rsk_talon/common/routes/routes.dart';
 import 'package:rsk_talon/feature/presentation/cubit/cubit.dart';
 import 'package:rsk_talon/service_locator.dart' as di;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'generated/l10n.dart';
 
 import 'feature/presentation/pages/pages.dart';
@@ -37,41 +38,55 @@ class _MyAppState extends State<MyApp> {
             create: (context) => di.sl<BranchCubit>()..loadBranches()),
         BlocProvider<TalonCubit>(create: (context) => di.sl<TalonCubit>()),
         BlocProvider<LanguageCubit>(
-            create: (context) => di.sl<LanguageCubit>()),
+            create: (context) => di.sl<LanguageCubit>()..getCachedLanguage()),
       ],
-      child: MaterialApp(
-        title: 'РСК талон',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: true,
-          fontFamily: 'Inter',
-        ),
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: S.delegate.supportedLocales,
-        locale: const Locale('ru'),
-        initialRoute: 'homePage',
-        onGenerateRoute: OnGenerateRoute.route,
-        routes: {
-          "homePage": (context) {
-            return BlocBuilder<BranchCubit, BranchState>(
-              builder: (context, state) {
-                if (state is BranchSuccess) {
-                  FlutterNativeSplash.remove();
-                  return HomePage(branchesList: state.brancheList);
-                } else if (state is BranchFailure) {
-                  FlutterNativeSplash.remove();
-                  return const ErrorPage();
-                } else {
-                  return const SizedBox();
-                }
-              },
-            );
+      child: BlocBuilder<LanguageCubit, LanguageState>(
+        builder: (context, state) {
+          Locale locale = const Locale('ky');
+
+          if (state is ChangeLanguage) {
+            locale = state.locale;
           }
+
+          return MaterialApp(
+            title: 'РСК талон',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              useMaterial3: true,
+              fontFamily: 'Inter',
+            ),
+            localizationsDelegates: const [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
+            locale: locale,
+            initialRoute: '/',
+            onGenerateRoute: OnGenerateRoute.route,
+            routes: {
+              "/": (context) {
+                return BlocBuilder<BranchCubit, BranchState>(
+                  builder: (context, state) {
+                    if (state is BranchSuccess) {
+                      FlutterNativeSplash.remove();
+                      if (di.sl<SharedPreferences>().getString("CASHED_LANG") == null) {
+                        return const SelectLanguagePage();
+                      } else {
+                        return HomePage(branchesList: state.brancheList);
+                      }
+                    } else if (state is BranchFailure) {
+                      FlutterNativeSplash.remove();
+                      return const ErrorPage();
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
+                );
+              }
+            },
+          );
         },
       ),
     );
