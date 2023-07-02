@@ -294,7 +294,7 @@ class _QueueTimePageState extends State<QueueTimePage> {
     if (time == null || time == TimeOfDay.fromDateTime(selectedDateTime)) {
       return;
     }
-    if (time.hour < 8 || time.hour > 18) {
+    if (time.hour < 8 || time.hour > 17) {
       toast(msg: errorText, isError: true);
       return;
     }
