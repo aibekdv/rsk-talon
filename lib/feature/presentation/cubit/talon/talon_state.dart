@@ -7,11 +7,11 @@ abstract class TalonState extends Equatable {
   List<Object> get props => [];
 }
 
-class TalonInitial extends TalonState {}
+final class TalonInitial extends TalonState {}
 
-class TalonLoading extends TalonState {}
+final class TalonLoading extends TalonState {}
 
-class TalonFailure extends TalonState {
+final class TalonFailure extends TalonState {
   final String message;
 
   const TalonFailure(this.message);
@@ -20,7 +20,7 @@ class TalonFailure extends TalonState {
   List<Object> get props => [message];
 }
 
-class TalonSuccess extends TalonState {
+final class TalonSuccess extends TalonState {
   final List<TalonEntity> talonList;
 
   const TalonSuccess({required this.talonList});
@@ -29,9 +29,9 @@ class TalonSuccess extends TalonState {
   List<Object> get props => [talonList];
 }
 
-class ServiceLoading extends TalonState {}
+final class ServiceLoading extends TalonState {}
 
-class ServiceFailure extends TalonState {
+final class ServiceFailure extends TalonState {
   final String message;
 
   const ServiceFailure(this.message);
@@ -40,15 +40,15 @@ class ServiceFailure extends TalonState {
   List<Object> get props => [message];
 }
 
-class ServiceSuccess extends TalonState {
+final class ServiceSuccess extends TalonState {
   final List<ServiceEntity> serviceList;
 
   const ServiceSuccess({required this.serviceList});
 }
 
-class TalonCacheLoading extends TalonState {}
+final class TalonCacheLoading extends TalonState {}
 
-class TalonCacheFailure extends TalonState {
+final class TalonCacheFailure extends TalonState {
   final String message;
 
   const TalonCacheFailure(this.message);
@@ -57,7 +57,7 @@ class TalonCacheFailure extends TalonState {
   List<Object> get props => [message];
 }
 
-class TalonCacheSuccess extends TalonState {
+final class TalonCacheSuccess extends TalonState {
   final List<TalonEntity> talonList;
 
   const TalonCacheSuccess({required this.talonList});

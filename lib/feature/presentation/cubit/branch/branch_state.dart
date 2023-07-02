@@ -7,11 +7,11 @@ abstract class BranchState extends Equatable {
   List<Object> get props => [];
 }
 
-class BranchInitial extends BranchState {}
+final class BranchInitial extends BranchState {}
 
-class BranchLoading extends BranchState {}
+final class BranchLoading extends BranchState {}
 
-class BranchFailure extends BranchState {
+final class BranchFailure extends BranchState {
   final String message;
 
   const BranchFailure(this.message);
@@ -20,7 +20,7 @@ class BranchFailure extends BranchState {
   List<Object> get props => [message];
 }
 
-class BranchSuccess extends BranchState {
+final class BranchSuccess extends BranchState {
   final List<BranchEntity> brancheList;
 
   const BranchSuccess(this.brancheList);

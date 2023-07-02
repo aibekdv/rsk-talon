@@ -6,9 +6,11 @@ import 'package:rsk_talon/feature/domain/usecases/usecases.dart';
 
 part 'branch_state.dart';
 
-class BranchCubit extends Cubit<BranchState> {
+final class BranchCubit extends Cubit<BranchState> {
   final GetAllBranches getAllBranches;
   BranchCubit({required this.getAllBranches}) : super(BranchInitial());
+
+  
 
   loadBranches() async {
     emit(BranchLoading());

@@ -7,12 +7,13 @@ import 'package:rsk_talon/feature/domain/usecases/usecases.dart';
 
 part 'talon_state.dart';
 
-class TalonCubit extends Cubit<TalonState> {
+final class TalonCubit extends Cubit<TalonState> {
   final GetServicesUseCase getServicesUseCase;
   final GetTalonsUseCase getTalonsUseCase;
   final CreateTalonUseCase createTalonUseCase;
   final GetCachedTalonsUseCase getCachedTalonsUseCase;
   final TalonToCacheUseCase talonToCacheUseCase;
+  final DeleteTalonFromCacheUseCase deleteTalonFromCacheUseCase;
 
   TalonCubit({
     required this.getServicesUseCase,
@@ -20,6 +21,7 @@ class TalonCubit extends Cubit<TalonState> {
     required this.createTalonUseCase,
     required this.getCachedTalonsUseCase,
     required this.talonToCacheUseCase,
+    required this.deleteTalonFromCacheUseCase,
   }) : super(TalonInitial());
 
   fetchServicesFromServer() async {
@@ -28,15 +30,6 @@ class TalonCubit extends Cubit<TalonState> {
     brancheList.fold(
       (error) => emit(ServiceFailure(_mapFailureToMessage(error))),
       (result) => emit(ServiceSuccess(serviceList: result)),
-    );
-  }
-
-  getTalonsFromServer() async {
-    emit(TalonCacheLoading());
-    final brancheList = await getTalonsUseCase(NoParams());
-    brancheList.fold(
-      (error) => emit(TalonCacheFailure(_mapFailureToMessage(error))),
-      (result) => emit(TalonCacheSuccess(talonList: result)),
     );
   }
 
@@ -57,6 +50,18 @@ class TalonCubit extends Cubit<TalonState> {
     try {
       final talons = await getCachedTalonsUseCase();
       emit(TalonCacheSuccess(talonList: talons));
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  deleteTalonItem(TalonEntity talon) async {
+    emit(TalonCacheLoading());
+
+    try {
+      deleteTalonFromCacheUseCase(talon);
+      final talonList = await getCachedTalonsUseCase();
+      emit(TalonCacheSuccess(talonList: talonList));
     } catch (e) {
       debugPrint(e.toString());
     }

@@ -13,4 +13,16 @@ class LanguageCubit extends Cubit<LanguageState> {
     required this.changeLangUseCase,
     required this.getCachedLangUseCase,
   }) : super(LanguageInitial());
+
+  changeLanguage(String code) async {
+    await changeLangUseCase(code);
+    getCachedLanguage();
+  }
+
+  getCachedLanguage() async {
+    final code = getCachedLangUseCase();
+    if (code != null) {
+      emit(ChangeLanguage(locale: Locale(code)));
+    }
+  }
 }

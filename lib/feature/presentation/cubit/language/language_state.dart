@@ -7,9 +7,9 @@ abstract class LanguageState extends Equatable {
   List<Object> get props => [];
 }
 
-class LanguageInitial extends LanguageState {}
+final class LanguageInitial extends LanguageState {}
 
-class ChangeLanguage extends LanguageState {
+final class ChangeLanguage extends LanguageState {
   final Locale locale;
 
   const ChangeLanguage({required this.locale});
