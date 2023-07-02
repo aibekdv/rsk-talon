@@ -1,4 +1,4 @@
-class BranchEntity {
+ class BranchEntity {
   final int? id;
   final String? city;
   final String? address;

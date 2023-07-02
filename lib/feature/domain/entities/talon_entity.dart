@@ -1,3 +1,4 @@
+import 'package:rsk_talon/feature/domain/entities/entities.dart';
 
 class TalonEntity {
   int? id;
@@ -15,8 +16,9 @@ class TalonEntity {
   String? registeredAt;
   String? updatedAt;
   int? service;
-  int? branch;
+  BranchEntity? branch;
   int? queue;
+  int? branchId;
 
   TalonEntity({
     this.id,
@@ -36,5 +38,6 @@ class TalonEntity {
     this.service,
     this.branch,
     this.queue,
+    this.branchId,
   });
 }

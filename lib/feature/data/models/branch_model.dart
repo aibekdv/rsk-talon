@@ -1,6 +1,6 @@
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
 
-class BranchModel extends BranchEntity {
+final class BranchModel extends BranchEntity {
   BranchModel({
     required super.id,
     required super.city,

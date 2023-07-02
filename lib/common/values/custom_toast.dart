@@ -8,8 +8,8 @@ void toast({required String msg, bool isError = false}) {
     toastLength: Toast.LENGTH_LONG,
     gravity: ToastGravity.BOTTOM,
     timeInSecForIosWeb: 1,
-    backgroundColor: isError ? Colors.red : AppColors.primray,
-    textColor: Colors.white,
+    backgroundColor: isError ? Colors.red : AppColors.primary,
+    textColor: AppColors.whiteColor ,
     fontSize: 16.0,
   );
 }

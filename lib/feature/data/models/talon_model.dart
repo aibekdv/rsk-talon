@@ -1,6 +1,7 @@
+import 'package:rsk_talon/feature/data/models/models.dart';
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
 
-class TalonModel extends TalonEntity {
+final class TalonModel extends TalonEntity {
   TalonModel({
     super.id,
     required super.appointmentDate,
@@ -38,7 +39,8 @@ class TalonModel extends TalonEntity {
       registeredAt: json['registered_at'],
       updatedAt: json['updated_at'],
       service: json['service'],
-      branch: json['branch'],
+      branch:
+          json['branch'] != null ? BranchModel.fromJson(json['branch']) : null,
       queue: json['queue'],
     );
   }

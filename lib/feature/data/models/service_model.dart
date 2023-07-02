@@ -1,6 +1,6 @@
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
 
-class ServiceModel extends ServiceEntity {
+final class ServiceModel extends ServiceEntity {
   ServiceModel({required super.name, required super.id});
 
   ServiceModel.fromJson(Map<String, dynamic> json) {
