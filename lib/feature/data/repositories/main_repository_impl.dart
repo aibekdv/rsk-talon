@@ -4,7 +4,7 @@ import 'package:rsk_talon/feature/data/datasources/datasources.dart';
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
 import 'package:rsk_talon/feature/domain/repositories/repositories.dart';
 
-class MainRepositoryImpl implements MainRepository {
+final class MainRepositoryImpl implements MainRepository {
   final RemoteDataSource remoteDataSource;
   final LocalDataSources localDataSources;
 
@@ -34,15 +34,18 @@ class MainRepositoryImpl implements MainRepository {
       await localDataSources.changeLanguage(code);
 
   @override
-  String getCachedLanguage() => localDataSources.getCachedLanguage();
+  String? getCachedLanguage() => localDataSources.getCachedLanguage();
 
   @override
   Future<List<TalonEntity>> getCachedTalons() async =>
       await localDataSources.getCachedTalons();
 
   @override
-  void talonToCache(TalonEntity talon) =>
-      localDataSources.talonToCache(talon);
+  void talonToCache(TalonEntity talon) => localDataSources.talonToCache(talon);
+
+  @override
+  Future<void> deleteTalonFromCache(TalonEntity talon) async =>
+      localDataSources.deleteTalonFromCache(talon);
 }
 
 Future<Either<Failure, List<BranchEntity>>> _getBranche(

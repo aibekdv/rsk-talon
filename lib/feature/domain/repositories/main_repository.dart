@@ -8,7 +8,8 @@ abstract class MainRepository {
   Future<Either<Failure, List<TalonEntity>>> getAllTalons();
   Future<Either<Failure, TalonEntity>> createTalon(TalonEntity talon);
   Future<List<TalonEntity>> getCachedTalons();
-  String getCachedLanguage();
+  String? getCachedLanguage();
   Future<void> changeLanguage(String code);
+  Future<void> deleteTalonFromCache(TalonEntity talon);
   void talonToCache(TalonEntity talon);
 }

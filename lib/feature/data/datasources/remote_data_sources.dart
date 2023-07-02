@@ -7,14 +7,14 @@ import 'package:rsk_talon/feature/data/models/models.dart';
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class RemoteDataSource {
+abstract final class RemoteDataSource {
   Future<List<BranchEntity>> getAllBranches();
   Future<List<ServiceEntity>> getAllServices();
   Future<List<TalonEntity>> getAllTalons();
   Future<TalonEntity> createTalon(TalonEntity talon);
 }
 
-class RemoteDataSourceImpl implements RemoteDataSource {
+final class RemoteDataSourceImpl implements RemoteDataSource {
   final Client client;
   final SharedPreferences prefs;
 
@@ -22,7 +22,6 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
   @override
   Future<List<BranchEntity>> getAllBranches() async {
-
     var response = await client.get(
       Uri.parse('http://omrinori.pythonanywhere.com/branch/list'),
       headers: {'Content-Type': 'application/json'},
@@ -33,7 +32,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
           .map<BranchEntity>((e) => BranchModel.fromJson(e))
           .toList();
     } else {
-      toast(msg: response.body);
+      toast(msg: "Server failure", isError: true);
       throw ServerExeption();
     }
   }
@@ -57,7 +56,8 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
   @override
   Future<List<TalonEntity>> getAllTalons() async {
-    var response = await client.get(
+    throw UnimplementedError();
+    /*var response = await client.get(
       Uri.parse('http://omrinori.pythonanywhere.com/talon/'),
       headers: {'Content-Type': 'application/json'},
     );
@@ -67,7 +67,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     } else {
       toast(msg: response.body);
       throw ServerExeption();
-    }
+    }*/
   }
 
   @override
@@ -75,7 +75,8 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     final Map<String, dynamic> postTalon = {
       "client_type": talon.clientType,
       "service": talon.service,
-      "branch": talon.branch,
+      "branch": talon.branch!.id,
+      "is_pensioner": talon.isPensioner,
       if (talon.appointmentDate != null)
         "appointment_date": talon.appointmentDate,
     };
@@ -86,27 +87,15 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       final branch = json.decode(utf8.decode(response.bodyBytes));
-      return TalonModel.fromJson({
-        'id': branch['id'],
-        'appointment_date': branch['appointmentDate'],
-        'token': branch['token'],
-        'status': branch['status'],
-        'client_type': branch['clientType'],
-        'client_comment': branch['clientComment'],
-        'rating_comment': branch['ratingComment'],
-        'employee_comment': branch['employeeComment'],
-        'rating': branch['rating'],
-        'is_pensioner': branch['isPensioner'],
-        'service_start': branch['serviceStart'],
-        'service_end': branch['serviceEnd'],
-        'registered_at': branch['registeredAt'],
-        'updated_at': branch['updatedAt'],
-        'service': branch['service'],
-        'branch': branch['branch']['id'],
-        'queue': branch['queue'],
-      });
+      return TalonModel.fromJson(branch);
+    } else if (response.statusCode == 400) {
+      final branch = json.decode(utf8.decode(response.bodyBytes));
+      toast(
+        msg: branch["non_field_errors"][0].toString(),
+        isError: true,
+      );
+      throw ServerExeption();
     } else {
-      toast(msg: response.body);
       throw ServerExeption();
     }
   }

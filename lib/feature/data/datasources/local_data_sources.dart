@@ -1,17 +1,19 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:rsk_talon/feature/data/models/models.dart';
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class LocalDataSources {
+abstract final class LocalDataSources {
   Future<List<TalonEntity>> getCachedTalons();
   void talonToCache(TalonEntity talon);
-  String getCachedLanguage();
+  String? getCachedLanguage();
   Future<void> changeLanguage(String code);
+  Future<void> deleteTalonFromCache(TalonEntity talon);
 }
 
-class LocalDataSourcesImpl implements LocalDataSources {
+final class LocalDataSourcesImpl implements LocalDataSources {
   final SharedPreferences prefs;
 
   LocalDataSourcesImpl({required this.prefs});
@@ -25,13 +27,12 @@ class LocalDataSourcesImpl implements LocalDataSources {
   }
 
   @override
-  String getCachedLanguage() {
+  String? getCachedLanguage() {
     final code = prefs.getString(CASHED_LANG);
     if (code != null) {
       return code;
-    } else {
-      return 'en';
     }
+    return null;
   }
 
   @override
@@ -82,6 +83,20 @@ class LocalDataSourcesImpl implements LocalDataSources {
     } else {
       jsonTalonList.add(jsonEncode(jsonTalon));
       prefs.setStringList(CASHED_TALONS_LIST, jsonTalonList);
+    }
+  }
+
+  @override
+  Future<void> deleteTalonFromCache(TalonEntity talon) async {
+    final jsonTalonList = prefs.getStringList(CASHED_TALONS_LIST);
+
+    try {
+      if (jsonTalonList != null) {
+        jsonTalonList.remove(jsonEncode(talon));
+        prefs.setStringList(CASHED_TALONS_LIST, jsonTalonList);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 }

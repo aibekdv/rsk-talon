@@ -29,6 +29,7 @@ Future<void> init() async {
       getTalonsUseCase: sl.call(),
       getCachedTalonsUseCase: sl.call(),
       talonToCacheUseCase: sl.call(),
+      deleteTalonFromCacheUseCase: sl.call(),
     ),
   );
 
@@ -41,6 +42,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetCachedTalonsUseCase(repository: sl.call()));
   sl.registerLazySingleton(() => TalonToCacheUseCase(repository: sl.call()));
   sl.registerLazySingleton(() => ChangeLangUseCase(repository: sl.call()));
+  sl.registerLazySingleton(() => DeleteTalonFromCacheUseCase(repository: sl.call()));
 
   // REPOSITORY
   sl.registerLazySingleton<RemoteDataSource>(
