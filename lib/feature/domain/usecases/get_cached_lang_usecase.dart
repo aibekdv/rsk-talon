@@ -1,11 +1,11 @@
 import 'package:rsk_talon/feature/domain/repositories/main_repository.dart';
 
-class GetCachedLangUseCase {
+final class GetCachedLangUseCase {
   final MainRepository repository;
 
   GetCachedLangUseCase({required this.repository});
 
-  String call() {
+  String? call() {
     return repository.getCachedLanguage();
   }
 }

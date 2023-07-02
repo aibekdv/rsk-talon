@@ -4,7 +4,7 @@ import 'package:rsk_talon/core/usecase/usecase.dart';
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
 import 'package:rsk_talon/feature/domain/repositories/main_repository.dart';
 
-class GetTalonsUseCase extends UseCase<List<TalonEntity>, NoParams> {
+final class GetTalonsUseCase extends UseCase<List<TalonEntity>, NoParams> {
   final MainRepository repository;
 
   GetTalonsUseCase({required this.repository});

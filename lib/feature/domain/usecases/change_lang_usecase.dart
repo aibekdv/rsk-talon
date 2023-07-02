@@ -1,6 +1,6 @@
 import 'package:rsk_talon/feature/domain/repositories/main_repository.dart';
 
-class ChangeLangUseCase {
+final class ChangeLangUseCase {
   final MainRepository repository;
 
   ChangeLangUseCase({required this.repository});

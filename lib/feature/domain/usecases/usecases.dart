@@ -6,3 +6,4 @@ export 'get_cached_talons_usecase.dart';
 export 'get_cached_lang_usecase.dart';
 export 'change_lang_usecase.dart';
 export 'talon_to_cahce_usecase.dart';
+export 'delete_talon_from_cache_usecase.dart';
