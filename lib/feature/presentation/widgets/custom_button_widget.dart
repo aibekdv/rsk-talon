@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rsk_talon/common/common.dart';
 
 class CustomButtonWidget extends StatelessWidget {
   final VoidCallback onTap;
@@ -9,7 +10,7 @@ class CustomButtonWidget extends StatelessWidget {
   final Color? bgColor;
   final double? borderRadius;
   final Color? borderColor;
-  final bool? isLoading;
+  final bool? isSelectTime;
 
   const CustomButtonWidget({
     super.key,
@@ -18,10 +19,10 @@ class CustomButtonWidget extends StatelessWidget {
     required this.textStyle,
     this.width = 80.0,
     this.height = 35.0,
-    this.bgColor = const Color(0xff2E79BD),
+    this.bgColor,
     this.borderRadius = 15,
     this.borderColor,
-    this.isLoading = false,
+    this.isSelectTime = false,
   });
 
   @override
@@ -33,27 +34,28 @@ class CustomButtonWidget extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: bgColor,
+          color: bgColor ?? AppColors.primaryBtnColor,
           borderRadius: BorderRadius.circular(borderRadius!),
           border: borderColor != null ? Border.all(color: Colors.white) : null,
         ),
-        child: isLoading!
-            ? SizedBox(
-                width: width,
-                height: height,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(title, style: textStyle),
-                    const SizedBox(width: 20),
-                    SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(color: textStyle.color),
-                    ),
-                  ],
-                ),
+        child: isSelectTime!
+            ? Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const Icon(
+                    Icons.calendar_month_outlined,
+                    size: 35,
+                    color: AppColors.primary,
+                  ),
+                  Text(
+                    title,
+                    style: textStyle,
+                  ),
+                  const Icon(
+                    Icons.expand_more,
+                  )
+                ],
               )
             : Center(child: Text(title, style: textStyle)),
       ),

@@ -1,18 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/cli_commands.dart';
+import 'package:intl/intl.dart';
 import 'package:rsk_talon/common/common.dart';
-import 'package:rsk_talon/feature/domain/entities/branch_entity.dart';
+import 'package:rsk_talon/feature/domain/entities/talon_entity.dart';
+import 'package:rsk_talon/feature/presentation/cubit/talon/talon_cubit.dart';
+import 'package:rsk_talon/generated/l10n.dart';
 
 class TicketItemWidget extends StatelessWidget {
-  final String numberTalon;
   final String serviceType;
-  final BranchEntity branch;
+  final TalonEntity talonItem;
 
   const TicketItemWidget({
     super.key,
-    required this.numberTalon,
     required this.serviceType,
-    required this.branch,
+    required this.talonItem,
   });
 
   @override
@@ -38,10 +41,10 @@ class TicketItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "Ваш номер:",
-                    style: TextStyle(
-                      color: Colors.white,
+                  Text(
+                    "${S.of(context).yournumber}:",
+                    style: const TextStyle(
+                      color: AppColors.whiteColor,
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
                     ),
@@ -49,9 +52,9 @@ class TicketItemWidget extends StatelessWidget {
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      numberTalon.toUpperCase(),
+                      talonItem.token!.toUpperCase(),
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.whiteColor,
                         fontWeight: FontWeight.bold,
                         fontSize: 26,
                       ),
@@ -63,10 +66,10 @@ class TicketItemWidget extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              const Text(
-                "Услуги:",
-                style: TextStyle(
-                  color: Colors.white,
+              Text(
+                "${S.of(context).serviceText}:",
+                style: const TextStyle(
+                  color: AppColors.whiteColor,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
@@ -74,7 +77,7 @@ class TicketItemWidget extends StatelessWidget {
               Text(
                 serviceType,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: AppColors.whiteColor,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
@@ -83,21 +86,24 @@ class TicketItemWidget extends StatelessWidget {
               Row(
                 children: [
                   RichText(
-                    text: const TextSpan(
+                    text: TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Дата:\n',
-                          style: TextStyle(
+                          text: '${S.of(context).date}:\n',
+                          style: const TextStyle(
                             height: 1.5,
-                            color: Colors.white,
+                            color: AppColors.whiteColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         TextSpan(
-                          text: 'Сегодня',
-                          style: TextStyle(
-                            color: Colors.white,
+                          text: DateFormat('MMMMd')
+                              .format(
+                                  DateTime.parse(talonItem.appointmentDate!))
+                              .capitalize(),
+                          style: const TextStyle(
+                            color: AppColors.whiteColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                             letterSpacing: 1.2,
@@ -107,23 +113,24 @@ class TicketItemWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 40),
+                  const SizedBox(width: 60),
                   RichText(
-                    text: const TextSpan(
+                    text: TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Время:\n',
-                          style: TextStyle(
+                          text: '${S.of(context).time}:\n',
+                          style: const TextStyle(
                             height: 1.5,
-                            color: Colors.white,
+                            color: AppColors.whiteColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         TextSpan(
-                          text: '12:10',
-                          style: TextStyle(
-                            color: Colors.white,
+                          text: DateFormat('jm').format(
+                              DateTime.parse(talonItem.appointmentDate!)),
+                          style: const TextStyle(
+                            color: AppColors.whiteColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                             letterSpacing: 1.2,
@@ -143,19 +150,20 @@ class TicketItemWidget extends StatelessWidget {
                   RichText(
                     text: TextSpan(
                       children: [
-                        const TextSpan(
-                          text: 'Адрес:\n',
-                          style: TextStyle(
+                        TextSpan(
+                          text: '${S.of(context).address}\n',
+                          style: const TextStyle(
                             height: 1.5,
-                            color: Colors.white,
+                            color: AppColors.whiteColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         TextSpan(
-                          text: '${branch.city}:  ${branch.address}',
+                          text:
+                              '${talonItem.branch!.city}:  ${talonItem.branch!.address}',
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: AppColors.whiteColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                             height: 1.5,
@@ -172,7 +180,7 @@ class TicketItemWidget extends StatelessWidget {
                       );
                     },
                     icon: const Icon(Icons.location_on_outlined),
-                    color: Colors.white,
+                    color: AppColors.whiteColor,
                   ),
                 ],
               ),
@@ -184,14 +192,14 @@ class TicketItemWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 10.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
               child: SizedBox(
                 width: 180,
                 child: Text(
-                  "Осталось: 19 мин",
-                  style: TextStyle(
-                    color: Colors.white,
+                  S.of(context).remainingMin(13),
+                  style: const TextStyle(
+                    color: AppColors.whiteColor,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
@@ -205,16 +213,16 @@ class TicketItemWidget extends StatelessWidget {
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.save_alt),
-                  color: Colors.white,
+                  color: AppColors.whiteColor,
                   iconSize: 20,
                   splashRadius: 20,
                 ),
                 const SizedBox(width: 10),
                 IconButton(
                   onPressed: () {
-                    _dialogForRemoveTicket(context);
+                    _dialogForRemoveTicket(context, talon: talonItem);
                   },
-                  color: Colors.white,
+                  color: AppColors.whiteColor,
                   icon: const Icon(
                     CupertinoIcons.delete_simple,
                   ),
@@ -229,14 +237,17 @@ class TicketItemWidget extends StatelessWidget {
     );
   }
 
-  Future<void> _dialogForRemoveTicket(BuildContext context) {
+  Future<void> _dialogForRemoveTicket(
+    BuildContext context, {
+    required TalonEntity talon,
+  }) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content: const Text(
-            'Удалить талон?',
-            style: TextStyle(
+          content: Text(
+            S.of(context).deleteticket,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -248,25 +259,26 @@ class TicketItemWidget extends StatelessWidget {
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text(
-                'ОК',
-                style: TextStyle(
+              child:  Text(
+                S.of(context).yes,
+                style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
               ),
               onPressed: () {
-                Navigator.of(context).pop();
+                BlocProvider.of<TalonCubit>(context).deleteTalonItem(talon);
+                Navigator.pop(context);
               },
             ),
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text(
-                'Отменить',
-                style: TextStyle(
+              child:  Text(
+                S.of(context).cancel,
+                style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,

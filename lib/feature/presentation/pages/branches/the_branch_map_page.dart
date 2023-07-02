@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
+import 'package:rsk_talon/generated/l10n.dart';
 
 class TheBranchMapPage extends StatelessWidget {
   const TheBranchMapPage({super.key});
@@ -15,7 +16,7 @@ class TheBranchMapPage extends StatelessWidget {
               image: AssetImage('assets/images/bg.png'),
               fit: BoxFit.cover,
             ),
-            color: Color(0xff0D3584),
+            color: AppColors.primary,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,8 +38,8 @@ class TheBranchMapPage extends StatelessWidget {
               const SizedBox(
                 height: 25,
               ),
-              const CustomAppBarWidget(
-                title: 'Карта',
+              CustomAppBarWidget(
+                title: S.of(context).map,
                 centerTitle: true,
               ),
               const Padding(
@@ -50,7 +51,7 @@ class TheBranchMapPage extends StatelessWidget {
                     Text(
                       "Здесь бутет карта филиала",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.whiteColor ,
                         fontSize: 18,
                       ),
                     ),

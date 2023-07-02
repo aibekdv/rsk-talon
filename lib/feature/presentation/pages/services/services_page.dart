@@ -4,6 +4,7 @@ import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
 import 'package:rsk_talon/feature/presentation/cubit/talon/talon_cubit.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
+import 'package:rsk_talon/generated/l10n.dart';
 
 class ServicesPage extends StatefulWidget {
   final BranchEntity branchItem;
@@ -22,6 +23,8 @@ class ServicesPage extends StatefulWidget {
 }
 
 class _ServicesPageState extends State<ServicesPage> {
+  List<ServiceEntity> serviceList = [];
+
   @override
   void didChangeDependencies() {
     BlocProvider.of<TalonCubit>(context).fetchServicesFromServer();
@@ -39,7 +42,7 @@ class _ServicesPageState extends State<ServicesPage> {
               image: AssetImage('assets/images/bg.png'),
               fit: BoxFit.cover,
             ),
-            color: Color(0xff0D3584),
+            color: AppColors.primary,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,25 +63,23 @@ class _ServicesPageState extends State<ServicesPage> {
               const SizedBox(
                 height: 25,
               ),
-              const CustomAppBarWidget(
-                title: 'Выберите услугу',
+              CustomAppBarWidget(
+                title: S.of(context).seleckservis,
                 centerTitle: true,
               ),
               const SizedBox(
                 height: 60,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  'Шаг 4/5',
-                  style: TextStyle(color: Colors.white),
+                  '${S.of(context).step} 4/5',
+                  style: const TextStyle(color: Colors.white),
                 ),
               ),
               const SizedBox(height: 20),
               BlocBuilder<TalonCubit, TalonState>(
                 builder: (context, state) {
-                  List<ServiceEntity> serviceList = [];
-
                   if (state is ServiceLoading) {
                     return const Expanded(
                       child: Center(
@@ -119,7 +120,7 @@ class _ServicesPageState extends State<ServicesPage> {
                                 alignment: Alignment.center,
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: AppColors.whiteColor,
                                   borderRadius: index % 2 == 0
                                       ? const BorderRadius.only(
                                           bottomRight: Radius.circular(15),
@@ -143,11 +144,11 @@ class _ServicesPageState extends State<ServicesPage> {
                               ),
                             ),
                           )
-                        : const Center(
+                        : Center(
                             child: Text(
-                              'Services not found',
-                              style: TextStyle(
-                                color: Colors.white,
+                              S.of(context).servicesNotFound,
+                              style: const TextStyle(
+                                color: AppColors.whiteColor,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                               ),

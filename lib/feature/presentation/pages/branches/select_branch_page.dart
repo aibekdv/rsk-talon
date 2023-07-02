@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
+import 'package:rsk_talon/generated/l10n.dart';
 
 class SelectBranchPage extends StatefulWidget {
   final List<BranchEntity> branchEntity;
+  final String cityName;
 
   const SelectBranchPage({
     super.key,
     required this.branchEntity,
+    required this.cityName,
   });
 
   @override
@@ -36,7 +39,7 @@ class _SelectBranchPageState extends State<SelectBranchPage> {
               image: AssetImage('assets/images/bg.png'),
               fit: BoxFit.cover,
             ),
-            color: Color(0xff0D3584),
+            color: AppColors.primary,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,22 +56,22 @@ class _SelectBranchPageState extends State<SelectBranchPage> {
               const SizedBox(
                 height: 60,
               ),
-              const CustomAppBarWidget(title: 'Бишкек'),
+               CustomAppBarWidget(title: widget.cityName),
               const SizedBox(height: 25),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Шаг 2/5',
+                     Text(
+                      '${S.of(context).step} 2/5',
                       style: TextStyle(color: Colors.white),
                     ),
                     const SizedBox(
                       height: 15,
                     ),
                     SelectOptionWidget(
-                      title: 'Выберите филиал',
+                      title: S.of(context).selectbranch,
                       onMenuStateChange: (isOpen) {
                         isOpenDropdown = !isOpenDropdown;
                         setState(() {});

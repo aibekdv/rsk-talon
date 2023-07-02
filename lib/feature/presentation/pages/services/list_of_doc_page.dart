@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
+import 'package:rsk_talon/generated/l10n.dart';
 
 class ListOfDocPage extends StatefulWidget {
   final BranchEntity branchItem;
@@ -22,14 +23,6 @@ class ListOfDocPage extends StatefulWidget {
 }
 
 class _ListOfDocPageState extends State<ListOfDocPage> {
-  List<String> requireDocs = [
-    'паспорт;',
-    'справка о доходах;',
-    'заверенная копия трудовой книжки;',
-    'военный билет (либо приписное удостоверение);',
-    'документы, подтверждающие семейное положение.',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +34,7 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
               image: AssetImage('assets/images/bg.png'),
               fit: BoxFit.cover,
             ),
-            color: Color(0xff0D3584),
+            color: AppColors.primary,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +57,7 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
               ),
               CustomAppBarWidget(
                 title:
-                    ' ${widget.clientType} < ${widget.serviceItem.name} < Список документов',
+                    ' ${widget.clientType} < ${S.of(context).listofdocuments}',
                 centerTitle: true,
               ),
               const SizedBox(height: 30),
@@ -85,37 +78,26 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Здесь будит список документов требуемых для определенной услуги. \nНапример:',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          const SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: requireDocs
-                                  .map(
-                                    (e) => Text(
-                                      '• $e',
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
+                          Text(
+                            S
+                                .of(context)
+                                .listOfDocumentsRequiredForASpecificService,
+                            style: const TextStyle(
+                              color: AppColors.whiteColor ,
+                              fontSize: 16.0,
+                              height: 2,
                             ),
                           ),
-                          const Row(
+                          const SizedBox(height: 20),
+                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               IconButton(
-                                onPressed: null,
-                                icon: Icon(
+                                onPressed: (){},
+                                icon: const Icon(
                                   Icons.save_alt,
-                                  color: Colors.white,
+                                  color: AppColors.whiteColor ,
                                 ),
                               ),
                             ],
@@ -139,13 +121,13 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
                           ),
                         );
                       },
-                      title: 'Выбрать очередь',
+                      title: S.of(context).selectqueue,
                       width: double.infinity,
                       height: 50.0,
-                      bgColor: const Color(0xff2E79BD),
+                      bgColor: AppColors.primaryBtnColor,
                       borderRadius: 20,
                       textStyle: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.whiteColor ,
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                       ),

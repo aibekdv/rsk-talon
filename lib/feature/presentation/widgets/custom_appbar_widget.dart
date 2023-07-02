@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:rsk_talon/common/common.dart';
 
 class CustomAppBarWidget extends StatelessWidget {
   final String title;
   final bool? centerTitle;
+  final bool? isFromCreate;
 
   const CustomAppBarWidget({
     super.key,
     required this.title,
     this.centerTitle = false,
+    this.isFromCreate = false,
   });
 
   @override
@@ -20,10 +23,12 @@ class CustomAppBarWidget extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () => Navigator.pop(context),
+            onTap: isFromCreate!
+                ? () => Navigator.pushNamed(context, RouteConst.homePage)
+                : () => Navigator.pop(context),
             child: const Icon(
               Icons.arrow_back,
-              color: Colors.white,
+              color: AppColors.whiteColor ,
               size: 20,
             ),
           ),
@@ -37,7 +42,7 @@ class CustomAppBarWidget extends StatelessWidget {
                         title,
                         style: const TextStyle(
                           fontSize: 15,
-                          color: Colors.white,
+                          color: AppColors.whiteColor ,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -48,7 +53,7 @@ class CustomAppBarWidget extends StatelessWidget {
                     title,
                     style: const TextStyle(
                       fontSize: 15,
-                      color: Colors.white,
+                      color: AppColors.whiteColor ,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
+import 'package:rsk_talon/feature/presentation/cubit/cubit.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
+import 'package:rsk_talon/generated/l10n.dart';
 import 'package:star_rating/star_rating.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,6 +29,7 @@ class _HomePageState extends State<HomePage> {
   bool isOpenDropdown = false;
   List<String> cityOfList = [];
   List<BranchEntity>? branchesList;
+  bool isNotFirstVisited = false;
 
   @override
   void initState() {
@@ -57,6 +61,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    BlocProvider.of<TalonCubit>(context).getCachedTalons();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 37, 90, 166),
@@ -67,165 +77,178 @@ class _HomePageState extends State<HomePage> {
               image: AssetImage('assets/images/bg.png'),
               fit: BoxFit.cover,
             ),
-            color: Color(0xff0D3584),
+            color: AppColors.primary
           ),
-          child: Stack(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  isReviewVisible = !isReviewVisible;
-                  setState(() {});
-                },
-                child: AnimatedContainer(
-                  width: double.infinity,
-                  height: isReviewVisible ? 85 : 40,
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                    color: const Color(0xff2C92EE).withOpacity(.5),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(50.0),
-                      bottomRight: Radius.circular(50.0),
-                    ),
-                  ),
-                  duration: const Duration(milliseconds: 100),
-                  child: isReviewVisible
-                      ? SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                'Пожалуйста, оцените обслуживание в банке.',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 5),
-                              StarRating(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                between: 5,
-                                starSize: 30,
-                                color: Colors.yellow,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                length: starLength,
-                                rating: _rating,
-                                onRaitingTap: (rating) {
-                                  Future.delayed(
-                                    const Duration(seconds: 3),
-                                    () {
-                                      isReviewVisible = false;
-                                      setState(() {});
-                                    },
-                                  );
-                                  _rating = rating;
-                                  setState(() {});
-                                },
-                              ),
-                            ],
+          child: BlocBuilder<TalonCubit, TalonState>(
+            builder: (context, state) {
+              if (state is TalonCacheSuccess) {
+                state.talonList.isNotEmpty
+                    ? isNotFirstVisited = true
+                    : isNotFirstVisited = false;
+              }
+              return Stack(
+                children: [
+                  if (isNotFirstVisited == true)
+                    GestureDetector(
+                      onTap: () {
+                        isReviewVisible = !isReviewVisible;
+                        setState(() {});
+                      },
+                      child: AnimatedContainer(
+                        width: double.infinity,
+                        height: isReviewVisible ? 85 : 40,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          color: const Color(0xff2C92EE).withOpacity(.5),
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(50.0),
+                            bottomRight: Radius.circular(50.0),
                           ),
-                        )
-                      : const Center(
-                          child: Text(
-                            "Оставить отзыв",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
+                        ),
+                        duration: const Duration(milliseconds: 100),
+                        child: isReviewVisible
+                            ? SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      S.of(context).reviewText,
+                                      style: const TextStyle(
+                                        color: AppColors.whiteColor ,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const SizedBox(height: 5),
+                                    StarRating(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      between: 5,
+                                      starSize: 30,
+                                      color: Colors.yellow,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      length: starLength,
+                                      rating: _rating,
+                                      onRaitingTap: (rating) {
+                                        Future.delayed(
+                                          const Duration(seconds: 3),
+                                          () {
+                                            isReviewVisible = false;
+                                            setState(() {});
+                                          },
+                                        );
+                                        _rating = rating;
+                                        setState(() {});
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : Center(
+                                child: Text(
+                                  S.of(context).leavefeedback,
+                                  style: const TextStyle(
+                                    color: AppColors.whiteColor ,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                      ),
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 130,
+                        ),
+                        Center(
+                          child: SizedBox(
+                            height: 120,
+                            child: Image.asset(
+                              'assets/images/large_logo.png',
+                              width: 162.0,
                             ),
                           ),
                         ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 130,
-                    ),
-                    Center(
-                      child: SizedBox(
-                        height: 120,
-                        child: Image.asset(
-                          'assets/images/large_logo.png',
-                          width: 162.0,
+                        const SizedBox(
+                          height: 60,
                         ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    const Text(
-                      'Шаг 1/5',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    SelectOptionWidget(
-                      title: 'Выберите город',
-                      onMenuStateChange: (isOpen) {
-                        isOpenDropdown = !isOpenDropdown;
-                        setState(() {});
-                      },
-                      onTapItem: (value) {
-                        List<BranchEntity> listBranch = [];
-                        for (var branche in branchesList!) {
-                          if (branche.city == value) {
-                            listBranch.add(branche);
-                          }
-                        }
-                        print(value);
-                        Future.delayed(
-                          const Duration(milliseconds: 100),
-                          () {
-                            Navigator.pushNamed(
-                              context,
-                              RouteConst.selectBranchPage,
-                              arguments:
-                                  ScreenRouteArgs(branchItems: listBranch),
+                        Text(
+                          '${S.of(context).step} 1/5',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        SelectOptionWidget(
+                          title: S.of(context).selectCity,
+                          onMenuStateChange: (isOpen) {
+                            isOpenDropdown = !isOpenDropdown;
+                            setState(() {});
+                          },
+                          onTapItem: (value) {
+                            List<BranchEntity> listBranch = [];
+                            for (var branche in branchesList!) {
+                              if (branche.city == value) {
+                                listBranch.add(branche);
+                              }
+                            }
+                            Future.delayed(
+                              const Duration(milliseconds: 100),
+                              () {
+                                Navigator.pushNamed(
+                                  context,
+                                  RouteConst.selectBranchPage,
+                                  arguments: ScreenRouteArgs(
+                                    branchItems: listBranch,
+                                    cityName: value,
+                                  ),
+                                );
+                              },
                             );
                           },
-                        );
-                      },
-                      isOpenDropdown: isOpenDropdown,
-                      items: cityOfList,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "У Вас уже есть талон?",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
+                          isOpenDropdown: isOpenDropdown,
+                          items: cityOfList,
                         ),
-                        const SizedBox(width: 10),
-                        CustomButtonWidget(
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              RouteConst.myTicketsPage,
-                            );
-                          },
-                          textStyle: const TextStyle(
-                            color: Colors.white,
-                          ),
-                          title: 'Да',
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              S.of(context).doYouHaveTicket,
+                              style: const TextStyle(
+                                color: AppColors.whiteColor ,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            CustomButtonWidget(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  RouteConst.myTicketsPage,
+                                );
+                              },
+                              textStyle: const TextStyle(
+                                color: AppColors.whiteColor ,
+                              ),
+                              title: S.of(context).yes,
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-            ],
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:rsk_talon/common/common.dart';
 
 class SelectOptionWidget extends StatelessWidget {
   final Function(bool isOpen) onMenuStateChange;
@@ -44,7 +45,7 @@ class SelectOptionWidget extends StatelessWidget {
             color: Colors.grey,
           ),
         ),
-        fillColor: Colors.white,
+        fillColor: AppColors.whiteColor ,
         filled: true,
       ),
       hint: Text(
