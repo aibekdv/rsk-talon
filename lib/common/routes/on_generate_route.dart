@@ -4,8 +4,9 @@ import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/domain/entities/branch_entity.dart';
 import 'package:rsk_talon/feature/domain/entities/service_entity.dart';
 import 'package:rsk_talon/feature/presentation/pages/pages.dart';
+import 'package:rsk_talon/generated/l10n.dart';
 
-class OnGenerateRoute {
+final class OnGenerateRoute {
   static Route<dynamic> route(RouteSettings settings) {
     final args = settings.arguments as ScreenRouteArgs?;
 
@@ -18,7 +19,10 @@ class OnGenerateRoute {
         );
       case RouteConst.selectBranchPage:
         return PageTransition(
-          child: SelectBranchPage(branchEntity: args!.branchItems!),
+          child: SelectBranchPage(
+            branchEntity: args!.branchItems!,
+            cityName: args.cityName!,
+          ),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
@@ -91,18 +95,23 @@ class OnGenerateRoute {
 
 class ErrorPage extends StatelessWidget {
   final String? message;
-  const ErrorPage({super.key, this.message = 'ErrorPage'});
+  const ErrorPage({super.key, this.message});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: AppColors.primary,
       body: SafeArea(
         child: Center(
-          child: Text(
-            message.toString(),
-            style: const TextStyle(
-              color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(
+              message ?? S.of(context).errorPage,
+              style: const TextStyle(
+                color: AppColors.whiteColor,
+                height: 2,
+              ),
+              textAlign: TextAlign.center,
             ),
           ),
         ),
@@ -118,6 +127,7 @@ class ScreenRouteArgs {
   final ServiceEntity? selectServiceItem;
   final String? clientType;
   final bool? isPensioner;
+  final String? cityName;
 
   ScreenRouteArgs({
     this.branchItems,
@@ -126,5 +136,6 @@ class ScreenRouteArgs {
     this.clientType,
     this.isPensioner,
     this.selectServiceItem,
+    this.cityName,
   });
 }
