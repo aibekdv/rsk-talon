@@ -15,7 +15,7 @@ final class OnGenerateRoute {
         return PageTransition(
           child: const HomePage(),
           type: PageTransitionType.fade,
-          duration: const Duration(milliseconds: 100),
+          duration: const Duration(milliseconds: 200),
         );
       case RouteConst.selectBranchPage:
         return PageTransition(

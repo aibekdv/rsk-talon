@@ -28,3 +28,7 @@ final class BranchSuccess extends BranchState {
   @override
   List<Object> get props => [brancheList];
 }
+
+final class DownloadFileLoading extends BranchState {}
+
+final class DownloadFileSuccess extends BranchState {}

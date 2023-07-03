@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
+import 'package:rsk_talon/feature/presentation/cubit/branch/branch_cubit.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 import 'package:rsk_talon/generated/l10n.dart';
 
@@ -83,21 +85,59 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
                                 .of(context)
                                 .listOfDocumentsRequiredForASpecificService,
                             style: const TextStyle(
-                              color: AppColors.whiteColor ,
+                              color: AppColors.whiteColor,
                               fontSize: 16.0,
                               height: 2,
                             ),
                           ),
                           const SizedBox(height: 20),
-                           Row(
+                          Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               IconButton(
-                                onPressed: (){},
-                                icon: const Icon(
-                                  Icons.save_alt,
-                                  color: AppColors.whiteColor ,
+                                onPressed: () {
+                                  final files = widget.serviceItem.documents;
+                                  if (files != null && files.isNotEmpty) {
+                                    BlocProvider.of<BranchCubit>(context)
+                                        .downloadFile(
+                                      files
+                                          .map(
+                                            (e) =>
+                                                "https://rskseo.pythonanywhere.com${e.file!}",
+                                          )
+                                          .toList(),
+                                      S.of(context).allFilesDownloaded,
+                                    );
+                                  } else {
+                                    toast(
+                                      msg: S.of(context).documentFileNotFound,
+                                      isError: true,
+                                    );
+                                  }
+                                },
+                                icon: BlocBuilder<BranchCubit, BranchState>(
+                                  builder: (context, state) {
+                                    bool isLoadingDownload = false;
+                                    if (state is DownloadFileLoading) {
+                                      isLoadingDownload = true;
+                                    } else if (state is DownloadFileSuccess) {
+                                      isLoadingDownload = false;
+                                    }
+                                    return SizedBox(
+                                      width: 30,
+                                      height: 30,
+                                      child: isLoadingDownload
+                                          ? const CircularProgressIndicator(
+                                              color: Colors.white,
+                                              strokeWidth: 3.0,
+                                            )
+                                          : const Icon(
+                                              Icons.save_alt,
+                                              color: AppColors.whiteColor,
+                                            ),
+                                    );
+                                  },
                                 ),
                               ),
                             ],
@@ -127,7 +167,7 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
                       bgColor: AppColors.primaryBtnColor,
                       borderRadius: 20,
                       textStyle: const TextStyle(
-                        color: AppColors.whiteColor ,
+                        color: AppColors.whiteColor,
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                       ),

@@ -13,12 +13,6 @@ class SelectLanguagePage extends StatefulWidget {
 }
 
 class _SelectLanguagePageState extends State<SelectLanguagePage> {
-  List<Map<String, dynamic>> langs = [
-    {"title": "Кыргызча", "code": "ky", "imagePath": "assets/icons/ky.png"},
-    {"title": "Русский", "code": "ru", "imagePath": "assets/icons/ru.png"},
-    {"title": "English", "code": "en", "imagePath": "assets/icons/en.png"},
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,73 +25,78 @@ class _SelectLanguagePageState extends State<SelectLanguagePage> {
                 fit: BoxFit.cover,
               ),
               color: AppColors.primary),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 100,
-              ),
-              Center(
-                child: SizedBox(
-                  height: 120,
-                  child: Image.asset(
-                    'assets/images/large_logo.png',
-                    width: 162.0,
+          child: BlocListener<LanguageCubit, LanguageState>(
+            listener: (context, state) {
+              if (state is ChangeLanguage) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  RouteConst.homePage,
+                  (route) => false,
+                );
+              }
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 100,
+                ),
+                Center(
+                  child: SizedBox(
+                    height: 120,
+                    child: Image.asset(
+                      'assets/images/large_logo.png',
+                      width: 162.0,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    Center(
-                      child: Text(
-                        S.of(context).selectLanguageText,
-                        style: const TextStyle(
-                          color: AppColors.whiteColor,
+                const SizedBox(
+                  height: 50,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Text(
+                          S.of(context).selectLanguageText,
+                          style: const TextStyle(
+                            color: AppColors.whiteColor,
+                          ),
                         ),
                       ),
-                    ),
-                    
-                    const SizedBox(height: 20),
-
-                    SelectLangaugeItemWidget(
-                      onTap: () {
-                        BlocProvider.of<LanguageCubit>(context)
-                          .changeLanguage("ky");
-                      },
-                      iconPath: "assets/icons/ky.png",
-                      title: "Кыргызча",
-                    ),
-
-                    const SizedBox(height: 15),
-
-                    SelectLangaugeItemWidget(
-                      onTap: () {
-                        BlocProvider.of<LanguageCubit>(context)
-                          .changeLanguage("ru");
-                      },
-                      iconPath: "assets/icons/ru.png",
-                      title: "Русский",
-                    ),
-
-                    const SizedBox(height: 15),
-
-                    SelectLangaugeItemWidget(
-                      onTap: () {
-                        BlocProvider.of<LanguageCubit>(context)
-                          .changeLanguage("en");
-                      },
-                      iconPath: "assets/icons/en.png",
-                      title: "English",
-                    ),
-                  ],
+                      const SizedBox(height: 20),
+                      SelectLangaugeItemWidget(
+                        onTap: () {
+                          BlocProvider.of<LanguageCubit>(context)
+                              .changeLanguage("ky");
+                        },
+                        iconPath: "assets/icons/ky.png",
+                        title: "Кыргызча",
+                      ),
+                      const SizedBox(height: 15),
+                      SelectLangaugeItemWidget(
+                        onTap: () {
+                          BlocProvider.of<LanguageCubit>(context)
+                              .changeLanguage("ru");
+                        },
+                        iconPath: "assets/icons/ru.png",
+                        title: "Русский",
+                      ),
+                      const SizedBox(height: 15),
+                      SelectLangaugeItemWidget(
+                        onTap: () {
+                          BlocProvider.of<LanguageCubit>(context)
+                              .changeLanguage("en");
+                        },
+                        iconPath: "assets/icons/en.png",
+                        title: "English",
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

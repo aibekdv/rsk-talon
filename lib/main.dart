@@ -31,6 +31,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      const Duration(seconds: 1),
+      () => FlutterNativeSplash.remove(),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
@@ -67,23 +76,12 @@ class _MyAppState extends State<MyApp> {
             onGenerateRoute: OnGenerateRoute.route,
             routes: {
               "/": (context) {
-                return BlocBuilder<BranchCubit, BranchState>(
-                  builder: (context, state) {
-                    if (state is BranchSuccess) {
-                      FlutterNativeSplash.remove();
-                      if (di.sl<SharedPreferences>().getString("CASHED_LANG") == null) {
-                        return const SelectLanguagePage();
-                      } else {
-                        return HomePage(branchesList: state.brancheList);
-                      }
-                    } else if (state is BranchFailure) {
-                      FlutterNativeSplash.remove();
-                      return const ErrorPage();
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
-                );
+                if (di.sl<SharedPreferences>().getString("CASHED_LANG") ==
+                    null) {
+                  return const SelectLanguagePage();
+                } else {
+                  return const HomePage();
+                }
               }
             },
           );

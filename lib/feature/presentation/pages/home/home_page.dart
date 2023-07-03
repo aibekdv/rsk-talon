@@ -8,14 +8,7 @@ import 'package:rsk_talon/generated/l10n.dart';
 import 'package:star_rating/star_rating.dart';
 
 class HomePage extends StatefulWidget {
-  final bool? isGotTicket;
-  final List<BranchEntity>? branchesList;
-
-  const HomePage({
-    super.key,
-    this.isGotTicket = false,
-    this.branchesList,
-  });
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -33,25 +26,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    branchesList = widget.branchesList ?? [];
-    if (branchesList != null && branchesList!.isNotEmpty) {
-      for (var element in branchesList!) {
-        cityOfList.add(element.city!);
-      }
-      cityOfList = uniqueArray(cityOfList);
-      setState(() {});
-    }
-
+    super.initState();
     if (isReviewVisible) {
       Future.delayed(
         const Duration(seconds: 3),
         () {
-          isReviewVisible = false;
-          setState(() {});
+          setState(() {
+            isReviewVisible = false;
+          });
         },
       );
     }
-    super.initState();
   }
 
   @override
@@ -63,6 +48,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    BlocProvider.of<BranchCubit>(context).loadBranches();
     BlocProvider.of<TalonCubit>(context).getCachedTalons();
   }
 
@@ -73,12 +59,11 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Container(
           decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/bg.png'),
-              fit: BoxFit.cover,
-            ),
-            color: AppColors.primary
-          ),
+              image: DecorationImage(
+                image: AssetImage('assets/images/bg.png'),
+                fit: BoxFit.cover,
+              ),
+              color: AppColors.primary),
           child: BlocBuilder<TalonCubit, TalonState>(
             builder: (context, state) {
               if (state is TalonCacheSuccess) {
@@ -115,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                                     Text(
                                       S.of(context).reviewText,
                                       style: const TextStyle(
-                                        color: AppColors.whiteColor ,
+                                        color: AppColors.whiteColor,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -151,99 +136,133 @@ class _HomePageState extends State<HomePage> {
                                 child: Text(
                                   S.of(context).leavefeedback,
                                   style: const TextStyle(
-                                    color: AppColors.whiteColor ,
+                                    color: AppColors.whiteColor,
                                     fontSize: 14,
                                   ),
                                 ),
                               ),
                       ),
                     ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 130,
-                        ),
-                        Center(
-                          child: SizedBox(
-                            height: 120,
-                            child: Image.asset(
-                              'assets/images/large_logo.png',
-                              width: 162.0,
+                  BlocListener<BranchCubit, BranchState>(
+                    listener: (context, state) {
+                      if (state is BranchSuccess) {
+                        print("state changed");
+                        branchesList = state.brancheList;
+                        if (branchesList != null && branchesList!.isNotEmpty) {
+                          for (var element in branchesList!) {
+                            cityOfList.add(element.city!);
+                          }
+                          setState(() {
+                            cityOfList = uniqueArray(cityOfList);
+                          });
+                        }
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: cityOfList.isNotEmpty
+                            ? MainAxisAlignment.start
+                            : MainAxisAlignment.center,
+                        children: [
+                          if (cityOfList.isNotEmpty)
+                            const SizedBox(
+                              height: 130,
+                            ),
+                          Center(
+                            child: SizedBox(
+                              height: 120,
+                              child: Image.asset(
+                                'assets/images/large_logo.png',
+                                width: 162.0,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 60,
-                        ),
-                        Text(
-                          '${S.of(context).step} 1/5',
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        SelectOptionWidget(
-                          title: S.of(context).selectCity,
-                          onMenuStateChange: (isOpen) {
-                            isOpenDropdown = !isOpenDropdown;
-                            setState(() {});
-                          },
-                          onTapItem: (value) {
-                            List<BranchEntity> listBranch = [];
-                            for (var branche in branchesList!) {
-                              if (branche.city == value) {
-                                listBranch.add(branche);
-                              }
-                            }
-                            Future.delayed(
-                              const Duration(milliseconds: 100),
-                              () {
-                                Navigator.pushNamed(
-                                  context,
-                                  RouteConst.selectBranchPage,
-                                  arguments: ScreenRouteArgs(
-                                    branchItems: listBranch,
-                                    cityName: value,
+                          const SizedBox(
+                            height: 60,
+                          ),
+                          cityOfList.isNotEmpty
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${S.of(context).step} 1/5',
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    SelectOptionWidget(
+                                      title: S.of(context).selectCity,
+                                      onMenuStateChange: (isOpen) {
+                                        isOpenDropdown = !isOpenDropdown;
+                                        setState(() {});
+                                      },
+                                      onTapItem: (value) {
+                                        List<BranchEntity> listBranch = [];
+                                        for (var branche in branchesList!) {
+                                          if (branche.city == value) {
+                                            listBranch.add(branche);
+                                          }
+                                        }
+                                        Future.delayed(
+                                          const Duration(milliseconds: 100),
+                                          () {
+                                            Navigator.pushNamed(
+                                              context,
+                                              RouteConst.selectBranchPage,
+                                              arguments: ScreenRouteArgs(
+                                                branchItems: listBranch,
+                                                cityName: value,
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                      isOpenDropdown: isOpenDropdown,
+                                      items: cityOfList,
+                                    ),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          S.of(context).doYouHaveTicket,
+                                          style: const TextStyle(
+                                            color: AppColors.whiteColor,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        CustomButtonWidget(
+                                          onTap: () {
+                                            Navigator.pushNamed(
+                                              context,
+                                              RouteConst.myTicketsPage,
+                                            );
+                                          },
+                                          textStyle: const TextStyle(
+                                            color: AppColors.whiteColor,
+                                          ),
+                                          title: S.of(context).yes,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              : const Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
                                   ),
-                                );
-                              },
-                            );
-                          },
-                          isOpenDropdown: isOpenDropdown,
-                          items: cityOfList,
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              S.of(context).doYouHaveTicket,
-                              style: const TextStyle(
-                                color: AppColors.whiteColor ,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            CustomButtonWidget(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  RouteConst.myTicketsPage,
-                                );
-                              },
-                              textStyle: const TextStyle(
-                                color: AppColors.whiteColor ,
-                              ),
-                              title: S.of(context).yes,
-                            ),
-                          ],
-                        ),
-                      ],
+                                ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

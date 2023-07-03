@@ -20,6 +20,10 @@ class TicketItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DateTime dateTime = DateTime.parse(talonItem.appointmentDate!);
+    final DateTime currentDateTime = DateTime.now();
+    var res = dateTime.difference(currentDateTime);
+
     return Column(
       children: [
         Container(
@@ -172,15 +176,18 @@ class TicketItemWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {
+                  GestureDetector(
+                    onTap: () {
                       Navigator.pushNamed(
                         context,
                         RouteConst.mapBranchPage,
                       );
                     },
-                    icon: const Icon(Icons.location_on_outlined),
-                    color: AppColors.whiteColor,
+                    child: const Icon(
+                      Icons.location_on_outlined,
+                      color: Colors.white,
+                      size: 25,
+                    ),
                   ),
                 ],
               ),
@@ -197,7 +204,9 @@ class TicketItemWidget extends StatelessWidget {
               child: SizedBox(
                 width: 180,
                 child: Text(
-                  S.of(context).remainingMin(13),
+                  res.inMinutes > 0
+                      ? S.of(context).remainingMin(res.inMinutes)
+                      : S.of(context).statusText(talonItem.status.toString()),
                   style: const TextStyle(
                     color: AppColors.whiteColor,
                     fontSize: 16,
@@ -214,10 +223,8 @@ class TicketItemWidget extends StatelessWidget {
                   onPressed: () {},
                   icon: const Icon(Icons.save_alt),
                   color: AppColors.whiteColor,
-                  iconSize: 20,
-                  splashRadius: 20,
+                  iconSize: 22,
                 ),
-                const SizedBox(width: 10),
                 IconButton(
                   onPressed: () {
                     _dialogForRemoveTicket(context, talon: talonItem);
@@ -226,7 +233,7 @@ class TicketItemWidget extends StatelessWidget {
                   icon: const Icon(
                     CupertinoIcons.delete_simple,
                   ),
-                  iconSize: 20,
+                  iconSize: 22,
                   splashRadius: 20,
                 ),
               ],
@@ -259,7 +266,7 @@ class TicketItemWidget extends StatelessWidget {
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child:  Text(
+              child: Text(
                 S.of(context).yes,
                 style: const TextStyle(
                   color: Colors.black,
@@ -276,7 +283,7 @@ class TicketItemWidget extends StatelessWidget {
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child:  Text(
+              child: Text(
                 S.of(context).cancel,
                 style: const TextStyle(
                   color: Colors.black,

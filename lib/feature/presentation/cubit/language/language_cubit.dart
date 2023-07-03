@@ -15,11 +15,13 @@ class LanguageCubit extends Cubit<LanguageState> {
   }) : super(LanguageInitial());
 
   changeLanguage(String code) async {
+    emit(ChangeLanguageLoading());
     await changeLangUseCase(code);
     getCachedLanguage();
   }
 
   getCachedLanguage() async {
+    emit(ChangeLanguageLoading());
     final code = getCachedLangUseCase();
     if (code != null) {
       emit(ChangeLanguage(locale: Locale(code)));
