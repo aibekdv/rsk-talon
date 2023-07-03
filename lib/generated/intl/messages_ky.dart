@@ -22,10 +22,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(reMin) => "Калды: ${reMin} мин";
 
+  static String m1(statusText) => "Статусу: ${statusText}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "add": MessageLookupByLibrary.simpleMessage("Кошуу"),
         "address": MessageLookupByLibrary.simpleMessage("Дареги:"),
+        "allFilesDownloaded": MessageLookupByLibrary.simpleMessage(
+            "Файлдар ийгиликтүү жүктөлдү!"),
         "bankbranch": MessageLookupByLibrary.simpleMessage("Банктын филиалы"),
         "cancel": MessageLookupByLibrary.simpleMessage("Жокко чыгаруу"),
         "clientType":
@@ -36,6 +40,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Талон жок кылынсынбы?"),
         "doYouHaveTicket":
             MessageLookupByLibrary.simpleMessage("Сизде талон барбы?"),
+        "documentFileNotFound":
+            MessageLookupByLibrary.simpleMessage("Документтер табылган жок"),
         "errorPage": MessageLookupByLibrary.simpleMessage(
             "Сервер иштебей калды. \nСураныч, кийинчерээк кайра аракет кылыңыз!"),
         "friday": MessageLookupByLibrary.simpleMessage("Жума"),
@@ -45,12 +51,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "legal": MessageLookupByLibrary.simpleMessage("Юридикалык жак"),
         "listOfDocumentsRequiredForASpecificService":
             MessageLookupByLibrary.simpleMessage(
-                "Керектүү болгон документтердин тисмесин жүктөп алуу үчүн төмөндөгү баскычты басыңыз."),
+                "Керектүү болгон документтердин тизмесин жүктөп алуу үчүн төмөндөгү баскычты басыңыз."),
         "listofdocuments":
             MessageLookupByLibrary.simpleMessage("Документтер тизмеси"),
         "loadingText": MessageLookupByLibrary.simpleMessage("Жүктөлүүдө"),
         "map": MessageLookupByLibrary.simpleMessage("Карта"),
-        "minutes": MessageLookupByLibrary.simpleMessage(" 19 минут калды"),
         "monday": MessageLookupByLibrary.simpleMessage("Дүйшөмбү"),
         "mytickets": MessageLookupByLibrary.simpleMessage("Менин талондорум"),
         "next": MessageLookupByLibrary.simpleMessage("Кийинки"),
@@ -73,6 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "serviceText": MessageLookupByLibrary.simpleMessage("Кызмат"),
         "servicesNotFound":
             MessageLookupByLibrary.simpleMessage("Кызматтар табылган жок"),
+        "statusText": m1,
         "step": MessageLookupByLibrary.simpleMessage("Кадам"),
         "sunday": MessageLookupByLibrary.simpleMessage("Жекшемби"),
         "theBankDoesNotWorkAtTheTimeYouHave":

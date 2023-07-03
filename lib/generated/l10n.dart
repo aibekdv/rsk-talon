@@ -100,10 +100,10 @@ class S {
     );
   }
 
-  /// `leave feedback`
+  /// `Leave feedback`
   String get leavefeedback {
     return Intl.message(
-      'leave feedback',
+      'Leave feedback',
       name: 'leavefeedback',
       desc: '',
       args: [],
@@ -120,10 +120,10 @@ class S {
     );
   }
 
-  /// `select city`
+  /// `Select city`
   String get selectCity {
     return Intl.message(
-      'select city',
+      'Select city',
       name: 'selectCity',
       desc: '',
       args: [],
@@ -260,10 +260,10 @@ class S {
     );
   }
 
-  /// `Legal entity,`
+  /// `Legal entity`
   String get legal {
     return Intl.message(
-      'Legal entity,',
+      'Legal entity',
       name: 'legal',
       desc: '',
       args: [],
@@ -390,10 +390,10 @@ class S {
     );
   }
 
-  /// `time`
+  /// `Time`
   String get time {
     return Intl.message(
-      'time',
+      'Time',
       name: 'time',
       desc: '',
       args: [],
@@ -535,6 +535,36 @@ class S {
     return Intl.message(
       'The server is down. \nPlease try again later!',
       name: 'errorPage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status: {statusText}`
+  String statusText(Object statusText) {
+    return Intl.message(
+      'Status: $statusText',
+      name: 'statusText',
+      desc: '',
+      args: [statusText],
+    );
+  }
+
+  /// `Files uploaded successfully!`
+  String get allFilesDownloaded {
+    return Intl.message(
+      'Files uploaded successfully!',
+      name: 'allFilesDownloaded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Documents not found`
+  String get documentFileNotFound {
+    return Intl.message(
+      'Documents not found',
+      name: 'documentFileNotFound',
       desc: '',
       args: [],
     );

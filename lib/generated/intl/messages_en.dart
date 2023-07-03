@@ -22,10 +22,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(reMin) => "Remaining: ${reMin} min";
 
+  static String m1(statusText) => "Status: ${statusText}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "address": MessageLookupByLibrary.simpleMessage("Address:"),
+        "allFilesDownloaded": MessageLookupByLibrary.simpleMessage(
+            "Files uploaded successfully!"),
         "bankbranch": MessageLookupByLibrary.simpleMessage("Bank branch"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "clientType":
@@ -36,13 +40,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteticket": MessageLookupByLibrary.simpleMessage("Delete ticket?"),
         "doYouHaveTicket":
             MessageLookupByLibrary.simpleMessage("You already have a ticket?"),
+        "documentFileNotFound":
+            MessageLookupByLibrary.simpleMessage("Documents not found"),
         "errorPage": MessageLookupByLibrary.simpleMessage(
             "The server is down. \nPlease try again later!"),
         "friday": MessageLookupByLibrary.simpleMessage("Friday"),
         "hello": MessageLookupByLibrary.simpleMessage("Hello!"),
         "individual": MessageLookupByLibrary.simpleMessage("Individual"),
-        "leavefeedback": MessageLookupByLibrary.simpleMessage("leave feedback"),
-        "legal": MessageLookupByLibrary.simpleMessage("Legal entity,"),
+        "leavefeedback": MessageLookupByLibrary.simpleMessage("Leave feedback"),
+        "legal": MessageLookupByLibrary.simpleMessage("Legal entity"),
         "listOfDocumentsRequiredForASpecificService":
             MessageLookupByLibrary.simpleMessage(
                 "Click the button below to download the list of required documents."),
@@ -63,7 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "saturday": MessageLookupByLibrary.simpleMessage("Saturday"),
         "seleckservis":
             MessageLookupByLibrary.simpleMessage("Select a service"),
-        "selectCity": MessageLookupByLibrary.simpleMessage("select city"),
+        "selectCity": MessageLookupByLibrary.simpleMessage("Select city"),
         "selectLanguageText": MessageLookupByLibrary.simpleMessage(
             "Please select an interface language."),
         "selectTime": MessageLookupByLibrary.simpleMessage("Select time"),
@@ -72,6 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "serviceText": MessageLookupByLibrary.simpleMessage("Service"),
         "servicesNotFound":
             MessageLookupByLibrary.simpleMessage("Services not found"),
+        "statusText": m1,
         "step": MessageLookupByLibrary.simpleMessage("Step"),
         "sunday": MessageLookupByLibrary.simpleMessage("Sunday"),
         "theBankDoesNotWorkAtTheTimeYouHave":
@@ -80,7 +87,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "thursday": MessageLookupByLibrary.simpleMessage("Thursday"),
         "ticketCreated": MessageLookupByLibrary.simpleMessage(
             "Ticket created successfully!"),
-        "time": MessageLookupByLibrary.simpleMessage("time"),
+        "time": MessageLookupByLibrary.simpleMessage("Time"),
         "togetinline": MessageLookupByLibrary.simpleMessage(
             "Stand at the end of the queue"),
         "tuesday": MessageLookupByLibrary.simpleMessage("Tuesday"),

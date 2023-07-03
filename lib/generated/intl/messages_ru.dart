@@ -22,10 +22,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(reMin) => "Осталась: ${reMin} мин";
 
+  static String m1(statusText) => "Статус: ${statusText}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "add": MessageLookupByLibrary.simpleMessage("Добавить"),
         "address": MessageLookupByLibrary.simpleMessage("Адрес:"),
+        "allFilesDownloaded":
+            MessageLookupByLibrary.simpleMessage("Файлы успешно загружены!"),
         "bankbranch": MessageLookupByLibrary.simpleMessage("Филиал банка"),
         "cancel": MessageLookupByLibrary.simpleMessage("Отменить"),
         "clientType":
@@ -35,6 +39,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteticket": MessageLookupByLibrary.simpleMessage("Удалить талон?"),
         "doYouHaveTicket":
             MessageLookupByLibrary.simpleMessage("У вас уже есть талон?"),
+        "documentFileNotFound":
+            MessageLookupByLibrary.simpleMessage("Документы не найдены"),
         "errorPage": MessageLookupByLibrary.simpleMessage(
             "Сервер не работает. \nПожалуйста повторите попытку позже!"),
         "friday": MessageLookupByLibrary.simpleMessage("Пятница"),
@@ -49,7 +55,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Список документов"),
         "loadingText": MessageLookupByLibrary.simpleMessage("Загрузка"),
         "map": MessageLookupByLibrary.simpleMessage("Карта"),
-        "minutes": MessageLookupByLibrary.simpleMessage("Осталась 19 мин"),
         "monday": MessageLookupByLibrary.simpleMessage("Понедельник"),
         "mytickets": MessageLookupByLibrary.simpleMessage("Мои талоны"),
         "next": MessageLookupByLibrary.simpleMessage("Далее"),
@@ -70,6 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "serviceText": MessageLookupByLibrary.simpleMessage("Услуга"),
         "servicesNotFound":
             MessageLookupByLibrary.simpleMessage("Услуги не найдены"),
+        "statusText": m1,
         "step": MessageLookupByLibrary.simpleMessage("Шаг"),
         "sunday": MessageLookupByLibrary.simpleMessage("Воскресенье"),
         "theBankDoesNotWorkAtTheTimeYouHave":

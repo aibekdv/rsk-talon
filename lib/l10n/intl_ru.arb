@@ -34,7 +34,6 @@
   "yournumber": "Ваш номер",
   "date": "Дата",
   "time": "Время",
-  "minutes": "Осталась 19 мин",
   "map": "Карта",
   "deleteticket": "Удалить талон?",
   "cаncel": "Отмена",
@@ -48,5 +47,8 @@
   "serviceText": "Услуга",
   "remainingMin": "Осталась: {reMin} мин",
   "cancel": "Отменить",
-  "errorPage": "Сервер не работает. \nПожалуйста повторите попытку позже!"
+  "errorPage": "Сервер не работает. \nПожалуйста повторите попытку позже!",
+  "statusText": "Статус: {statusText}",
+  "allFilesDownloaded": "Файлы успешно загружены!",
+  "documentFileNotFound": "Документы не найдены"
 }
