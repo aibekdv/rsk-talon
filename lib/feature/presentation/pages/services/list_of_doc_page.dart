@@ -153,12 +153,14 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
                         Navigator.pushNamed(
                           context,
                           RouteConst.selectQueuePage,
+
                           arguments: ScreenRouteArgs(
                             clientType: widget.clientType,
                             isPensioner: widget.isPensioner,
                             selectBranchItem: widget.branchItem,
                             selectServiceItem: widget.serviceItem,
                           ),
+
                         );
                       },
                       title: S.of(context).selectqueue,

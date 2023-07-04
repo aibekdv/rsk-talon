@@ -413,6 +413,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.9"
+
   path:
     dependency: transitive
     description:
@@ -597,6 +598,23 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
+  qr:
+    dependency: transitive
+    description:
+      name: qr
+      sha256: "64957a3930367bf97cc211a5af99551d630f2f4625e38af10edd6b19131b64b3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
+  qr_flutter:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: ffbb276ec6ec2830ca50841a7aab9cfb4b7fb26b
+      url: "https://github.com/theyakka/qr.flutter.git"
+    source: git
+    version: "4.1.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -725,3 +743,5 @@ packages:
 sdks:
   dart: ">=3.0.2 <4.0.0"
   flutter: ">=3.10.0"
+  flutter: ">=3.7.0"
+
