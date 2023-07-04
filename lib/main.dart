@@ -7,9 +7,8 @@ import 'package:rsk_talon/common/routes/routes.dart';
 import 'package:rsk_talon/feature/presentation/cubit/cubit.dart';
 import 'package:rsk_talon/service_locator.dart' as di;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'generated/l10n.dart';
-
 import 'feature/presentation/pages/pages.dart';
+import 'generated/l10n.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();

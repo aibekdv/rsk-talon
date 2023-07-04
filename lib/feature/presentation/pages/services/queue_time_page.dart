@@ -138,25 +138,6 @@ class _QueueTimePageState extends State<QueueTimePage> {
                                   borderColor: AppColors.whiteColor,
                                 );
                               },
-=======
-                            CustomButtonWidget(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  RouteConst.myTicketsPage,
-                                  arguments:
-                                      ScreenRouteArgs(isCreatedTicket: true),
-                                );
-                              },
-                              title: 'Встать в конец очереди',
-                              textStyle: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                              ),
-                              width: double.infinity,
-                              height: 48,
-                              bgColor: Colors.transparent,
-                              borderColor: Colors.white,
                             ),
                             const SizedBox(height: 10),
                             Center(
@@ -204,18 +185,6 @@ class _QueueTimePageState extends State<QueueTimePage> {
                               }
                             : () {},
                         title: S.of(context).createaticket,
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            RouteConst.myTicketsPage,
-                            arguments: ScreenRouteArgs(isCreatedTicket: true),
-                          );
-                        },
-                        title: 'Создать талон',
-                        textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
                         width: double.infinity,
                         height: 54,
                         bgColor: !isSelectedTime

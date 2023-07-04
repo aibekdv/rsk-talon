@@ -8,5 +8,4 @@ final class RouteConst {
   static const String listOfDocPage = 'listOfDocPage';
   static const String myTicketsPage = 'myTicketsPage';
   static const String mapBranchPage = 'mapBranchPage';
-  static const String noNetworkPage = 'noNetworkPage';
 }
