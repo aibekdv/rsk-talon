@@ -1,4 +1,4 @@
-class RouteConst {
+final class RouteConst {
   static const String homePage = 'homePage';
   static const String selectBranchPage = 'selectBranchPage';
   static const String aboutBranchPage = 'aboutBranchPage';

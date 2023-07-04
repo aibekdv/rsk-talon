@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/feature/domain/entities/entities.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
+import 'package:rsk_talon/generated/l10n.dart';
 
 class SelectTypeClientPage extends StatefulWidget {
-  const SelectTypeClientPage({super.key});
+  final BranchEntity branchItem;
+
+  const SelectTypeClientPage({super.key, required this.branchItem});
 
   @override
   State<SelectTypeClientPage> createState() => _SelectTypeClientPageState();
@@ -11,10 +15,11 @@ class SelectTypeClientPage extends StatefulWidget {
 
 class _SelectTypeClientPageState extends State<SelectTypeClientPage> {
   bool isCompleted = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 37, 90, 166),
+      backgroundColor: AppColors.primary,
       body: SafeArea(
         child: Container(
           decoration: const BoxDecoration(
@@ -22,7 +27,7 @@ class _SelectTypeClientPageState extends State<SelectTypeClientPage> {
               image: AssetImage('assets/images/bg.png'),
               fit: BoxFit.cover,
             ),
-            color: Color(0xff0D3584),
+            color: AppColors.primary,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,8 +48,8 @@ class _SelectTypeClientPageState extends State<SelectTypeClientPage> {
               const SizedBox(
                 height: 25,
               ),
-              const CustomAppBarWidget(
-                title: 'Выберите тип клиента',
+               CustomAppBarWidget(
+                title:S.of(context).clientType,
                 centerTitle: true,
               ),
               const SizedBox(
@@ -55,10 +60,10 @@ class _SelectTypeClientPageState extends State<SelectTypeClientPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Шаг 3/5',
-                      style: TextStyle(
-                        color: Colors.white,
+                     Text(
+                      '${S.of(context).step} 3/5',
+                      style: const TextStyle(
+                        color: AppColors.whiteColor ,
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
@@ -73,19 +78,24 @@ class _SelectTypeClientPageState extends State<SelectTypeClientPage> {
                               Navigator.pushNamed(
                                 context,
                                 RouteConst.selectServicePage,
+                                arguments: ScreenRouteArgs(
+                                  clientType: S.of(context).legal,
+                                  isPensioner: isCompleted,
+                                  selectBranchItem: widget.branchItem,
+                                ),
                               );
                             },
-                      title: 'Юридическое лицо',
+                      title: S.of(context).legal,
                       width: double.infinity,
                       height: 70.0,
                       bgColor: isCompleted
                           ? Colors.black.withOpacity(.2)
-                          : Colors.white,
+                          : AppColors.whiteColor ,
                       borderRadius: 20,
                       textStyle: TextStyle(
                         color: isCompleted
                             ? Colors.white.withOpacity(.2)
-                            : const Color(0xff0E3584),
+                            : AppColors.primary,
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                       ),
@@ -98,15 +108,20 @@ class _SelectTypeClientPageState extends State<SelectTypeClientPage> {
                         Navigator.pushNamed(
                           context,
                           RouteConst.selectServicePage,
+                          arguments: ScreenRouteArgs(
+                            clientType: S.of(context).individual,
+                            isPensioner: isCompleted,
+                            selectBranchItem: widget.branchItem,
+                          ),
                         );
                       },
-                      title: 'Физическое лицо',
+                      title: S.of(context).individual,
                       width: double.infinity,
                       height: 70.0,
-                      bgColor: Colors.white,
+                      bgColor: AppColors.whiteColor ,
                       borderRadius: 20,
                       textStyle: const TextStyle(
-                        color: Color(0xff0E3584),
+                        color: AppColors.primary,
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                       ),
@@ -116,11 +131,11 @@ class _SelectTypeClientPageState extends State<SelectTypeClientPage> {
                       child: SizedBox(
                         width: 245,
                         child: CheckboxListTile(
-                          title: const Text(
-                            'Я пенсионер(-ка)',
-                            style: TextStyle(color: Colors.white),
+                          title:  Text(
+                            S.of(context).pensioner,
+                            style: const TextStyle(color: Colors.white),
                           ),
-                          activeColor: Colors.white,
+                          activeColor: AppColors.whiteColor ,
                           checkColor: Colors.black,
                           value: isCompleted,
                           contentPadding: const EdgeInsets.all(0),

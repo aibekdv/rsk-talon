@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rsk_talon/common/common.dart';
 
 class CustomButtonWidget extends StatelessWidget {
   final VoidCallback onTap;
@@ -9,6 +10,7 @@ class CustomButtonWidget extends StatelessWidget {
   final Color? bgColor;
   final double? borderRadius;
   final Color? borderColor;
+  final bool? isSelectTime;
 
   const CustomButtonWidget({
     super.key,
@@ -17,9 +19,10 @@ class CustomButtonWidget extends StatelessWidget {
     required this.textStyle,
     this.width = 80.0,
     this.height = 35.0,
-    this.bgColor = const Color(0xff2E79BD),
+    this.bgColor,
     this.borderRadius = 15,
     this.borderColor,
+    this.isSelectTime = false,
   });
 
   @override
@@ -31,11 +34,30 @@ class CustomButtonWidget extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: bgColor,
+          color: bgColor ?? AppColors.primaryBtnColor,
           borderRadius: BorderRadius.circular(borderRadius!),
           border: borderColor != null ? Border.all(color: Colors.white) : null,
         ),
-        child: Center(child: Text(title, style: textStyle)),
+        child: isSelectTime!
+            ? Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const Icon(
+                    Icons.calendar_month_outlined,
+                    size: 35,
+                    color: AppColors.primary,
+                  ),
+                  Text(
+                    title,
+                    style: textStyle,
+                  ),
+                  const Icon(
+                    Icons.expand_more,
+                  )
+                ],
+              )
+            : Center(child: Text(title, style: textStyle)),
       ),
     );
   }

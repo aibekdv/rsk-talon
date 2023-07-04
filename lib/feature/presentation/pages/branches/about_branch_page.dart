@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/feature/domain/entities/branch_entity.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
+import 'package:rsk_talon/generated/l10n.dart';
 
 class AboutBranchPage extends StatefulWidget {
+  final BranchEntity branchItem;
+
   const AboutBranchPage({
     super.key,
+    required this.branchItem,
   });
 
   @override
@@ -12,38 +17,38 @@ class AboutBranchPage extends StatefulWidget {
 }
 
 class _AboutBranchPageState extends State<AboutBranchPage> {
-  List<Map<String, dynamic>> schedule = [
-    {
-      'weekDay': 'Понедельник',
-      'time': '10:00-20:00',
-    },
-    {
-      'weekDay': 'Вторник',
-      'time': '10:00-20:00',
-    },
-    {
-      'weekDay': 'Среда',
-      'time': '10:00-20:00',
-    },
-    {
-      'weekDay': 'Четверг',
-      'time': '10:00-20:00',
-    },
-    {
-      'weekDay': 'Пятница',
-      'time': '10:00-20:00',
-    },
-    {
-      'weekDay': 'Суббота',
-      'time': '10:00-20:00',
-    },
-    {
-      'weekDay': 'Вскресенье',
-      'time': 'не работет',
-    },
-  ];
   @override
   Widget build(BuildContext context) {
+  List<Map<String, dynamic>> schedule = [
+    {
+      'weekDay': S.of(context).monday,
+      'time': '09:00-17:00',
+    },
+    {
+      'weekDay': S.of(context).tuesday,
+      'time': '09:00-17:00',
+    },
+    {
+      'weekDay': S.of(context).wednesday,
+      'time': '09:00-17:00',
+    },
+    {
+      'weekDay': S.of(context).thursday,
+      'time': '09:00-17:00',
+    },
+    {
+      'weekDay': S.of(context).friday,
+      'time': '09:00-17:00',
+    },
+    {
+      'weekDay': S.of(context).saturday,
+      'time': S.of(context).notOpen,
+    },
+    {
+      'weekDay': S.of(context).sunday,
+      'time': S.of(context).notOpen,
+    },
+  ];
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 37, 90, 166),
       body: SafeArea(
@@ -53,7 +58,7 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
               image: AssetImage('assets/images/bg.png'),
               fit: BoxFit.cover,
             ),
-            color: Color(0xff0D3584),
+            color: AppColors.primary,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,8 +75,8 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
               const SizedBox(
                 height: 60,
               ),
-              const CustomAppBarWidget(
-                title: 'ОАО "РСК Банк" Октябрьский филиал',
+                CustomAppBarWidget(
+                title:S.of(context).bankbranch ,
                 centerTitle: true,
               ),
               const SizedBox(height: 20),
@@ -80,13 +85,13 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Center(
+                     Center(
                       child: Text(
-                        "Адрес: 48 просп. Чуй, Бишкек",
-                        style: TextStyle(
+                        "${S.of(context).address} ${widget.branchItem.address}",
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white,
+                          color: AppColors.whiteColor ,
                         ),
                       ),
                     ),
@@ -107,14 +112,14 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
                                         Text(
                                           item['weekDay'],
                                           style: const TextStyle(
-                                            color: Colors.white,
+                                            color: AppColors.whiteColor ,
                                             fontSize: 14,
                                           ),
                                         ),
                                         Text(
                                           item['time'],
                                           style: const TextStyle(
-                                            color: Colors.white,
+                                            color: AppColors.whiteColor ,
                                             fontSize: 14,
                                           ),
                                         ),
@@ -131,11 +136,12 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
                         Navigator.pushNamed(
                           context,
                           RouteConst.selectClientTypePage,
+                          arguments: ScreenRouteArgs(selectBranchItem: widget.branchItem),
                         );
                       },
-                      title: 'Далее',
+                      title: S.of(context).next,
                       textStyle: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.whiteColor ,
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
                       ),

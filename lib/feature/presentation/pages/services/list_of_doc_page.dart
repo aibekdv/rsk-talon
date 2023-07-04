@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/feature/domain/entities/entities.dart';
+import 'package:rsk_talon/feature/presentation/cubit/branch/branch_cubit.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
+import 'package:rsk_talon/generated/l10n.dart';
 
 class ListOfDocPage extends StatefulWidget {
-  const ListOfDocPage({super.key});
+  final BranchEntity branchItem;
+  final bool isPensioner;
+  final String clientType;
+  final ServiceEntity serviceItem;
+
+  const ListOfDocPage({
+    super.key,
+    required this.branchItem,
+    required this.isPensioner,
+    required this.clientType,
+    required this.serviceItem,
+  });
 
   @override
   State<ListOfDocPage> createState() => _ListOfDocPageState();
 }
 
 class _ListOfDocPageState extends State<ListOfDocPage> {
-  List<String> requireDocs = [
-    'паспорт;',
-    'справка о доходах;',
-    'заверенная копия трудовой книжки;',
-    'военный билет (либо приписное удостоверение);',
-    'документы, подтверждающие семейное положение.',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +36,7 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
               image: AssetImage('assets/images/bg.png'),
               fit: BoxFit.cover,
             ),
-            color: Color(0xff0D3584),
+            color: AppColors.primary,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,8 +57,9 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
               const SizedBox(
                 height: 25,
               ),
-              const CustomAppBarWidget(
-                title: 'Услуга 1 < Список документов',
+              CustomAppBarWidget(
+                title:
+                    ' ${widget.clientType} < ${S.of(context).listofdocuments}',
                 centerTitle: true,
               ),
               const SizedBox(height: 30),
@@ -72,37 +80,64 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Здесь будит список документов требуемых для определенной услуги. \nНапример:',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          const SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: requireDocs
-                                  .map(
-                                    (e) => Text(
-                                      '• $e',
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
+                          Text(
+                            S
+                                .of(context)
+                                .listOfDocumentsRequiredForASpecificService,
+                            style: const TextStyle(
+                              color: AppColors.whiteColor,
+                              fontSize: 16.0,
+                              height: 2,
                             ),
                           ),
-                          const Row(
+                          const SizedBox(height: 20),
+                          Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               IconButton(
-                                onPressed: null,
-                                icon: Icon(
-                                  Icons.save_alt,
-                                  color: Colors.white,
+                                onPressed: () {
+                                  final files = widget.serviceItem.documents;
+                                  if (files != null && files.isNotEmpty) {
+                                    BlocProvider.of<BranchCubit>(context)
+                                        .downloadFile(
+                                      files
+                                          .map(
+                                            (e) =>
+                                                "https://rskseo.pythonanywhere.com${e.file!}",
+                                          )
+                                          .toList(),
+                                      S.of(context).allFilesDownloaded,
+                                    );
+                                  } else {
+                                    toast(
+                                      msg: S.of(context).documentFileNotFound,
+                                      isError: true,
+                                    );
+                                  }
+                                },
+                                icon: BlocBuilder<BranchCubit, BranchState>(
+                                  builder: (context, state) {
+                                    bool isLoadingDownload = false;
+                                    if (state is DownloadFileLoading) {
+                                      isLoadingDownload = true;
+                                    } else if (state is DownloadFileSuccess) {
+                                      isLoadingDownload = false;
+                                    }
+                                    return SizedBox(
+                                      width: 30,
+                                      height: 30,
+                                      child: isLoadingDownload
+                                          ? const CircularProgressIndicator(
+                                              color: Colors.white,
+                                              strokeWidth: 3.0,
+                                            )
+                                          : const Icon(
+                                              Icons.save_alt,
+                                              color: AppColors.whiteColor,
+                                            ),
+                                    );
+                                  },
                                 ),
                               ),
                             ],
@@ -118,15 +153,23 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
                         Navigator.pushNamed(
                           context,
                           RouteConst.selectQueuePage,
+
+                          arguments: ScreenRouteArgs(
+                            clientType: widget.clientType,
+                            isPensioner: widget.isPensioner,
+                            selectBranchItem: widget.branchItem,
+                            selectServiceItem: widget.serviceItem,
+                          ),
+
                         );
                       },
-                      title: 'Выбрать очередь',
+                      title: S.of(context).selectqueue,
                       width: double.infinity,
                       height: 50.0,
-                      bgColor: const Color(0xff2E79BD),
+                      bgColor: AppColors.primaryBtnColor,
                       borderRadius: 20,
                       textStyle: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.whiteColor,
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                       ),

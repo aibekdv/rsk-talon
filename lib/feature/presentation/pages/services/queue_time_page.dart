@@ -1,30 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/feature/domain/entities/entities.dart';
+import 'package:rsk_talon/feature/presentation/cubit/talon/talon_cubit.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
+import 'package:rsk_talon/generated/l10n.dart';
 
 class QueueTimePage extends StatefulWidget {
-  const QueueTimePage({super.key});
+  final BranchEntity branchItem;
+  final bool isPensioner;
+  final String clientType;
+  final ServiceEntity serviceItem;
+
+  const QueueTimePage({
+    super.key,
+    required this.branchItem,
+    required this.isPensioner,
+    required this.clientType,
+    required this.serviceItem,
+  });
 
   @override
   State<QueueTimePage> createState() => _QueueTimePageState();
 }
 
 class _QueueTimePageState extends State<QueueTimePage> {
-  final List numbers = List.generate(30, (index) => "Item ${++index}");
+  bool isSelectedTime = false;
+  bool isCreatedTicket = false;
+  bool isLoading = false;
+
+  DateTime currentYear = DateTime(DateTime.now().year);
+  DateTime selectedDateTime = DateTime.now();
+  late DateTime initialData;
 
   @override
   Widget build(BuildContext context) {
+    var selectedTimeFormated =
+        "${DateFormat('yMMMEd').format(selectedDateTime)} ${DateFormat('jm').format(selectedDateTime)}";
+
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 37, 90, 166),
       body: SafeArea(
         child: Container(
           decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/bg.png'),
-              fit: BoxFit.cover,
-            ),
-            color: Color(0xff0D3584),
-          ),
+              image: DecorationImage(
+                image: AssetImage('assets/images/bg.png'),
+                fit: BoxFit.cover,
+              ),
+              color: AppColors.primary),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -44,14 +67,16 @@ class _QueueTimePageState extends State<QueueTimePage> {
               const SizedBox(
                 height: 25,
               ),
-              const CustomAppBarWidget(
-                title: 'Юр.лицо < Услуга 1 < Очередь',
+              CustomAppBarWidget(
+                title:
+                    '${widget.clientType} < ${widget.serviceItem.name!.length > 9 ? "${widget.serviceItem.name!.substring(0, 10)}.." : widget.serviceItem.name} < Очередь',
                 centerTitle: true,
               ),
               const SizedBox(
                 height: 60,
               ),
-              Padding(
+              SingleChildScrollView(
+                child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,11 +87,58 @@ class _QueueTimePageState extends State<QueueTimePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'Шаг 5/5',
-                              style: TextStyle(color: Colors.white),
+                            Text(
+                              '${S.of(context).step} 5/5 ',
+                              style: const TextStyle(color: Colors.white),
                             ),
                             const SizedBox(height: 20),
+                            BlocBuilder<TalonCubit, TalonState>(
+                              builder: (context, state) {
+                                if (state is TalonLoading) {
+                                  isLoading = true;
+                                } else if (state is TalonFailure) {
+                                  isLoading = false;
+                                } else if (state is TalonSuccess) {
+                                  isCreatedTicket = true;
+                                  Future.delayed(
+                                      const Duration(milliseconds: 300), () {
+                                    if (isCreatedTicket == true) {
+                                      Navigator.pushNamed(
+                                        context,
+                                        RouteConst.myTicketsPage,
+                                        arguments: ScreenRouteArgs(
+                                          isCreatedTicket: isCreatedTicket,
+                                        ),
+                                      );
+                                    }
+                                  });
+                                }
+
+                                return CustomButtonWidget(
+                                  onTap: () {
+                                    BlocProvider.of<TalonCubit>(context)
+                                        .createNewTalon(
+                                      TalonEntity(
+                                        branch: widget.branchItem,
+                                        isPensioner: widget.isPensioner,
+                                        clientType: widget.clientType,
+                                        service: widget.serviceItem.id,
+                                      ),
+                                    );
+                                  },
+                                  title: S.of(context).togetinline,
+                                  textStyle: const TextStyle(
+                                    color: AppColors.whiteColor,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  width: double.infinity,
+                                  height: 48,
+                                  bgColor: Colors.transparent,
+                                  borderColor: AppColors.whiteColor,
+                                );
+                              },
+=======
                             CustomButtonWidget(
                               onTap: () {
                                 Navigator.pushNamed(
@@ -87,30 +159,51 @@ class _QueueTimePageState extends State<QueueTimePage> {
                               borderColor: Colors.white,
                             ),
                             const SizedBox(height: 10),
-                            const Center(
+                            Center(
                                 child: Text(
-                              "или",
-                              style: TextStyle(color: Colors.white),
+                              S.of(context).or,
+                              style: const TextStyle(color: Colors.white),
                             )),
                             const SizedBox(height: 10),
                             CustomButtonWidget(
-                              onTap: () {
-                                _dialogBuilder(context);
-                              },
-                              title: 'Выбрать время',
+                              onTap: () => _selectDate(S
+                                  .of(context)
+                                  .theBankDoesNotWorkAtTheTimeYouHave),
+                              title: isSelectedTime
+                                  ? selectedTimeFormated
+                                  : S.of(context).selectTime,
                               textStyle: const TextStyle(
-                                color: Colors.black,
+                                color: AppColors.primary,
                                 fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                overflow: TextOverflow.ellipsis,
                               ),
                               width: double.infinity,
                               height: 48,
-                              bgColor: Colors.white,
+                              bgColor: AppColors.whiteColor,
+                              isSelectTime: !isSelectedTime,
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 60),
+                      const SizedBox(height: 40),
                       CustomButtonWidget(
+                        onTap: isSelectedTime
+                            ? () {
+                                BlocProvider.of<TalonCubit>(context)
+                                    .createNewTalon(
+                                  TalonEntity(
+                                    branch: widget.branchItem,
+                                    isPensioner: widget.isPensioner,
+                                    clientType: widget.clientType,
+                                    service: widget.serviceItem.id,
+                                    appointmentDate:
+                                        selectedDateTime.toString(),
+                                  ),
+                                );
+                              }
+                            : () {},
+                        title: S.of(context).createaticket,
                         onTap: () {
                           Navigator.pushNamed(
                             context,
@@ -125,9 +218,55 @@ class _QueueTimePageState extends State<QueueTimePage> {
                         ),
                         width: double.infinity,
                         height: 54,
+                        bgColor: !isSelectedTime
+                            ? Colors.black.withOpacity(.2)
+                            : null,
+                        borderRadius: 20,
+                        textStyle: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: !isSelectedTime
+                              ? Colors.white.withOpacity(.2)
+                              : AppColors.whiteColor,
+                        ),
+                      ),
+                      BlocBuilder<TalonCubit, TalonState>(
+                        builder: (context, state) {
+                          if (state is TalonLoading) {
+                            return Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const SizedBox(height: 20),
+                                  const SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.whiteColor,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 7,
+                                  ),
+                                  Text(
+                                    S.of(context).loadingText,
+                                    style: const TextStyle(
+                                      color: AppColors.whiteColor,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                          return const SizedBox();
+                        },
                       ),
                     ],
-                  )),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -135,79 +274,70 @@ class _QueueTimePageState extends State<QueueTimePage> {
     );
   }
 
-  Future<void> _dialogBuilder(BuildContext context) {
-    return showDialog<void>(
+  bool defineSelectable(DateTime val) {
+    switch (val.weekday) {
+      case DateTime.saturday:
+        return false;
+      case DateTime.sunday:
+        return false;
+      default:
+        return true;
+    }
+  }
+
+  int daysToAdd(int todayIndex, int targetIndex) {
+    if (todayIndex < targetIndex) {
+      return targetIndex - todayIndex;
+    } else if (todayIndex > targetIndex) {
+      return 7 + targetIndex - todayIndex;
+    } else {
+      return 0;
+    }
+  }
+
+  DateTime defineInitialDate() {
+    DateTime now = DateTime.now();
+    int dayOffset = daysToAdd(now.weekday, DateTime.monday);
+    return now.add(Duration(days: dayOffset));
+  }
+
+  Future<TimeOfDay?> pickTime() {
+    return showTimePicker(
       context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Выберите время'),
-          content: const SizedBox(
-            height: 100,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Сегодня'),
-                      Text('10 00'),
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Сб, июнь 17'),
-                      Text('12 00'),
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Вс, июнь 18'),
-                      Text('11 05'),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text(
-                'ОК',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text(
-                'Отменить',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
+      initialTime: TimeOfDay.now(),
     );
+  }
+
+  Future<void> _selectDate(String errorText) async {
+    initialData = defineInitialDate();
+    final DateTime? date = await showDatePicker(
+      context: context,
+      initialDate: initialData,
+      selectableDayPredicate: defineSelectable,
+      firstDate: currentYear,
+      lastDate: DateTime(currentYear.year + 1),
+    );
+
+    if (date == null || date == selectedDateTime) return;
+
+    final TimeOfDay? time = await pickTime();
+
+    if (time == null || time == TimeOfDay.fromDateTime(selectedDateTime)) {
+      return;
+    }
+    if (time.hour < 8 || time.hour > 17) {
+      toast(msg: errorText, isError: true);
+      return;
+    }
+
+    isSelectedTime = true;
+    selectedDateTime = DateTime(
+      date.year,
+      date.month,
+      date.day,
+      time.hour,
+      time.minute,
+    );
+    setState(() {});
   }
 }

@@ -1,9 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
+import 'package:rsk_talon/generated/l10n.dart';
 
-class TheBranchMapPage extends StatelessWidget {
+class TheBranchMapPage extends StatefulWidget {
   const TheBranchMapPage({super.key});
+
+  @override
+  State<TheBranchMapPage> createState() => _TheBranchMapPageState();
+}
+
+class _TheBranchMapPageState extends State<TheBranchMapPage> {
+  final List<Marker> _markers = <Marker>[
+    Marker(
+      markerId: const MarkerId("rsk"),
+      position: kGooglePlex.target,
+    ),
+  ];
+  late GoogleMapController mapController;
+
+  static const CameraPosition kGooglePlex = CameraPosition(
+    target: LatLng(42.86923338434879, 74.61263345276244),
+    zoom: 17,
+  );
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +39,7 @@ class TheBranchMapPage extends StatelessWidget {
               image: AssetImage('assets/images/bg.png'),
               fit: BoxFit.cover,
             ),
-            color: Color(0xff0D3584),
+            color: AppColors.primary,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,16 +61,22 @@ class TheBranchMapPage extends StatelessWidget {
               const SizedBox(
                 height: 25,
               ),
-              const CustomAppBarWidget(
-                title: 'Карта',
+              CustomAppBarWidget(
+                title: S.of(context).map,
                 centerTitle: true,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [Text("Hello world!")],
+              const SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: GoogleMap(
+                  onMapCreated: _onMapCreated,
+                  initialCameraPosition: kGooglePlex,
+                  markers: Set<Marker>.of(_markers),
+                  myLocationButtonEnabled: true,
+                  minMaxZoomPreference: const MinMaxZoomPreference(0, 19),
+                  padding: const EdgeInsets.all(10),
+                  
                 ),
               ),
             ],
