@@ -244,30 +244,15 @@ class _QueueTimePageState extends State<QueueTimePage> {
   }
 
   bool defineSelectable(DateTime val) {
-    switch (val.weekday) {
-      case DateTime.saturday:
-        return false;
-      case DateTime.sunday:
-        return false;
-      default:
-        return true;
-    }
-  }
-
-  int daysToAdd(int todayIndex, int targetIndex) {
-    if (todayIndex < targetIndex) {
-      return targetIndex - todayIndex;
-    } else if (todayIndex > targetIndex) {
-      return 7 + targetIndex - todayIndex;
+    if (val.day < initialData.day) {
+      return false;
+    } else if (val.weekday == DateTime.saturday) {
+      return false;
+    } else if (val.weekday == DateTime.sunday) {
+      return false;
     } else {
-      return 0;
+      return true;
     }
-  }
-
-  DateTime defineInitialDate() {
-    DateTime now = DateTime.now();
-    int dayOffset = daysToAdd(now.weekday, DateTime.monday);
-    return now.add(Duration(days: dayOffset));
   }
 
   Future<TimeOfDay?> pickTime() {
@@ -278,7 +263,7 @@ class _QueueTimePageState extends State<QueueTimePage> {
   }
 
   Future<void> _selectDate(String errorText) async {
-    initialData = defineInitialDate();
+    initialData = DateTime.now();
     final DateTime? date = await showDatePicker(
       context: context,
       initialDate: initialData,
@@ -287,16 +272,14 @@ class _QueueTimePageState extends State<QueueTimePage> {
       lastDate: DateTime(currentYear.year + 1),
     );
 
-    if (date == null || date == selectedDateTime) return;
+    if (date == null) return;
 
     final TimeOfDay? time = await pickTime();
 
-    if (time == null || time == TimeOfDay.fromDateTime(selectedDateTime)) {
-      return;
-    }
-    if (time.hour < 8 || time.hour > 17) {
-      toast(msg: errorText, isError: true);
-      return;
+    if (time == null) return;
+
+    if (time.hour < 8 || time.hour > 16) {
+      return toast(msg: errorText, isError: true);
     }
 
     isSelectedTime = true;

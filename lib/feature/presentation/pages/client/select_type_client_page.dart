@@ -129,11 +129,12 @@ class _SelectTypeClientPageState extends State<SelectTypeClientPage> {
                     const SizedBox(height: 10),
                     Center(
                       child: SizedBox(
-                        width: 245,
+                        width: 220,
                         child: CheckboxListTile(
                           title:  Text(
                             S.of(context).pensioner,
                             style: const TextStyle(color: Colors.white),
+                            textAlign: TextAlign.center,
                           ),
                           activeColor: AppColors.whiteColor ,
                           checkColor: Colors.black,
