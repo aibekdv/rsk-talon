@@ -181,6 +181,9 @@ class TicketItemWidget extends StatelessWidget {
                       Navigator.pushNamed(
                         context,
                         RouteConst.mapBranchPage,
+                        arguments: ScreenRouteArgs(
+                          selectBranchItem: talonItem.branch,
+                        ),
                       );
                     },
                     child: const Icon(
