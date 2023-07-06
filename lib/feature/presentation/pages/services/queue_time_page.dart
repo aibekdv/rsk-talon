@@ -246,6 +246,8 @@ class _QueueTimePageState extends State<QueueTimePage> {
   bool defineSelectable(DateTime val) {
     if (val.day < initialData.day) {
       return false;
+    } else if (val.month < initialData.month) {
+      return false;
     } else if (val.weekday == DateTime.saturday) {
       return false;
     } else if (val.weekday == DateTime.sunday) {
@@ -277,6 +279,26 @@ class _QueueTimePageState extends State<QueueTimePage> {
     final TimeOfDay? time = await pickTime();
 
     if (time == null) return;
+
+    var isValidMin = time.minute < initialData.minute;
+    var isValidHour = time.hour == initialData.hour;
+    var isValidDay = date.day == initialData.day;
+
+    if (isValidDay) {
+      if (time.hour <= initialData.hour) {
+        if (isValidHour && isValidMin) {
+          return toast(
+            msg: "Пожалуйста, обратите внимание на правильность времени!",
+            isError: true,
+          );
+        } else if (time.hour < initialData.hour) {
+          return toast(
+            msg: "Пожалуйста, обратите внимание на правильность времени!",
+            isError: true,
+          );
+        }
+      }
+    }
 
     if (time.hour < 8 || time.hour > 16) {
       return toast(msg: errorText, isError: true);
