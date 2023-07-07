@@ -11,6 +11,8 @@ abstract final class LocalDataSources {
   String? getCachedLanguage();
   Future<void> changeLanguage(String code);
   Future<void> deleteTalonFromCache(TalonEntity talon);
+  Future<void> setTokenToCache(String token);
+  Future<String?> getTokenFromCache();
 }
 
 final class LocalDataSourcesImpl implements LocalDataSources {
@@ -18,6 +20,7 @@ final class LocalDataSourcesImpl implements LocalDataSources {
 
   LocalDataSourcesImpl({required this.prefs});
 
+  static const TOKEN_TALON = 'TOKEN_TALON';
   static const CASHED_LANG = 'CASHED_LANG';
   static const CASHED_TALONS_LIST = 'CASHED_TALONS_LIST';
 
@@ -59,17 +62,17 @@ final class LocalDataSourcesImpl implements LocalDataSources {
       status: talon.status,
       clientType: talon.clientType,
       clientComment: talon.clientComment,
-      ratingComment: talon.ratingComment,
       employeeComment: talon.employeeComment,
-      rating: talon.rating,
       isPensioner: talon.isPensioner,
-      serviceStart: talon.serviceStart,
-      serviceEnd: talon.serviceEnd,
       registeredAt: talon.registeredAt,
       updatedAt: talon.updatedAt,
       service: talon.service,
       branch: talon.branch,
       queue: talon.queue,
+      estimatedTimeInMin: talon.estimatedTimeInMin,
+      qrCode: talon.qrCode,
+      serviceName: talon.serviceName,
+      talonsInQueue: talon.talonsInQueue,
     ).toJson();
 
     if (jsonTalonList == null) {
@@ -98,5 +101,16 @@ final class LocalDataSourcesImpl implements LocalDataSources {
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  @override
+  Future<void> setTokenToCache(String token) async {
+    await prefs.remove(TOKEN_TALON);
+    await prefs.setString(TOKEN_TALON, token);
+  }
+
+  @override
+  Future<String?> getTokenFromCache() async {
+    return prefs.getString(TOKEN_TALON);
   }
 }

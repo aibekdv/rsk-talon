@@ -16,6 +16,11 @@ abstract final class RemoteDataSource {
   Future<List<TalonEntity>> getAllTalons();
   Future<TalonEntity> createTalon(TalonEntity talon);
   Future<void> downloadFileFromApi(List<String> url, String successMsg);
+  Future<void> sendReviewToServer({
+    required String token,
+    required int rating,
+    required String succesMsg,
+  });
 }
 
 final class RemoteDataSourceImpl implements RemoteDataSource {
@@ -23,6 +28,10 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
   final SharedPreferences prefs;
 
   RemoteDataSourceImpl({required this.dio, required this.prefs});
+
+  static const TOKEN_TALON = 'TOKEN_TALON';
+  static const CASHED_LANG = 'CASHED_LANG';
+  static const CASHED_TALONS_LIST = 'CASHED_TALONS_LIST';
 
   @override
   Future<List<BranchEntity>> getAllBranches() async {
@@ -65,7 +74,20 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
 
   @override
   Future<List<TalonEntity>> getAllTalons() async {
-    throw UnimplementedError();
+    var response = await dio.get(
+      'http://rskseo.pythonanywhere.com/talon',
+      options: Options(
+        headers: {'Content-Type': 'application/json'},
+        responseType: ResponseType.bytes,
+      ),
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final branches = json.decode(utf8.decode(response.data));
+      return branches.map<TalonEntity>((e) => TalonModel.fromJson(e)).toList();
+    } else {
+      toast(msg: response.data);
+      throw ServerExeption();
+    }
   }
 
   @override
@@ -78,7 +100,7 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
       if (talon.appointmentDate != null)
         "appointment_date": talon.appointmentDate,
     };
-    print(json.encode(postTalon));
+    
     var response = await dio.post(
       'http://rskseo.pythonanywhere.com/talon/',
       options: Options(
@@ -99,7 +121,6 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
       );
       throw ServerExeption();
     } else {
-      log(response.data);
       toast(msg: "Server failure", isError: true);
       throw ServerExeption();
     }
@@ -117,8 +138,34 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
         },
         isParallel: false,
       );
-
     }
+  }
 
+  @override
+  Future<void> sendReviewToServer({
+    required String token,
+    required int rating,
+    required String succesMsg,
+  }) async {
+    Map<String, dynamic> ratingPost = {
+      "token": token,
+      "rating": rating,
+    };
+
+    var response = await dio.post(
+      'http://rskseo.pythonanywhere.com/stats/rating/',
+      options: Options(
+        headers: {'Content-Type': 'application/json'},
+        responseType: ResponseType.bytes,
+      ),
+      data: json.encode(ratingPost),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      prefs.remove(TOKEN_TALON);
+      toast(msg: succesMsg);
+    } else if (response.statusCode == 400) {
+      log(response.data.toString());
+    }
   }
 }

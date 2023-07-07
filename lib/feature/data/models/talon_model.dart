@@ -4,22 +4,22 @@ import 'package:rsk_talon/feature/domain/entities/entities.dart';
 final class TalonModel extends TalonEntity {
   TalonModel({
     super.id,
-    required super.appointmentDate,
+    super.appointmentDate,
+    super.qrCode,
     super.token,
     super.status,
-    required super.clientType,
+    super.clientType,
     super.clientComment,
-    super.ratingComment,
     super.employeeComment,
-    super.rating,
     super.isPensioner,
-    super.serviceStart,
-    super.serviceEnd,
     super.registeredAt,
     super.updatedAt,
-    required super.service,
-    required super.branch,
+    super.service,
+    super.branch,
     super.queue,
+    super.talonsInQueue,
+    super.estimatedTimeInMin,
+    super.serviceName,
   });
 
   factory TalonModel.fromJson(Map<String, dynamic> json) {
@@ -27,21 +27,24 @@ final class TalonModel extends TalonEntity {
       id: json['id'],
       appointmentDate: json['appointment_date'],
       token: json['token'],
+      qrCode: json['qr_code'],
       status: json['status'],
       clientType: json['client_type'],
       clientComment: json['client_comment'],
-      ratingComment: json['rating_comment'],
       employeeComment: json['employee_comment'],
-      rating: json['rating'],
       isPensioner: json['is_pensioner'],
-      serviceStart: json['service_start'],
-      serviceEnd: json['service_end'],
       registeredAt: json['registered_at'],
       updatedAt: json['updated_at'],
       service: json['service'],
-      branch:
-          json['branch'] != null ? BranchModel.fromJson(json['branch']) : null,
+      branch: (json['branch'] is int)
+          ? null
+          : json['branch'] != null
+              ? BranchModel.fromJson(json['branch'])
+              : null,
       queue: json['queue'],
+      talonsInQueue: json['talons_in_queue'],
+      estimatedTimeInMin: json['estimated_time_in_min'],
+      serviceName: json['service_name'],
     );
   }
 
@@ -49,21 +52,21 @@ final class TalonModel extends TalonEntity {
     return {
       'id': id,
       'appointment_date': appointmentDate,
+      'qr_code': qrCode,
       'token': token,
       'status': status,
       'client_type': clientType,
       'client_comment': clientComment,
-      'rating_comment': ratingComment,
       'employee_comment': employeeComment,
-      'rating': rating,
       'is_pensioner': isPensioner,
-      'service_start': serviceStart,
-      'service_end': serviceEnd,
       'registered_at': registeredAt,
       'updated_at': updatedAt,
       'service': service,
       'branch': branch,
       'queue': queue,
+      'talons_in_queue': talonsInQueue,
+      'estimated_time_in_min': estimatedTimeInMin,
+      'service_name': serviceName,
     };
   }
 }

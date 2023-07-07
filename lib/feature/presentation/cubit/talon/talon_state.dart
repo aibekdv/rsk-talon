@@ -9,7 +9,9 @@ abstract class TalonState extends Equatable {
 
 final class TalonInitial extends TalonState {}
 
-final class TalonLoading extends TalonState {}
+final class TalonFromServerLoading extends TalonState {}
+
+final class TalonFromCacheLoading extends TalonState {}
 
 final class TalonFailure extends TalonState {
   final String message;
@@ -20,10 +22,19 @@ final class TalonFailure extends TalonState {
   List<Object> get props => [message];
 }
 
-final class TalonSuccess extends TalonState {
+final class TalonFromCacheSuccess extends TalonState {
   final List<TalonEntity> talonList;
 
-  const TalonSuccess({required this.talonList});
+  const TalonFromCacheSuccess({required this.talonList});
+
+  @override
+  List<Object> get props => [talonList];
+}
+
+final class TalonFromServerSuccess extends TalonState {
+  final List<TalonEntity> talonList;
+
+  const TalonFromServerSuccess({required this.talonList});
 
   @override
   List<Object> get props => [talonList];
@@ -61,4 +72,12 @@ final class TalonCacheSuccess extends TalonState {
   final List<TalonEntity> talonList;
 
   const TalonCacheSuccess({required this.talonList});
+}
+
+final class ReviewLoading extends TalonState {}
+
+final class ReviewSucces extends TalonState {
+  final String? token;
+
+  const ReviewSucces({this.token});
 }

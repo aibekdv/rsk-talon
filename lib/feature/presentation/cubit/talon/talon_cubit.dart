@@ -14,6 +14,9 @@ final class TalonCubit extends Cubit<TalonState> {
   final GetCachedTalonsUseCase getCachedTalonsUseCase;
   final TalonToCacheUseCase talonToCacheUseCase;
   final DeleteTalonFromCacheUseCase deleteTalonFromCacheUseCase;
+  final TokenToCacheUseCase setTokenToCacheUseCase;
+  final GetTokenFromCacheUseCase getTokenFromCacheUseCase;
+  final SendReviewToServerUseCase sendReviewToServerUseCase;
 
   TalonCubit({
     required this.getServicesUseCase,
@@ -22,27 +25,54 @@ final class TalonCubit extends Cubit<TalonState> {
     required this.getCachedTalonsUseCase,
     required this.talonToCacheUseCase,
     required this.deleteTalonFromCacheUseCase,
+    required this.setTokenToCacheUseCase,
+    required this.getTokenFromCacheUseCase,
+    required this.sendReviewToServerUseCase,
   }) : super(TalonInitial());
 
   fetchServicesFromServer() async {
     emit(ServiceLoading());
-    final brancheList = await getServicesUseCase(NoParams());
-    brancheList.fold(
-      (error) => emit(ServiceFailure(_mapFailureToMessage(error))),
-      (result) => emit(ServiceSuccess(serviceList: result)),
-    );
+    try {
+      final brancheList = await getServicesUseCase(NoParams());
+      brancheList.fold(
+        (error) => emit(ServiceFailure(_mapFailureToMessage(error))),
+        (result) => emit(ServiceSuccess(serviceList: result)),
+      );
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  getTalonsFromServer() async {
+    if (state is! TalonFromServerSuccess) {
+      emit(TalonFromServerLoading());
+    }
+
+    try {
+      final brancheList = await getTalonsUseCase(NoParams());
+      brancheList.fold(
+        (error) => emit(TalonFailure(_mapFailureToMessage(error))),
+        (result) => emit(TalonFromServerSuccess(talonList: result)),
+      );
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   createNewTalon(TalonEntity talon) async {
-    emit(TalonLoading());
-    final brancheList = await createTalonUseCase(talon);
-    brancheList.fold(
-      (error) => emit(TalonFailure(_mapFailureToMessage(error))),
-      (result) {
-        talonToCacheUseCase(result);
-        emit(const TalonSuccess(talonList: []));
-      },
-    );
+    emit(TalonFromCacheLoading());
+    try {
+      final brancheList = await createTalonUseCase(talon);
+      brancheList.fold(
+        (error) => emit(TalonFailure(_mapFailureToMessage(error))),
+        (result) {
+          talonToCacheUseCase(result);
+          emit(const TalonFromCacheSuccess(talonList: []));
+        },
+      );
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   getCachedTalons() async {
@@ -65,6 +95,32 @@ final class TalonCubit extends Cubit<TalonState> {
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  sendReviewToServer({
+    required String token,
+    required int rating,
+    required String successMsg,
+  }) async {
+    emit(ReviewLoading());
+    try {
+      await sendReviewToServerUseCase(
+        rating: rating,
+        succesMsg: successMsg,
+        token: token,
+      );
+      emit(ReviewSucces(token: await getTokenFromCache()));
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<String?> getTokenFromCache() async {
+    return await getTokenFromCacheUseCase();
+  }
+
+  setTokenToCache(String token) async {
+    await setTokenToCacheUseCase(token);
   }
 }
 

@@ -48,8 +48,29 @@ final class MainRepositoryImpl implements MainRepository {
       localDataSources.deleteTalonFromCache(talon);
 
   @override
-  Future<void> downloadFileFromApi(List<String> url, String serviceType) async =>
+  Future<void> downloadFileFromApi(
+          List<String> url, String serviceType) async =>
       await remoteDataSource.downloadFileFromApi(url, serviceType);
+
+  @override
+  Future<String?> getTokenFromCache() async =>
+      localDataSources.getTokenFromCache();
+
+  @override
+  Future<void> sendReviewToServer({
+    required String token,
+    required int rating,
+    required String succesMsg,
+  }) async =>
+      remoteDataSource.sendReviewToServer(
+        token: token,
+        rating: rating,
+        succesMsg: succesMsg,
+      );
+
+  @override
+  Future<void> setTokenToCache(String token) async =>
+      localDataSources.setTokenToCache(token);
 }
 
 Future<Either<Failure, List<BranchEntity>>> _getBranche(
