@@ -2,8 +2,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
@@ -11,6 +11,10 @@
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
     >
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC-6qzGpLPj6ISthh7Bx1uJknB-yFlra1c" />
 
         <activity
             android:name=".MainActivity"
@@ -34,9 +38,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCeAHDXvgkgl67iu_nhI2-y3M1IDIcqLes" />
+
 
     </application>
 </manifest>
