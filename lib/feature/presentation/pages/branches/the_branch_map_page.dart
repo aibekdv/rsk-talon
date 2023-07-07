@@ -76,7 +76,6 @@ class _TheBranchMapPageState extends State<TheBranchMapPage> {
                   myLocationButtonEnabled: true,
                   minMaxZoomPreference: const MinMaxZoomPreference(0, 19),
                   padding: const EdgeInsets.all(10),
-                  
                 ),
               ),
             ],

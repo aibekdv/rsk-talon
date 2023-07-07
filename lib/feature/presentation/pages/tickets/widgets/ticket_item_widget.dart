@@ -8,19 +8,40 @@ import 'package:rsk_talon/feature/domain/entities/talon_entity.dart';
 import 'package:rsk_talon/feature/presentation/cubit/talon/talon_cubit.dart';
 import 'package:rsk_talon/generated/l10n.dart';
 
-class TicketItemWidget extends StatelessWidget {
-  final String serviceType;
+class TicketItemWidget extends StatefulWidget {
   final TalonEntity talonItem;
+  final String status;
 
   const TicketItemWidget({
     super.key,
-    required this.serviceType,
     required this.talonItem,
+    required this.status,
   });
 
   @override
+  State<TicketItemWidget> createState() => _TicketItemWidgetState();
+}
+
+class _TicketItemWidgetState extends State<TicketItemWidget> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    Future.delayed(const Duration(seconds: 1), () {
+      String status = widget.status.toLowerCase();
+
+      if (status == 'complited' || status == 'completed') {
+        BlocProvider.of<TalonCubit>(context)
+            .setTokenToCache(widget.talonItem.token!);
+
+        BlocProvider.of<TalonCubit>(context).deleteTalonItem(widget.talonItem);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final DateTime dateTime = DateTime.parse(talonItem.appointmentDate!);
+    final DateTime dateTime = DateTime.parse(widget.talonItem.appointmentDate!);
     final DateTime currentDateTime = DateTime.now();
     var res = dateTime.difference(currentDateTime);
 
@@ -56,7 +77,7 @@ class TicketItemWidget extends StatelessWidget {
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      talonItem.token!.toUpperCase(),
+                      widget.talonItem.token!.toUpperCase(),
                       style: const TextStyle(
                         color: AppColors.whiteColor,
                         fontWeight: FontWeight.bold,
@@ -79,7 +100,7 @@ class TicketItemWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                serviceType,
+                widget.talonItem.serviceName.toString(),
                 style: const TextStyle(
                   color: AppColors.whiteColor,
                   fontSize: 14,
@@ -103,8 +124,8 @@ class TicketItemWidget extends StatelessWidget {
                         ),
                         TextSpan(
                           text: DateFormat('MMMMd')
-                              .format(
-                                  DateTime.parse(talonItem.appointmentDate!))
+                              .format(DateTime.parse(
+                                  widget.talonItem.appointmentDate!))
                               .capitalize(),
                           style: const TextStyle(
                             color: AppColors.whiteColor,
@@ -131,8 +152,8 @@ class TicketItemWidget extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: DateFormat('jm').format(
-                              DateTime.parse(talonItem.appointmentDate!)),
+                          text: DateFormat('jm').format(DateTime.parse(
+                              widget.talonItem.appointmentDate!)),
                           style: const TextStyle(
                             color: AppColors.whiteColor,
                             fontSize: 14,
@@ -165,7 +186,7 @@ class TicketItemWidget extends StatelessWidget {
                         ),
                         TextSpan(
                           text:
-                              '${talonItem.branch!.city}:  ${talonItem.branch!.address}',
+                              '${widget.talonItem.branch!.city}:  ${widget.talonItem.branch!.address}',
                           style: const TextStyle(
                             color: AppColors.whiteColor,
                             fontSize: 14,
@@ -182,7 +203,7 @@ class TicketItemWidget extends StatelessWidget {
                         context,
                         RouteConst.mapBranchPage,
                         arguments: ScreenRouteArgs(
-                          selectBranchItem: talonItem.branch,
+                          selectBranchItem: widget.talonItem.branch,
                         ),
                       );
                     },
@@ -207,9 +228,12 @@ class TicketItemWidget extends StatelessWidget {
               child: SizedBox(
                 width: 180,
                 child: Text(
-                  res.inMinutes > 0
-                      ? S.of(context).remainingMin(res.inMinutes)
-                      : S.of(context).statusText(talonItem.status.toString()),
+                  res.inSeconds > 0
+                      ? S.of(context).remainingMin(
+                            formatDurationTime(res).$1,
+                            formatDurationTime(res).$2,
+                          )
+                      : S.of(context).statusText(widget.status),
                   style: const TextStyle(
                     color: AppColors.whiteColor,
                     fontSize: 16,
@@ -230,7 +254,7 @@ class TicketItemWidget extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    _dialogForRemoveTicket(context, talon: talonItem);
+                    _dialogForRemoveTicket(context, talon: widget.talonItem);
                   },
                   color: AppColors.whiteColor,
                   icon: const Icon(
@@ -303,4 +327,10 @@ class TicketItemWidget extends StatelessWidget {
       },
     );
   }
+}
+
+(String, String) formatDurationTime(Duration duration) {
+  String twoDigits(int n) => n.toString().padLeft(2, "0");
+  String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+  return (duration.inHours.toString(), twoDigitMinutes);
 }

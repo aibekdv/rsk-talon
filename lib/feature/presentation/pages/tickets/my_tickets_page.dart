@@ -23,15 +23,15 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
   bool? isSuccess;
   late bool isEmpty;
   bool isLoading = false;
+  List<TalonEntity> talonListCached = [];
   List<TalonEntity> talonList = [];
-  List<ServiceEntity> serviceList = [];
 
   @override
   void initState() {
     super.initState();
 
     isSuccess = widget.isCreatedTicket;
-    isEmpty = talonList.isEmpty;
+    isEmpty = talonListCached.isEmpty;
     setState(() {});
 
     Future.delayed(
@@ -46,8 +46,8 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    BlocProvider.of<TalonCubit>(context).getTalonsFromServer();
     BlocProvider.of<TalonCubit>(context).getCachedTalons();
-    BlocProvider.of<TalonCubit>(context).fetchServicesFromServer();
   }
 
   @override
@@ -70,15 +70,16 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
               color: AppColors.primary),
           child: BlocBuilder<TalonCubit, TalonState>(
             builder: (context, state) {
-              if (state is TalonCacheLoading) {
+              if (state is TalonFromServerLoading) {
+                isLoading = true;
+              } else if (state is TalonFromServerSuccess) {
+                talonList = state.talonList;
+                isLoading = false;
+              } else if (state is TalonCacheLoading) {
                 isLoading = true;
               } else if (state is TalonCacheSuccess) {
-                talonList = state.talonList;
-                isEmpty = talonList.isEmpty;
-              } else if (state is ServiceLoading) {
-                isLoading = true;
-              } else if (state is ServiceSuccess) {
-                serviceList = state.serviceList;
+                talonListCached = state.talonList;
+                isEmpty = talonListCached.isEmpty;
                 isLoading = false;
               }
               return isEmpty
@@ -118,20 +119,28 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
           centerTitle: true,
           isFromCreate: widget.isCreatedTicket ?? false,
         ),
-        isLoading
-            ? const Expanded(
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.whiteColor,
-                  ),
-                ),
-              )
-            : Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                  child: ListView.separated(
-                    itemCount: talonList.length,
-                    itemBuilder: (context, index) => Padding(
+        if (isLoading)
+          const Expanded(
+            child: Center(
+              child: CircularProgressIndicator(
+                color: AppColors.whiteColor,
+              ),
+            ),
+          )
+        else
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+              child: RefreshIndicator(
+                color: AppColors.primary,
+                onRefresh: () {
+                  return BlocProvider.of<TalonCubit>(context)
+                      .getTalonsFromServer();
+                },
+                child: ListView.separated(
+                  itemCount: talonListCached.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
                       padding: EdgeInsets.fromLTRB(
                         0,
                         index == 0 ? 20 : 0,
@@ -139,25 +148,26 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
                         index == 3 ? 15 : 0,
                       ),
                       child: TicketItemWidget(
-                        talonItem: talonList[index],
-                        serviceType: serviceName(
-                              serviceList,
-                              talonList[index].service!,
-                            ) ??
-                            talonList[index].service.toString(),
+                        talonItem: talonListCached[index],
+                        status: getActiveStatus(
+                          talonList,
+                          talonListCached[index],
+                        ).toString(),
                       ),
-                    ),
-                    separatorBuilder: (context, index) => Column(
-                      children: [
-                        Divider(
-                          color: Colors.white.withOpacity(.6),
-                        ),
-                        const SizedBox(height: 10),
-                      ],
-                    ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => Column(
+                    children: [
+                      Divider(
+                        color: Colors.white.withOpacity(.6),
+                      ),
+                      const SizedBox(height: 10),
+                    ],
                   ),
                 ),
               ),
+            ),
+          ),
       ],
     );
   }
@@ -251,10 +261,11 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
   }
 }
 
-String? serviceName(List<ServiceEntity> services, int? id) {
-  if (id != null && services.isNotEmpty) {
-    var res = services.where((element) => element.id == id);
-    return res.first.name;
+String? getActiveStatus(List<TalonEntity> arr, TalonEntity? talon) {
+  for (var item in arr) {
+    if (item.id == talon?.id) {
+      return item.status.toString();
+    }
   }
   return null;
 }

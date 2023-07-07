@@ -94,11 +94,11 @@ class _QueueTimePageState extends State<QueueTimePage> {
                             const SizedBox(height: 20),
                             BlocBuilder<TalonCubit, TalonState>(
                               builder: (context, state) {
-                                if (state is TalonLoading) {
+                                if (state is TalonFromCacheLoading) {
                                   isLoading = true;
                                 } else if (state is TalonFailure) {
                                   isLoading = false;
-                                } else if (state is TalonSuccess) {
+                                } else if (state is TalonFromCacheSuccess) {
                                   isCreatedTicket = true;
                                   Future.delayed(
                                       const Duration(milliseconds: 300), () {
@@ -201,7 +201,7 @@ class _QueueTimePageState extends State<QueueTimePage> {
                       ),
                       BlocBuilder<TalonCubit, TalonState>(
                         builder: (context, state) {
-                          if (state is TalonLoading) {
+                          if (state is TalonFromCacheLoading) {
                             return Center(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -280,7 +280,7 @@ class _QueueTimePageState extends State<QueueTimePage> {
 
     if (time == null) return;
 
-    var isValidMin = time.minute < initialData.minute;
+    var isValidMin = time.minute <= initialData.minute;
     var isValidHour = time.hour == initialData.hour;
     var isValidDay = date.day == initialData.day;
 

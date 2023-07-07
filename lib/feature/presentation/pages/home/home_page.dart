@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsk_talon/common/common.dart';
@@ -22,14 +24,14 @@ class _HomePageState extends State<HomePage> {
   bool isOpenDropdown = false;
   List<String> cityOfList = [];
   List<BranchEntity>? branchesList;
-  bool isNotFirstVisited = false;
+  String? tokenCache;
 
   @override
   void initState() {
     super.initState();
     if (isReviewVisible) {
       Future.delayed(
-        const Duration(seconds: 3),
+        const Duration(seconds: 5),
         () {
           setState(() {
             isReviewVisible = false;
@@ -46,10 +48,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     super.didChangeDependencies();
     BlocProvider.of<BranchCubit>(context).loadBranches();
-    BlocProvider.of<TalonCubit>(context).getCachedTalons();
+    tokenCache = await BlocProvider.of<TalonCubit>(context).getTokenFromCache();
+
+    log(tokenCache.toString());
   }
 
   @override
@@ -66,14 +70,13 @@ class _HomePageState extends State<HomePage> {
               color: AppColors.primary),
           child: BlocBuilder<TalonCubit, TalonState>(
             builder: (context, state) {
-              if (state is TalonCacheSuccess) {
-                state.talonList.isNotEmpty
-                    ? isNotFirstVisited = true
-                    : isNotFirstVisited = false;
+              if (state is ReviewSucces) {
+                tokenCache = state.token;
               }
+
               return Stack(
                 children: [
-                  if (isNotFirstVisited == true)
+                  if (tokenCache != null)
                     GestureDetector(
                       onTap: () {
                         isReviewVisible = !isReviewVisible;
@@ -118,15 +121,27 @@ class _HomePageState extends State<HomePage> {
                                       length: starLength,
                                       rating: _rating,
                                       onRaitingTap: (rating) {
+                                        setState(() => _rating = rating);
                                         Future.delayed(
-                                          const Duration(seconds: 3),
+                                          const Duration(seconds: 2),
                                           () {
-                                            isReviewVisible = false;
-                                            setState(() {});
+                                            BlocProvider.of<TalonCubit>(context)
+                                                .sendReviewToServer(
+                                              token: tokenCache!,
+                                              rating: rating.toInt(),
+                                              successMsg: S
+                                                  .of(context)
+                                                  .thanksForYourFeedback,
+                                            );
+                                            Future.delayed(
+                                                const Duration(milliseconds: 700),
+                                                () {
+                                              setState(
+                                                () => isReviewVisible = false,
+                                              );
+                                            });
                                           },
                                         );
-                                        _rating = rating;
-                                        setState(() {});
                                       },
                                     ),
                                   ],
