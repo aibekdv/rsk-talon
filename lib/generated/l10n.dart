@@ -520,13 +520,13 @@ class S {
     );
   }
 
-  /// `Remaining: {reMin} min`
-  String remainingMin(Object reMin) {
+  /// `Remaining: {reHour} h {reMin} m`
+  String remainingMin(Object reHour, Object reMin) {
     return Intl.message(
-      'Remaining: $reMin min',
+      'Remaining: $reHour h $reMin m',
       name: 'remainingMin',
       desc: '',
-      args: [reMin],
+      args: [reHour, reMin],
     );
   }
 
@@ -565,6 +565,16 @@ class S {
     return Intl.message(
       'Documents not found',
       name: 'documentFileNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thanks for your feedback!`
+  String get thanksForYourFeedback {
+    return Intl.message(
+      'Thanks for your feedback!',
+      name: 'thanksForYourFeedback',
       desc: '',
       args: [],
     );

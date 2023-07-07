@@ -45,10 +45,11 @@
   "theBankDoesNotWorkAtTheTimeYouHave": "Банк не работает в выбранное вами время!",
   "youDontHaveTicketsYet": "У Вас пока нет талонов.",
   "serviceText": "Услуга",
-  "remainingMin": "Осталась: {reMin} мин",
+  "remainingMin": "Осталось: {reHour} ч {reMin} м",
   "cancel": "Отменить",
   "errorPage": "Сервер не работает. \nПожалуйста повторите попытку позже!",
   "statusText": "Статус: {statusText}",
   "allFilesDownloaded": "Файлы успешно загружены!",
-  "documentFileNotFound": "Документы не найдены"
+  "documentFileNotFound": "Документы не найдены",
+  "thanksForYourFeedback": "Спасибо за ваш отзыв!"
 }

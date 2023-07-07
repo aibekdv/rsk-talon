@@ -20,7 +20,7 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(reMin) => "Remaining: ${reMin} min";
+  static String m0(reHour, reMin) => "Remaining: ${reHour} h ${reMin} m";
 
   static String m1(statusText) => "Status: ${statusText}";
 
@@ -81,6 +81,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "statusText": m1,
         "step": MessageLookupByLibrary.simpleMessage("Step"),
         "sunday": MessageLookupByLibrary.simpleMessage("Sunday"),
+        "thanksForYourFeedback":
+            MessageLookupByLibrary.simpleMessage("Thanks for your feedback!"),
         "theBankDoesNotWorkAtTheTimeYouHave":
             MessageLookupByLibrary.simpleMessage(
                 "The bank does not work at the time you have chosen!"),

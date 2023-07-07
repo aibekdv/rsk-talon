@@ -45,10 +45,11 @@
   "theBankDoesNotWorkAtTheTimeYouHave": "Сиз тандаган убакытта банк иштебейт!",
   "youDontHaveTicketsYet": "Сизде азырынча эч кандай талондор жок.",
   "serviceText": "Кызмат",
-  "remainingMin": "Калды: {reMin} мин",
+  "remainingMin": "Калды: {reHour} с {reMin} м",
   "cancel": "Жокко чыгаруу",
   "errorPage": "Сервер иштебей калды. \nСураныч, кийинчерээк кайра аракет кылыңыз!",
   "statusText": "Статусу: {statusText}",
   "allFilesDownloaded": "Файлдар ийгиликтүү жүктөлдү!",
-  "documentFileNotFound": "Документтер табылган жок"
+  "documentFileNotFound": "Документтер табылган жок",
+  "thanksForYourFeedback": "Пикириңиз үчүн рахмат!"
 }

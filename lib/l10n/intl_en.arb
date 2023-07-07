@@ -46,9 +46,10 @@
   "theBankDoesNotWorkAtTheTimeYouHave": "The bank does not work at the time you have chosen!",
   "youDontHaveTicketsYet": "You don't have tickets yet.",
   "serviceText": "Service",
-  "remainingMin": "Remaining: {reMin} min",
+  "remainingMin": "Remaining: {reHour} h {reMin} m",
   "errorPage": "The server is down. \nPlease try again later!",
   "statusText": "Status: {statusText}",
   "allFilesDownloaded": "Files uploaded successfully!",
-  "documentFileNotFound": "Documents not found"
+  "documentFileNotFound": "Documents not found",
+  "thanksForYourFeedback": "Thanks for your feedback!"
 }
