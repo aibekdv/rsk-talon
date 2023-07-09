@@ -63,6 +63,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "notOpen": MessageLookupByLibrary.simpleMessage("Doesn\'t work"),
         "or": MessageLookupByLibrary.simpleMessage("or"),
         "pensioner": MessageLookupByLibrary.simpleMessage("I\'m a pensioner"),
+        "pleaseSelectADateAndTimeInTheFuture":
+            MessageLookupByLibrary.simpleMessage(
+                "Please select a date and time in the future!"),
         "remainingMin": m0,
         "reviewText": MessageLookupByLibrary.simpleMessage(
             "Please rate the service in the bank"),

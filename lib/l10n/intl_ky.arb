@@ -51,5 +51,6 @@
   "statusText": "Статусу: {statusText}",
   "allFilesDownloaded": "Файлдар ийгиликтүү жүктөлдү!",
   "documentFileNotFound": "Документтер табылган жок",
-  "thanksForYourFeedback": "Пикириңиз үчүн рахмат!"
+  "thanksForYourFeedback": "Пикириңиз үчүн рахмат!",
+  "pleaseSelectADateAndTimeInTheFuture": "Сураныч келечекте болуучу убакытты тандаңыз!"
 }

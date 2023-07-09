@@ -47,7 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hello": MessageLookupByLibrary.simpleMessage("Привет!"),
         "individual": MessageLookupByLibrary.simpleMessage("Физическое лицо"),
         "leavefeedback": MessageLookupByLibrary.simpleMessage("Оставить отзыв"),
-        "legal": MessageLookupByLibrary.simpleMessage("Юридическое лицо,"),
+        "legal": MessageLookupByLibrary.simpleMessage("Юридическое лицо"),
         "listOfDocumentsRequiredForASpecificService":
             MessageLookupByLibrary.simpleMessage(
                 "Нажмите кнопку ниже, чтобы загрузить список необходимых документов."),
@@ -61,6 +61,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "notOpen": MessageLookupByLibrary.simpleMessage("Не работает"),
         "or": MessageLookupByLibrary.simpleMessage("или"),
         "pensioner": MessageLookupByLibrary.simpleMessage("Я пенсионер(-ка)"),
+        "pleaseSelectADateAndTimeInTheFuture":
+            MessageLookupByLibrary.simpleMessage(
+                "Пожалуйста, выберите дату и время в будущем!"),
         "remainingMin": m0,
         "reviewText": MessageLookupByLibrary.simpleMessage(
             "Пожалуйста, оцените обслуживание в банке"),

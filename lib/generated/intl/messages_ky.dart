@@ -62,6 +62,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "notOpen": MessageLookupByLibrary.simpleMessage("Дем алуу"),
         "or": MessageLookupByLibrary.simpleMessage("же"),
         "pensioner": MessageLookupByLibrary.simpleMessage("Мен пенсионермин"),
+        "pleaseSelectADateAndTimeInTheFuture":
+            MessageLookupByLibrary.simpleMessage(
+                "Сураныч келечекте болуучу убакытты тандаңыз!"),
         "remainingMin": m0,
         "reviewText": MessageLookupByLibrary.simpleMessage(
             "Сураныч банктын тейлөөсүн баалаңыз"),

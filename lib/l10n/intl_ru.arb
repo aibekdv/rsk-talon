@@ -20,7 +20,7 @@
   "notOpen": "Не работает",
   "next": "Далее",
   "clientType": "Выберите тип клиента",
-  "legal": "Юридическое лицо,",
+  "legal": "Юридическое лицо",
   "individual": "Физическое лицо",
   "pensioner": "Я пенсионер(-ка)",
   "seleckservis": "Выберите услугу",
@@ -51,5 +51,6 @@
   "statusText": "Статус: {statusText}",
   "allFilesDownloaded": "Файлы успешно загружены!",
   "documentFileNotFound": "Документы не найдены",
-  "thanksForYourFeedback": "Спасибо за ваш отзыв!"
+  "thanksForYourFeedback": "Спасибо за ваш отзыв!",
+  "pleaseSelectADateAndTimeInTheFuture": "Пожалуйста, выберите дату и время в будущем!"
 }

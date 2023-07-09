@@ -51,5 +51,6 @@
   "statusText": "Status: {statusText}",
   "allFilesDownloaded": "Files uploaded successfully!",
   "documentFileNotFound": "Documents not found",
-  "thanksForYourFeedback": "Thanks for your feedback!"
+  "thanksForYourFeedback": "Thanks for your feedback!",
+  "pleaseSelectADateAndTimeInTheFuture": "Please select a date and time in the future!"
 }

@@ -579,6 +579,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Please select a date and time in the future!`
+  String get pleaseSelectADateAndTimeInTheFuture {
+    return Intl.message(
+      'Please select a date and time in the future!',
+      name: 'pleaseSelectADateAndTimeInTheFuture',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
