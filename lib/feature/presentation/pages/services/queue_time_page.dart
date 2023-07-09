@@ -34,6 +34,7 @@ class _QueueTimePageState extends State<QueueTimePage> {
   DateTime selectedDateTime = DateTime.now();
   late DateTime initialData;
 
+
   @override
   Widget build(BuildContext context) {
     var selectedTimeFormated =
@@ -147,9 +148,14 @@ class _QueueTimePageState extends State<QueueTimePage> {
                             )),
                             const SizedBox(height: 10),
                             CustomButtonWidget(
-                              onTap: () => _selectDate(S
-                                  .of(context)
-                                  .theBankDoesNotWorkAtTheTimeYouHave),
+                              onTap: () => _selectDate(
+                                S
+                                    .of(context)
+                                    .theBankDoesNotWorkAtTheTimeYouHave,
+                                S
+                                    .of(context)
+                                    .pleaseSelectADateAndTimeInTheFuture,
+                              ),
                               title: isSelectedTime
                                   ? selectedTimeFormated
                                   : S.of(context).selectTime,
@@ -244,33 +250,38 @@ class _QueueTimePageState extends State<QueueTimePage> {
   }
 
   bool defineSelectable(DateTime val) {
-    if (val.day < initialData.day) {
+    DateTime now = DateTime.now();
+    if (val.isBefore(now)) {
       return false;
-    } else if (val.month < initialData.month) {
-      return false;
-    } else if (val.weekday == DateTime.saturday) {
-      return false;
-    } else if (val.weekday == DateTime.sunday) {
+    } else if (val.weekday == DateTime.saturday ||
+        val.weekday == DateTime.sunday) {
       return false;
     } else {
       return true;
     }
   }
 
-  Future<TimeOfDay?> pickTime() {
+  Future<TimeOfDay?> pickTime() async {
     return showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
     );
   }
 
-  Future<void> _selectDate(String errorText) async {
-    initialData = DateTime.now();
+  Future<void> _selectDate(
+    String errorText,
+    String isBeforeTimeErrorText,
+  ) async {
+    DateTime initialDate = DateTime.now();
+    while (!defineSelectable(initialDate)) {
+      initialDate = initialDate.add(const Duration(days: 1));
+    }
+
     final DateTime? date = await showDatePicker(
       context: context,
-      initialDate: initialData,
+      initialDate: initialDate,
       selectableDayPredicate: defineSelectable,
-      firstDate: currentYear,
+      firstDate: DateTime(currentYear.year),
       lastDate: DateTime(currentYear.year + 1),
     );
 
@@ -280,38 +291,30 @@ class _QueueTimePageState extends State<QueueTimePage> {
 
     if (time == null) return;
 
-    var isValidMin = time.minute <= initialData.minute;
-    var isValidHour = time.hour == initialData.hour;
-    var isValidDay = date.day == initialData.day;
-
-    if (isValidDay) {
-      if (time.hour <= initialData.hour) {
-        if (isValidHour && isValidMin) {
-          return toast(
-            msg: "Пожалуйста, обратите внимание на правильность времени!",
-            isError: true,
-          );
-        } else if (time.hour < initialData.hour) {
-          return toast(
-            msg: "Пожалуйста, обратите внимание на правильность времени!",
-            isError: true,
-          );
-        }
-      }
-    }
-
-    if (time.hour < 8 || time.hour > 16) {
-      return toast(msg: errorText, isError: true);
-    }
-
-    isSelectedTime = true;
-    selectedDateTime = DateTime(
+    DateTime selectedDateTime = DateTime(
       date.year,
       date.month,
       date.day,
       time.hour,
       time.minute,
     );
-    setState(() {});
+
+    if (selectedDateTime.isBefore(DateTime.now())) {
+      toast(
+        msg: isBeforeTimeErrorText,
+        isError: true,
+      );
+      return;
+    }
+
+    if (time.hour < 8 || time.hour > 16) {
+      toast(msg: errorText, isError: true);
+      return;
+    }
+
+    setState(() {
+      isSelectedTime = true;
+      this.selectedDateTime = selectedDateTime;
+    });
   }
 }

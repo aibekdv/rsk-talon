@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/core/core.dart';
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
 import 'package:rsk_talon/feature/domain/usecases/usecases.dart';
@@ -111,7 +112,7 @@ final class TalonCubit extends Cubit<TalonState> {
       );
       emit(ReviewSucces(token: await getTokenFromCache()));
     } catch (e) {
-      debugPrint(e.toString());
+      toast(msg:e.toString(),isError: true);
     }
   }
 
