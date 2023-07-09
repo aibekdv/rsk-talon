@@ -34,7 +34,6 @@ class _QueueTimePageState extends State<QueueTimePage> {
   DateTime selectedDateTime = DateTime.now();
   late DateTime initialData;
 
-
   @override
   Widget build(BuildContext context) {
     var selectedTimeFormated =
@@ -250,15 +249,10 @@ class _QueueTimePageState extends State<QueueTimePage> {
   }
 
   bool defineSelectable(DateTime val) {
-    DateTime now = DateTime.now();
-    if (val.isBefore(now)) {
+    if (val.weekday == DateTime.saturday || val.weekday == DateTime.sunday) {
       return false;
-    } else if (val.weekday == DateTime.saturday ||
-        val.weekday == DateTime.sunday) {
-      return false;
-    } else {
-      return true;
     }
+    return val.isAfter(DateTime.now().subtract(const Duration(days: 1)));
   }
 
   Future<TimeOfDay?> pickTime() async {
