@@ -1,26 +1,34 @@
+import 'package:rsk_talon/feature/data/models/models.dart';
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
 
-final class DocModel extends DocEntity {
+class DocModel extends DocEntity {
   DocModel({
-    super.file,
-    super.id,
-    super.name,
-    super.required,
+    required super.file,
+    required super.id,
+    required super.name,
+    required super.required,
+    required super.langNames,
   });
 
-  DocModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    file = json['file'];
-    required = json['required'];
+  factory DocModel.fromJson(Map<String, dynamic> json) {
+    return DocModel(
+      id: json['id'],
+      name: json['name'],
+      file: json['file'],
+      required: json['required'],
+      langNames: List.from(json['lang_name'] ?? [])
+          .map((e) => LangModel.fromJson(e))
+          .toList(),
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['file'] = file;
-    data['required'] = required;
-    return data;
+    return {
+      'id': id,
+      'name': name,
+      'file': file,
+      'required': required,
+      'lang_name': langNames,
+    };
   }
 }
