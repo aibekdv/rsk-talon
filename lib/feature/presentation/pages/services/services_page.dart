@@ -24,10 +24,12 @@ class ServicesPage extends StatefulWidget {
 
 class _ServicesPageState extends State<ServicesPage> {
   List<ServiceEntity> serviceList = [];
+  String? lang;
 
   @override
   void didChangeDependencies() {
     BlocProvider.of<TalonCubit>(context).fetchServicesFromServer();
+    lang = Localizations.localeOf(context).languageCode;
     super.didChangeDependencies();
   }
 
@@ -132,7 +134,8 @@ class _ServicesPageState extends State<ServicesPage> {
                                         ),
                                 ),
                                 child: Text(
-                                  serviceList[index].name!,
+                                  getServiceLangText(serviceList[index], lang!)
+                                      .toString(),
                                   style: const TextStyle(
                                     color: Color(0xff0E3584),
                                     fontSize: 16,
@@ -163,4 +166,13 @@ class _ServicesPageState extends State<ServicesPage> {
       ),
     );
   }
+}
+
+String? getServiceLangText(ServiceEntity data, String codeLang) {
+  for (var langName in data.langNames!) {
+    if (langName.lang == codeLang) {
+      return langName.text;
+    }
+  }
+  return null;
 }

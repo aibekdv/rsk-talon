@@ -34,10 +34,22 @@ class _QueueTimePageState extends State<QueueTimePage> {
   DateTime selectedDateTime = DateTime.now();
   late DateTime initialData;
 
+  String? languageCode;
+  String ?topServiceTitle;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    languageCode = Localizations.localeOf(context).languageCode;
+    topServiceTitle = widget.serviceItem.langNames?.firstWhere((element) => element.lang == languageCode).text;
+  }
+
   @override
   Widget build(BuildContext context) {
     var selectedTimeFormated =
         "${DateFormat('yMMMEd').format(selectedDateTime)} ${DateFormat('jm').format(selectedDateTime)}";
+
+    
 
     return Scaffold(
       body: SafeArea(
@@ -69,7 +81,7 @@ class _QueueTimePageState extends State<QueueTimePage> {
               ),
               CustomAppBarWidget(
                 title:
-                    '${widget.clientType} < ${widget.serviceItem.name!.length > 9 ? "${widget.serviceItem.name!.substring(0, 10)}.." : widget.serviceItem.name} < Очередь',
+                    '${widget.clientType} < ${topServiceTitle!.length > 9 ? "${topServiceTitle!.substring(0, 10)}.." : topServiceTitle} < ${S.of(context).queueText}',
                 centerTitle: true,
               ),
               const SizedBox(

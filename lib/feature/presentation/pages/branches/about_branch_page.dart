@@ -3,6 +3,7 @@ import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/domain/entities/branch_entity.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 import 'package:rsk_talon/generated/l10n.dart';
+import 'package:translit/translit.dart';
 
 class AboutBranchPage extends StatefulWidget {
   final BranchEntity branchItem;
@@ -19,36 +20,36 @@ class AboutBranchPage extends StatefulWidget {
 class _AboutBranchPageState extends State<AboutBranchPage> {
   @override
   Widget build(BuildContext context) {
-  List<Map<String, dynamic>> schedule = [
-    {
-      'weekDay': S.of(context).monday,
-      'time': '09:00-17:00',
-    },
-    {
-      'weekDay': S.of(context).tuesday,
-      'time': '09:00-17:00',
-    },
-    {
-      'weekDay': S.of(context).wednesday,
-      'time': '09:00-17:00',
-    },
-    {
-      'weekDay': S.of(context).thursday,
-      'time': '09:00-17:00',
-    },
-    {
-      'weekDay': S.of(context).friday,
-      'time': '09:00-17:00',
-    },
-    {
-      'weekDay': S.of(context).saturday,
-      'time': S.of(context).notOpen,
-    },
-    {
-      'weekDay': S.of(context).sunday,
-      'time': S.of(context).notOpen,
-    },
-  ];
+    List<Map<String, dynamic>> schedule = [
+      {
+        'weekDay': S.of(context).monday,
+        'time': '09:00-17:00',
+      },
+      {
+        'weekDay': S.of(context).tuesday,
+        'time': '09:00-17:00',
+      },
+      {
+        'weekDay': S.of(context).wednesday,
+        'time': '09:00-17:00',
+      },
+      {
+        'weekDay': S.of(context).thursday,
+        'time': '09:00-17:00',
+      },
+      {
+        'weekDay': S.of(context).friday,
+        'time': '09:00-17:00',
+      },
+      {
+        'weekDay': S.of(context).saturday,
+        'time': S.of(context).notOpen,
+      },
+      {
+        'weekDay': S.of(context).sunday,
+        'time': S.of(context).notOpen,
+      },
+    ];
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 37, 90, 166),
       body: SafeArea(
@@ -75,8 +76,8 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
               const SizedBox(
                 height: 60,
               ),
-                CustomAppBarWidget(
-                title:S.of(context).bankbranch ,
+              CustomAppBarWidget(
+                title: S.of(context).bankbranch,
                 centerTitle: true,
               ),
               const SizedBox(height: 20),
@@ -85,13 +86,13 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     Center(
+                    Center(
                       child: Text(
-                        "${S.of(context).address} ${widget.branchItem.address}",
+                        "${S.of(context).address} ${Translit().toTranslit(source: widget.branchItem.address!)}",
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: AppColors.whiteColor ,
+                          color: AppColors.whiteColor,
                         ),
                       ),
                     ),
@@ -112,14 +113,14 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
                                         Text(
                                           item['weekDay'],
                                           style: const TextStyle(
-                                            color: AppColors.whiteColor ,
+                                            color: AppColors.whiteColor,
                                             fontSize: 14,
                                           ),
                                         ),
                                         Text(
                                           item['time'],
                                           style: const TextStyle(
-                                            color: AppColors.whiteColor ,
+                                            color: AppColors.whiteColor,
                                             fontSize: 14,
                                           ),
                                         ),
@@ -136,12 +137,13 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
                         Navigator.pushNamed(
                           context,
                           RouteConst.selectClientTypePage,
-                          arguments: ScreenRouteArgs(selectBranchItem: widget.branchItem),
+                          arguments: ScreenRouteArgs(
+                              selectBranchItem: widget.branchItem),
                         );
                       },
                       title: S.of(context).next,
                       textStyle: const TextStyle(
-                        color: AppColors.whiteColor ,
+                        color: AppColors.whiteColor,
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
                       ),

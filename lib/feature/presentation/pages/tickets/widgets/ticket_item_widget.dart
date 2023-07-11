@@ -7,6 +7,7 @@ import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/domain/entities/talon_entity.dart';
 import 'package:rsk_talon/feature/presentation/cubit/talon/talon_cubit.dart';
 import 'package:rsk_talon/generated/l10n.dart';
+import 'package:translit/translit.dart';
 
 class TicketItemWidget extends StatefulWidget {
   final TalonEntity talonItem;
@@ -33,8 +34,6 @@ class _TicketItemWidgetState extends State<TicketItemWidget> {
       if (status == 'complited' || status == 'completed') {
         BlocProvider.of<TalonCubit>(context)
             .setTokenToCache(widget.talonItem.token!);
-
-        BlocProvider.of<TalonCubit>(context).deleteTalonItem(widget.talonItem);
       }
     });
   }
@@ -44,6 +43,7 @@ class _TicketItemWidgetState extends State<TicketItemWidget> {
     final DateTime dateTime = DateTime.parse(widget.talonItem.appointmentDate!);
     final DateTime currentDateTime = DateTime.now();
     var res = dateTime.difference(currentDateTime);
+    String langCode = Localizations.localeOf(context).languageCode;
 
     return Column(
       children: [
@@ -186,7 +186,7 @@ class _TicketItemWidgetState extends State<TicketItemWidget> {
                         ),
                         TextSpan(
                           text:
-                              '${widget.talonItem.branch!.city}:  ${widget.talonItem.branch!.address}',
+                              '${langCode == 'en' ? Translit().toTranslit(source: widget.talonItem.branch!.city!) : widget.talonItem.branch!.city}:  ${langCode == 'en' ? Translit().toTranslit(source: widget.talonItem.branch!.address!) : widget.talonItem.branch!.address}',
                           style: const TextStyle(
                             color: AppColors.whiteColor,
                             fontSize: 14,

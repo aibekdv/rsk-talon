@@ -8,6 +8,7 @@ import 'package:rsk_talon/feature/presentation/cubit/cubit.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 import 'package:rsk_talon/generated/l10n.dart';
 import 'package:star_rating/star_rating.dart';
+import 'package:translit/translit.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   List<String> cityOfList = [];
   List<BranchEntity>? branchesList;
   String? tokenCache;
+  String? langCode;
 
   @override
   void initState() {
@@ -52,6 +54,7 @@ class _HomePageState extends State<HomePage> {
     super.didChangeDependencies();
     BlocProvider.of<BranchCubit>(context).loadBranches();
     tokenCache = await BlocProvider.of<TalonCubit>(context).getTokenFromCache();
+    langCode = Localizations.localeOf(context).languageCode;
 
     log(tokenCache.toString());
   }
@@ -134,8 +137,8 @@ class _HomePageState extends State<HomePage> {
                                                   .thanksForYourFeedback,
                                             );
                                             Future.delayed(
-                                                const Duration(milliseconds: 700),
-                                                () {
+                                                const Duration(
+                                                    milliseconds: 700), () {
                                               setState(
                                                 () => isReviewVisible = false,
                                               );
@@ -168,6 +171,14 @@ class _HomePageState extends State<HomePage> {
                             cityOfList.add(element.city!);
                           }
                           setState(() {
+                            if (langCode! == "en") {
+                              cityOfList = uniqueArray(cityOfList)
+                                  .map(
+                                    (e) => Translit().toTranslit(source: e),
+                                  )
+                                  .toList();
+                            }
+
                             cityOfList = uniqueArray(cityOfList);
                           });
                         }
@@ -219,7 +230,9 @@ class _HomePageState extends State<HomePage> {
                                       onTapItem: (value) {
                                         List<BranchEntity> listBranch = [];
                                         for (var branche in branchesList!) {
-                                          if (branche.city == value) {
+                                          if (branche.city ==
+                                              Translit()
+                                                  .unTranslit(source: value)) {
                                             listBranch.add(branche);
                                           }
                                         }

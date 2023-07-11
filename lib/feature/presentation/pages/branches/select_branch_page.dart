@@ -3,6 +3,7 @@ import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 import 'package:rsk_talon/generated/l10n.dart';
+import 'package:translit/translit.dart';
 
 class SelectBranchPage extends StatefulWidget {
   final List<BranchEntity> branchEntity;
@@ -24,7 +25,9 @@ class _SelectBranchPageState extends State<SelectBranchPage> {
 
   @override
   void initState() {
-    brachesOfBank = widget.branchEntity.map((e) => e.address!).toList();
+    brachesOfBank = widget.branchEntity
+        .map((e) => Translit().toTranslit(source: e.address!))
+        .toList();
     super.initState();
   }
 
@@ -56,16 +59,16 @@ class _SelectBranchPageState extends State<SelectBranchPage> {
               const SizedBox(
                 height: 60,
               ),
-               CustomAppBarWidget(title: widget.cityName),
+              CustomAppBarWidget(title: widget.cityName),
               const SizedBox(height: 25),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     Text(
+                    Text(
                       '${S.of(context).step} 2/5',
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(
                       height: 15,
@@ -79,7 +82,8 @@ class _SelectBranchPageState extends State<SelectBranchPage> {
                       onTapItem: (value) {
                         late BranchEntity listBranch;
                         for (var branche in widget.branchEntity) {
-                          if (branche.address == value) {
+                          if (branche.address ==
+                              Translit().unTranslit(source: value)) {
                             listBranch = BranchEntity(
                               address: branche.address,
                               city: branche.city,

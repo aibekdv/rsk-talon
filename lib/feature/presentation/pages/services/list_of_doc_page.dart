@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/feature/data/models/models.dart';
 import 'package:rsk_talon/feature/domain/entities/entities.dart';
-import 'package:rsk_talon/feature/presentation/cubit/branch/branch_cubit.dart';
 import 'package:rsk_talon/feature/presentation/widgets/widgets.dart';
 import 'package:rsk_talon/generated/l10n.dart';
 
@@ -25,6 +24,14 @@ class ListOfDocPage extends StatefulWidget {
 }
 
 class _ListOfDocPageState extends State<ListOfDocPage> {
+  String? lang;
+
+  @override
+  void didChangeDependencies() {
+    lang = Localizations.localeOf(context).languageCode;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,67 +88,38 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            S
+                            "${S
                                 .of(context)
-                                .listOfDocumentsRequiredForASpecificService,
+                                .listOfDocumentsRequiredForASpecificService}:",
                             style: const TextStyle(
                               color: AppColors.whiteColor,
                               fontSize: 16.0,
                               height: 2,
                             ),
                           ),
-                          const SizedBox(height: 20),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  final files = widget.serviceItem.documents;
-                                  if (files != null && files.isNotEmpty) {
-                                    BlocProvider.of<BranchCubit>(context)
-                                        .downloadFile(
-                                      files
-                                          .map(
-                                            (e) =>
-                                                "https://rskseo.pythonanywhere.com${e.file!}",
-                                          )
-                                          .toList(),
-                                      S.of(context).allFilesDownloaded,
-                                    );
-                                  } else {
-                                    toast(
-                                      msg: S.of(context).documentFileNotFound,
-                                      isError: true,
-                                    );
-                                  }
-                                },
-                                icon: BlocBuilder<BranchCubit, BranchState>(
-                                  builder: (context, state) {
-                                    bool isLoadingDownload = false;
-                                    if (state is DownloadFileLoading) {
-                                      isLoadingDownload = true;
-                                    } else if (state is DownloadFileSuccess) {
-                                      isLoadingDownload = false;
-                                    }
-                                    return SizedBox(
-                                      width: 30,
-                                      height: 30,
-                                      child: isLoadingDownload
-                                          ? const CircularProgressIndicator(
-                                              color: Colors.white,
-                                              strokeWidth: 3.0,
-                                            )
-                                          : const Icon(
-                                              Icons.save_alt,
-                                              color: AppColors.whiteColor,
-                                            ),
-                                    );
-                                  },
-                                ),
+                          if (widget.serviceItem.documents != null)
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 10),
+                                  ...widget.serviceItem.documents!.map(
+                                    (e) => Text(
+                                      "• ${getLangText(e.langNames!, lang!)}",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          )
+                            ),
                         ],
                       ),
                     ),
@@ -181,4 +159,13 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
       ),
     );
   }
+}
+
+String? getLangText(List<LangModel> langNameList, String lang) {
+  for (var item in langNameList) {
+    if (item.lang == lang) {
+      return item.text;
+    }
+  }
+  return null;
 }
