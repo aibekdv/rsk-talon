@@ -16,7 +16,6 @@ Future<void> init() async {
   sl.registerFactory(
     () => BranchCubit(
       getAllBranches: sl(),
-      downloadFileFromApi: sl(),
     ),
   );
 
@@ -50,7 +49,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetCachedTalonsUseCase(repository: sl()));
   sl.registerLazySingleton(() => TalonToCacheUseCase(repository: sl()));
   sl.registerLazySingleton(() => ChangeLangUseCase(repository: sl()));
-  sl.registerLazySingleton(() => DownloadFileFromApi(repository: sl()));
   sl.registerLazySingleton(() => DeleteTalonFromCacheUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetTokenFromCacheUseCase(repository: sl()));
   sl.registerLazySingleton(() => TokenToCacheUseCase(repository: sl()));

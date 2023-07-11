@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_file_downloader/flutter_file_downloader.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/core/core.dart';
 import 'package:rsk_talon/feature/data/models/models.dart';
@@ -15,7 +13,6 @@ abstract final class RemoteDataSource {
   Future<List<ServiceEntity>> getAllServices();
   Future<List<TalonEntity>> getAllTalons();
   Future<TalonEntity> createTalon(TalonEntity talon);
-  Future<void> downloadFileFromApi(List<String> url, String successMsg);
   Future<void> sendReviewToServer({
     required String token,
     required int rating,
@@ -100,7 +97,7 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
       if (talon.appointmentDate != null)
         "appointment_date": talon.appointmentDate,
     };
-    
+
     var response = await dio.post(
       'http://rskseo.pythonanywhere.com/talon/',
       options: Options(
@@ -123,21 +120,6 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
     } else {
       toast(msg: "Server failure", isError: true);
       throw ServerExeption();
-    }
-  }
-
-  @override
-  Future<void> downloadFileFromApi(List<String> url, String successMsg) async {
-    await Permission.storage.request();
-    var status = await Permission.storage.status;
-    if (status.isGranted) {
-      await FileDownloader.downloadFiles(
-        urls: url,
-        onAllDownloaded: () {
-          toast(msg: successMsg);
-        },
-        isParallel: false,
-      );
     }
   }
 

@@ -12,7 +12,6 @@ abstract class MainRepository {
   Future<void> changeLanguage(String code);
   Future<void> deleteTalonFromCache(TalonEntity talon);
   void talonToCache(TalonEntity talon);
-  Future<void> downloadFileFromApi(List<String> url, String successMsg);
   Future<void> setTokenToCache(String token);
   Future<String?> getTokenFromCache();
   Future<void> sendReviewToServer({

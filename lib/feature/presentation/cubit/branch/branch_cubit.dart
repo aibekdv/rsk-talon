@@ -8,11 +8,9 @@ part 'branch_state.dart';
 
 final class BranchCubit extends Cubit<BranchState> {
   final GetAllBranches getAllBranches;
-  final DownloadFileFromApi downloadFileFromApi;
 
   BranchCubit({
     required this.getAllBranches,
-    required this.downloadFileFromApi,
   }) : super(BranchInitial());
 
   loadBranches() async {
@@ -22,12 +20,6 @@ final class BranchCubit extends Cubit<BranchState> {
       (error) => emit(BranchFailure(_mapFailureToMessage(error))),
       (result) => emit(BranchSuccess(result)),
     );
-  }
-
-  downloadFile(List<String> url, String successMsg) async {
-    emit(DownloadFileLoading());
-    await downloadFileFromApi(url, successMsg);
-    emit(DownloadFileSuccess());
   }
 
   _mapFailureToMessage(Failure failure) {

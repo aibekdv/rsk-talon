@@ -47,10 +47,6 @@ final class MainRepositoryImpl implements MainRepository {
   Future<void> deleteTalonFromCache(TalonEntity talon) async =>
       localDataSources.deleteTalonFromCache(talon);
 
-  @override
-  Future<void> downloadFileFromApi(
-          List<String> url, String serviceType) async =>
-      await remoteDataSource.downloadFileFromApi(url, serviceType);
 
   @override
   Future<String?> getTokenFromCache() async =>
