@@ -470,10 +470,10 @@ class S {
     );
   }
 
-  /// `Click the button below to download the list of required documents.`
+  /// `List of documents required for the service you have chosen`
   String get listOfDocumentsRequiredForASpecificService {
     return Intl.message(
-      'Click the button below to download the list of required documents.',
+      'List of documents required for the service you have chosen',
       name: 'listOfDocumentsRequiredForASpecificService',
       desc: '',
       args: [],
@@ -585,6 +585,16 @@ class S {
     return Intl.message(
       'Please select a date and time in the future!',
       name: 'pleaseSelectADateAndTimeInTheFuture',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Queue`
+  String get queueText {
+    return Intl.message(
+      'Queue',
+      name: 'queueText',
       desc: '',
       args: [],
     );

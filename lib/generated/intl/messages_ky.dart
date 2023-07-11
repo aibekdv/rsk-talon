@@ -51,7 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "legal": MessageLookupByLibrary.simpleMessage("Юридикалык жак"),
         "listOfDocumentsRequiredForASpecificService":
             MessageLookupByLibrary.simpleMessage(
-                "Керектүү болгон документтердин тизмесин жүктөп алуу үчүн төмөндөгү баскычты басыңыз."),
+                "Сиз тандаган кызмат үчүн керектүү болгон документтердин тизмеси"),
         "listofdocuments":
             MessageLookupByLibrary.simpleMessage("Документтер тизмеси"),
         "loadingText": MessageLookupByLibrary.simpleMessage("Жүктөлүүдө"),
@@ -65,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseSelectADateAndTimeInTheFuture":
             MessageLookupByLibrary.simpleMessage(
                 "Сураныч келечекте болуучу убакытты тандаңыз!"),
+        "queueText": MessageLookupByLibrary.simpleMessage("Кезек"),
         "remainingMin": m0,
         "reviewText": MessageLookupByLibrary.simpleMessage(
             "Сураныч банктын тейлөөсүн баалаңыз"),

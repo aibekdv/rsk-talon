@@ -40,7 +40,7 @@
   "add": "Добавить",
   "ticketCreated": "Талон успешно создан!",
   "servicesNotFound": "Услуги не найдены",
-  "listOfDocumentsRequiredForASpecificService": "Нажмите кнопку ниже, чтобы загрузить список необходимых документов.",
+  "listOfDocumentsRequiredForASpecificService": "Список документов, необходимых для выбранной вами услуги",
   "loadingText": "Загрузка",
   "theBankDoesNotWorkAtTheTimeYouHave": "Банк не работает в выбранное вами время!",
   "youDontHaveTicketsYet": "У Вас пока нет талонов.",
@@ -52,5 +52,6 @@
   "allFilesDownloaded": "Файлы успешно загружены!",
   "documentFileNotFound": "Документы не найдены",
   "thanksForYourFeedback": "Спасибо за ваш отзыв!",
-  "pleaseSelectADateAndTimeInTheFuture": "Пожалуйста, выберите дату и время в будущем!"
+  "pleaseSelectADateAndTimeInTheFuture": "Пожалуйста, выберите дату и время в будущем!",
+  "queueText": "Очередь"
 }

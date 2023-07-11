@@ -50,7 +50,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "legal": MessageLookupByLibrary.simpleMessage("Юридическое лицо"),
         "listOfDocumentsRequiredForASpecificService":
             MessageLookupByLibrary.simpleMessage(
-                "Нажмите кнопку ниже, чтобы загрузить список необходимых документов."),
+                "Список документов, необходимых для выбранной вами услуги"),
         "listofdocuments":
             MessageLookupByLibrary.simpleMessage("Список документов"),
         "loadingText": MessageLookupByLibrary.simpleMessage("Загрузка"),
@@ -64,6 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseSelectADateAndTimeInTheFuture":
             MessageLookupByLibrary.simpleMessage(
                 "Пожалуйста, выберите дату и время в будущем!"),
+        "queueText": MessageLookupByLibrary.simpleMessage("Очередь"),
         "remainingMin": m0,
         "reviewText": MessageLookupByLibrary.simpleMessage(
             "Пожалуйста, оцените обслуживание в банке"),

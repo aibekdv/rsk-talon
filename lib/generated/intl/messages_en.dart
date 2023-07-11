@@ -51,7 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "legal": MessageLookupByLibrary.simpleMessage("Legal entity"),
         "listOfDocumentsRequiredForASpecificService":
             MessageLookupByLibrary.simpleMessage(
-                "Click the button below to download the list of required documents."),
+                "List of documents required for the service you have chosen"),
         "listofdocuments":
             MessageLookupByLibrary.simpleMessage("List of Documents"),
         "loadingText": MessageLookupByLibrary.simpleMessage("Loading"),
@@ -66,6 +66,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseSelectADateAndTimeInTheFuture":
             MessageLookupByLibrary.simpleMessage(
                 "Please select a date and time in the future!"),
+        "queueText": MessageLookupByLibrary.simpleMessage("Queue"),
         "remainingMin": m0,
         "reviewText": MessageLookupByLibrary.simpleMessage(
             "Please rate the service in the bank"),

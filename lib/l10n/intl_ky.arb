@@ -40,7 +40,7 @@
   "add": "Кошуу",
   "ticketCreated": "Талон ийгиликтүү  түзүлдү.",
   "servicesNotFound": "Кызматтар табылган жок",
-  "listOfDocumentsRequiredForASpecificService": "Керектүү болгон документтердин тизмесин жүктөп алуу үчүн төмөндөгү баскычты басыңыз.",
+  "listOfDocumentsRequiredForASpecificService": "Сиз тандаган кызмат үчүн керектүү болгон документтердин тизмеси",
   "loadingText": "Жүктөлүүдө",
   "theBankDoesNotWorkAtTheTimeYouHave": "Сиз тандаган убакытта банк иштебейт!",
   "youDontHaveTicketsYet": "Сизде азырынча эч кандай талондор жок.",
@@ -52,5 +52,6 @@
   "allFilesDownloaded": "Файлдар ийгиликтүү жүктөлдү!",
   "documentFileNotFound": "Документтер табылган жок",
   "thanksForYourFeedback": "Пикириңиз үчүн рахмат!",
-  "pleaseSelectADateAndTimeInTheFuture": "Сураныч келечекте болуучу убакытты тандаңыз!"
+  "pleaseSelectADateAndTimeInTheFuture": "Сураныч келечекте болуучу убакытты тандаңыз!",
+  "queueText": "Кезек"
 }

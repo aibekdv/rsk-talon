@@ -41,7 +41,7 @@
   "add": "Add",
   "ticketCreated": "Ticket created successfully!",
   "servicesNotFound": "Services not found",
-  "listOfDocumentsRequiredForASpecificService": "Click the button below to download the list of required documents.",
+  "listOfDocumentsRequiredForASpecificService": "List of documents required for the service you have chosen",
   "loadingText": "Loading",
   "theBankDoesNotWorkAtTheTimeYouHave": "The bank does not work at the time you have chosen!",
   "youDontHaveTicketsYet": "You don't have tickets yet.",
@@ -52,5 +52,6 @@
   "allFilesDownloaded": "Files uploaded successfully!",
   "documentFileNotFound": "Documents not found",
   "thanksForYourFeedback": "Thanks for your feedback!",
-  "pleaseSelectADateAndTimeInTheFuture": "Please select a date and time in the future!"
+  "pleaseSelectADateAndTimeInTheFuture": "Please select a date and time in the future!",
+  "queueText": "Queue"
 }
