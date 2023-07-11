@@ -28,7 +28,6 @@ dependencies:
         sdk: flutter
   intl: ^0.18.0
   dio: ^5.2.1+1
-  flutter_file_downloader: ^1.1.2
   permission_handler: ^10.4.1
   google_maps_flutter: ^2.3.1
 
