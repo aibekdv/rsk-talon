@@ -30,6 +30,7 @@ dependencies:
   dio: ^5.2.1+1
   permission_handler: ^10.4.1
   google_maps_flutter: ^2.3.1
+  translit: ^2.0.1
 
 dev_dependencies:
   flutter_test:
