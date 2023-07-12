@@ -34,7 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancel": MessageLookupByLibrary.simpleMessage("Отменить"),
         "clientType":
             MessageLookupByLibrary.simpleMessage("Выберите тип клиента"),
-        "createaticket": MessageLookupByLibrary.simpleMessage("Создат талон"),
+        "createaticket": MessageLookupByLibrary.simpleMessage("Создать талон"),
         "date": MessageLookupByLibrary.simpleMessage("Дата"),
         "deleteticket": MessageLookupByLibrary.simpleMessage("Удалить талон?"),
         "doYouHaveTicket":
