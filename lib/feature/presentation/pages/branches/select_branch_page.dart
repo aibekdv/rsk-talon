@@ -22,13 +22,24 @@ class SelectBranchPage extends StatefulWidget {
 class _SelectBranchPageState extends State<SelectBranchPage> {
   List<String>? brachesOfBank;
   bool isOpenDropdown = false;
+   String? langCode;
 
   @override
   void initState() {
     brachesOfBank = widget.branchEntity
-        .map((e) => Translit().toTranslit(source: e.address!))
+        .map(
+          (e) => langCode !=null && langCode == "en"
+              ? Translit().toTranslit(source: e.address!)
+              : e.address!,
+        )
         .toList();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    langCode = Localizations.localeOf(context).languageCode;
+    super.didChangeDependencies();
   }
 
   @override
