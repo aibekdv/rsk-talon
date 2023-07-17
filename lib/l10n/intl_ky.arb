@@ -53,5 +53,6 @@
   "documentFileNotFound": "Документтер табылган жок",
   "thanksForYourFeedback": "Пикириңиз үчүн рахмат!",
   "pleaseSelectADateAndTimeInTheFuture": "Сураныч келечекте болуучу убакытты тандаңыз!",
-  "queueText": "Кезек"
+  "queueText": "Кезек",
+  "noInternetConnection": "Интернет байланышы жок.\nСураныч, интернет байланышыңызды текшериңиз."
 }

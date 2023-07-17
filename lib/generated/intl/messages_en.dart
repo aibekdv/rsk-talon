@@ -60,6 +60,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "monday": MessageLookupByLibrary.simpleMessage("Monday"),
         "mytickets": MessageLookupByLibrary.simpleMessage("My tickets"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
+        "noInternetConnection": MessageLookupByLibrary.simpleMessage(
+            "No internet connection.\nPlease check your connection."),
         "notOpen": MessageLookupByLibrary.simpleMessage("Doesn\'t work"),
         "or": MessageLookupByLibrary.simpleMessage("or"),
         "pensioner": MessageLookupByLibrary.simpleMessage("I\'m a pensioner"),

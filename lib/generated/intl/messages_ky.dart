@@ -59,6 +59,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "monday": MessageLookupByLibrary.simpleMessage("Дүйшөмбү"),
         "mytickets": MessageLookupByLibrary.simpleMessage("Менин талондорум"),
         "next": MessageLookupByLibrary.simpleMessage("Кийинки"),
+        "noInternetConnection": MessageLookupByLibrary.simpleMessage(
+            "Интернет байланышы жок.\nСураныч, интернет байланышыңызды текшериңиз."),
         "notOpen": MessageLookupByLibrary.simpleMessage("Дем алуу"),
         "or": MessageLookupByLibrary.simpleMessage("же"),
         "pensioner": MessageLookupByLibrary.simpleMessage("Мен пенсионермин"),

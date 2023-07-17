@@ -53,5 +53,6 @@
   "documentFileNotFound": "Documents not found",
   "thanksForYourFeedback": "Thanks for your feedback!",
   "pleaseSelectADateAndTimeInTheFuture": "Please select a date and time in the future!",
-  "queueText": "Queue"
+  "queueText": "Queue",
+  "noInternetConnection": "No internet connection.\nPlease check your connection."
 }

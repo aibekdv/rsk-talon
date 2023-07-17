@@ -53,5 +53,6 @@
   "documentFileNotFound": "Документы не найдены",
   "thanksForYourFeedback": "Спасибо за ваш отзыв!",
   "pleaseSelectADateAndTimeInTheFuture": "Пожалуйста, выберите дату и время в будущем!",
-  "queueText": "Очередь"
+  "queueText": "Очередь",
+  "noInternetConnection": "Нет соединения с интернетом.\nПожалуйста, проверьте подключение."
 }

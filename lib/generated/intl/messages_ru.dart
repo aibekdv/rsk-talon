@@ -58,6 +58,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "monday": MessageLookupByLibrary.simpleMessage("Понедельник"),
         "mytickets": MessageLookupByLibrary.simpleMessage("Мои талоны"),
         "next": MessageLookupByLibrary.simpleMessage("Далее"),
+        "noInternetConnection": MessageLookupByLibrary.simpleMessage(
+            "Нет соединения с интернетом.\nПожалуйста, проверьте подключение."),
         "notOpen": MessageLookupByLibrary.simpleMessage("Не работает"),
         "or": MessageLookupByLibrary.simpleMessage("или"),
         "pensioner": MessageLookupByLibrary.simpleMessage("Я пенсионер(-ка)"),
