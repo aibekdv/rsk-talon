@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:rsk_talon/core/core.dart';
 import 'package:rsk_talon/feature/data/datasources/datasources.dart';
 import 'package:rsk_talon/feature/data/repositories/repositories.dart';
 import 'package:rsk_talon/feature/domain/repositories/repositories.dart';
@@ -73,11 +72,6 @@ Future<void> init() async {
       remoteDataSource: sl(),
       localDataSources: sl(),
     ),
-  );
-
-  // CORE
-  sl.registerLazySingleton<NetworkInfo>(
-    () => NetworkInfoImpl(connectionChecker: sl()),
   );
 
   // EXTERNAL
