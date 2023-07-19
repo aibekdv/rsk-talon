@@ -1,11 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:rsk_talon/feature/data/datasources/datasources.dart';
-import 'package:rsk_talon/feature/data/repositories/repositories.dart';
-import 'package:rsk_talon/feature/domain/repositories/repositories.dart';
-import 'package:rsk_talon/feature/domain/usecases/usecases.dart';
-import 'package:rsk_talon/feature/presentation/cubit/cubit.dart';
+import 'package:rsk_talon/features/user/data/datasources/datasources.dart';
+import 'package:rsk_talon/features/user/data/repositories/repositories.dart';
+import 'package:rsk_talon/features/user/domain/repositories/repositories.dart';
+import 'package:rsk_talon/features/user/domain/usecases/usecases.dart';
+import 'package:rsk_talon/features/user/presentation/cubit/cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
@@ -24,6 +23,8 @@ Future<void> init() async {
       getCachedLangUseCase: sl(),
     ),
   );
+
+  sl.registerFactory(() => ConnectionCubit());
 
   sl.registerFactory(
     () => TalonCubit(
@@ -78,5 +79,4 @@ Future<void> init() async {
   final sharedPrefences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPrefences);
   sl.registerLazySingleton(() => Dio());
-  sl.registerLazySingleton(() => InternetConnectionChecker());
 }

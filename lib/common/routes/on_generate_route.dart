@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rsk_talon/common/common.dart';
-import 'package:rsk_talon/feature/domain/entities/branch_entity.dart';
-import 'package:rsk_talon/feature/domain/entities/service_entity.dart';
-import 'package:rsk_talon/feature/presentation/pages/pages.dart';
+import 'package:rsk_talon/features/user/domain/entities/branch_entity.dart';
+import 'package:rsk_talon/features/user/domain/entities/service_entity.dart';
+import 'package:rsk_talon/features/user/presentation/pages/pages.dart';
 import 'package:rsk_talon/generated/l10n.dart';
 
 final class OnGenerateRoute {
@@ -13,79 +13,87 @@ final class OnGenerateRoute {
     switch (settings.name) {
       case RouteConst.homePage:
         return PageTransition(
-          child: const HomePage(),
+          child: const NetworkWrapper(child: HomePage()),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 200),
         );
       case RouteConst.selectBranchPage:
         return PageTransition(
-          child: SelectBranchPage(
-            branchEntity: args!.branchItems!,
-            cityName: args.cityName!,
+          child: NetworkWrapper(
+            child: SelectBranchPage(
+              branchEntity: args!.branchItems!,
+              cityName: args.cityName!,
+            ),
           ),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
       case RouteConst.aboutBranchPage:
         return PageTransition(
-          child: AboutBranchPage(branchItem: args!.selectBranchItem!),
+          child:  NetworkWrapper(child: AboutBranchPage(branchItem: args!.selectBranchItem!)),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
       case RouteConst.selectClientTypePage:
         return PageTransition(
-          child: SelectTypeClientPage(branchItem: args!.selectBranchItem!),
+          child: NetworkWrapper(child: SelectTypeClientPage(branchItem: args!.selectBranchItem!)),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
       case RouteConst.selectServicePage:
         return PageTransition(
-          child: ServicesPage(
-            clientType: args!.clientType!,
-            isPensioner: args.isPensioner!,
-            branchItem: args.selectBranchItem!,
+          child: NetworkWrapper(
+            child: ServicesPage(
+              clientType: args!.clientType!,
+              isPensioner: args.isPensioner!,
+              branchItem: args.selectBranchItem!,
+            ),
           ),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
       case RouteConst.listOfDocPage:
         return PageTransition(
-          child: ListOfDocPage(
-            branchItem: args!.selectBranchItem!,
-            clientType: args.clientType!,
-            isPensioner: args.isPensioner!,
-            serviceItem: args.selectServiceItem!,
+          child: NetworkWrapper(
+            child: ListOfDocPage(
+              branchItem: args!.selectBranchItem!,
+              clientType: args.clientType!,
+              isPensioner: args.isPensioner!,
+              serviceItem: args.selectServiceItem!,
+            ),
           ),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
       case RouteConst.selectQueuePage:
         return PageTransition(
-          child: QueueTimePage(
-            branchItem: args!.selectBranchItem!,
-            clientType: args.clientType!,
-            isPensioner: args.isPensioner!,
-            serviceItem: args.selectServiceItem!,
+          child: NetworkWrapper(
+            child: QueueTimePage(
+              branchItem: args!.selectBranchItem!,
+              clientType: args.clientType!,
+              isPensioner: args.isPensioner!,
+              serviceItem: args.selectServiceItem!,
+            ),
           ),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
       case RouteConst.myTicketsPage:
         return PageTransition(
-          child: MyTicketsPage(isCreatedTicket: args?.isCreatedTicket),
+          child: NetworkWrapper(child: MyTicketsPage(isCreatedTicket: args?.isCreatedTicket)),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
       case RouteConst.mapBranchPage:
         return PageTransition(
-          child: const TheBranchMapPage(),
+          child: const NetworkWrapper(child: TheBranchMapPage()),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
 
       default:
         return PageTransition(
-          child: const ErrorPage(),
+          child: const NetworkWrapper(child: ErrorPage()),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );

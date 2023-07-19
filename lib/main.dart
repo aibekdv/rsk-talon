@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:rsk_talon/common/routes/routes.dart';
-import 'package:rsk_talon/feature/presentation/cubit/cubit.dart';
+import 'package:rsk_talon/features/user/presentation/cubit/cubit.dart';
 import 'package:rsk_talon/service_locator.dart' as di;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'common/common.dart';
 import 'generated/l10n.dart';
 
-import 'feature/presentation/pages/pages.dart';
+import 'features/user/presentation/pages/pages.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -46,6 +46,8 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<BranchCubit>(
             create: (context) => di.sl<BranchCubit>()..loadBranches()),
         BlocProvider<TalonCubit>(create: (context) => di.sl<TalonCubit>()),
+        BlocProvider<ConnectionCubit>(
+            create: (context) => di.sl<ConnectionCubit>()),
         BlocProvider<LanguageCubit>(
             create: (context) => di.sl<LanguageCubit>()..getCachedLanguage()),
       ],
@@ -74,16 +76,18 @@ class _MyAppState extends State<MyApp> {
             locale: locale,
             initialRoute: '/',
             onGenerateRoute: OnGenerateRoute.route,
-            routes: {
-              "/": (context) {
-                if (di.sl<SharedPreferences>().getString("CASHED_LANG") ==
-                    null) {
-                  return const SelectLanguagePage();
+            home: BlocBuilder<ConnectionCubit, ConnectionStatus>(
+              builder: (context, state) {
+                if (state == ConnectionStatus.connected) {
+                  return di.sl<SharedPreferences>().getString("CASHED_LANG") ==
+                          null
+                      ? const SelectLanguagePage()
+                      : const HomePage();
                 } else {
-                  return const HomePage();
+                  return const NoConnectionPage();
                 }
-              }
-            },
+              },
+            ),
           );
         },
       ),
