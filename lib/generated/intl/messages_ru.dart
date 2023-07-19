@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Файлы успешно загружены!"),
         "bankbranch": MessageLookupByLibrary.simpleMessage("Филиал банка"),
         "cancel": MessageLookupByLibrary.simpleMessage("Отменить"),
+        "checkYourConnection": MessageLookupByLibrary.simpleMessage(
+            "Пожалуйста, проверьте подключение."),
         "clientType":
             MessageLookupByLibrary.simpleMessage("Выберите тип клиента"),
         "createaticket": MessageLookupByLibrary.simpleMessage("Создать талон"),
@@ -58,8 +60,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "monday": MessageLookupByLibrary.simpleMessage("Понедельник"),
         "mytickets": MessageLookupByLibrary.simpleMessage("Мои талоны"),
         "next": MessageLookupByLibrary.simpleMessage("Далее"),
-        "noInternetConnection": MessageLookupByLibrary.simpleMessage(
-            "Нет соединения с интернетом.\nПожалуйста, проверьте подключение."),
+        "noInternetConnection":
+            MessageLookupByLibrary.simpleMessage("Нет соединения"),
         "notOpen": MessageLookupByLibrary.simpleMessage("Не работает"),
         "or": MessageLookupByLibrary.simpleMessage("или"),
         "pensioner": MessageLookupByLibrary.simpleMessage("Я пенсионер(-ка)"),

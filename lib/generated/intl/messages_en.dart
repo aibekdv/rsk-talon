@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Files uploaded successfully!"),
         "bankbranch": MessageLookupByLibrary.simpleMessage("Bank branch"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "checkYourConnection": MessageLookupByLibrary.simpleMessage(
+            "Please check your connection."),
         "clientType":
             MessageLookupByLibrary.simpleMessage("Select client type"),
         "createaticket":
@@ -60,8 +62,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "monday": MessageLookupByLibrary.simpleMessage("Monday"),
         "mytickets": MessageLookupByLibrary.simpleMessage("My tickets"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
-        "noInternetConnection": MessageLookupByLibrary.simpleMessage(
-            "No internet connection.\nPlease check your connection."),
+        "noInternetConnection":
+            MessageLookupByLibrary.simpleMessage("No connection"),
         "notOpen": MessageLookupByLibrary.simpleMessage("Doesn\'t work"),
         "or": MessageLookupByLibrary.simpleMessage("or"),
         "pensioner": MessageLookupByLibrary.simpleMessage("I\'m a pensioner"),

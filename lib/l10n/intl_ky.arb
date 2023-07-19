@@ -54,5 +54,6 @@
   "thanksForYourFeedback": "Пикириңиз үчүн рахмат!",
   "pleaseSelectADateAndTimeInTheFuture": "Сураныч келечекте болуучу убакытты тандаңыз!",
   "queueText": "Кезек",
-  "noInternetConnection": "Интернет байланышы жок.\nСураныч, интернет байланышыңызды текшериңиз."
+  "noInternetConnection": "Интернет байланышы жок",
+  "checkYourConnection": "Сураныч, интернет байланышыңызды текшериңиз."
 }

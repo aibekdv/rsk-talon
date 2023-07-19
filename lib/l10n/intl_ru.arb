@@ -54,5 +54,6 @@
   "thanksForYourFeedback": "Спасибо за ваш отзыв!",
   "pleaseSelectADateAndTimeInTheFuture": "Пожалуйста, выберите дату и время в будущем!",
   "queueText": "Очередь",
-  "noInternetConnection": "Нет соединения с интернетом.\nПожалуйста, проверьте подключение."
+  "noInternetConnection": "Нет соединения",
+  "checkYourConnection": "Пожалуйста, проверьте подключение."
 }

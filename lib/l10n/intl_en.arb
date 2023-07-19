@@ -54,5 +54,6 @@
   "thanksForYourFeedback": "Thanks for your feedback!",
   "pleaseSelectADateAndTimeInTheFuture": "Please select a date and time in the future!",
   "queueText": "Queue",
-  "noInternetConnection": "No internet connection.\nPlease check your connection."
+  "noInternetConnection": "No connection",
+  "checkYourConnection": "Please check your connection."
 }

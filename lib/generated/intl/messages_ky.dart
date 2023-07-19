@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Файлдар ийгиликтүү жүктөлдү!"),
         "bankbranch": MessageLookupByLibrary.simpleMessage("Банктын филиалы"),
         "cancel": MessageLookupByLibrary.simpleMessage("Жокко чыгаруу"),
+        "checkYourConnection": MessageLookupByLibrary.simpleMessage(
+            "Сураныч, интернет байланышыңызды текшериңиз."),
         "clientType":
             MessageLookupByLibrary.simpleMessage("Кардардын түрүн тандоо"),
         "createaticket": MessageLookupByLibrary.simpleMessage("Талон түзүү"),
@@ -59,8 +61,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "monday": MessageLookupByLibrary.simpleMessage("Дүйшөмбү"),
         "mytickets": MessageLookupByLibrary.simpleMessage("Менин талондорум"),
         "next": MessageLookupByLibrary.simpleMessage("Кийинки"),
-        "noInternetConnection": MessageLookupByLibrary.simpleMessage(
-            "Интернет байланышы жок.\nСураныч, интернет байланышыңызды текшериңиз."),
+        "noInternetConnection":
+            MessageLookupByLibrary.simpleMessage("Интернет байланышы жок"),
         "notOpen": MessageLookupByLibrary.simpleMessage("Дем алуу"),
         "or": MessageLookupByLibrary.simpleMessage("же"),
         "pensioner": MessageLookupByLibrary.simpleMessage("Мен пенсионермин"),

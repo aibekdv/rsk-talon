@@ -600,11 +600,21 @@ class S {
     );
   }
 
-  /// `No internet connection.\nPlease check your connection.`
+  /// `No connection`
   String get noInternetConnection {
     return Intl.message(
-      'No internet connection.\nPlease check your connection.',
+      'No connection',
       name: 'noInternetConnection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please check your connection.`
+  String get checkYourConnection {
+    return Intl.message(
+      'Please check your connection.',
+      name: 'checkYourConnection',
       desc: '',
       args: [],
     );
