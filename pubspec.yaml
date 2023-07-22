@@ -31,6 +31,9 @@ dependencies:
   google_maps_flutter: ^2.3.1
   translit: ^2.0.1
   connectivity_plus: ^4.0.1
+  pdf: ^3.10.4
+  document_file_save_plus: ^2.0.0
+  path_provider: ^2.0.15
 
 dev_dependencies:
   flutter_test:
