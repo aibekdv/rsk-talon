@@ -55,5 +55,13 @@
   "pleaseSelectADateAndTimeInTheFuture": "Please select a date and time in the future!",
   "queueText": "Queue",
   "noInternetConnection": "No connection",
-  "checkYourConnection": "Please check your connection."
+  "checkYourConnection": "Please check your connection.",
+  "cityText": "City",
+  "downloadedSuccessfully": "Downloaded successfully!",
+  "electronicQueueText": "ELECTRONIC QUEUE",
+  "ticketNumberText": "Ticket number",
+  "branchText": "Branch",
+  "clientTypeText": "Client type",
+  "timeText": "Time",
+  "faxText": "Fax"
 }

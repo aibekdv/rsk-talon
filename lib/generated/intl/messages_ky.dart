@@ -31,11 +31,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "allFilesDownloaded": MessageLookupByLibrary.simpleMessage(
             "Файлдар ийгиликтүү жүктөлдү!"),
         "bankbranch": MessageLookupByLibrary.simpleMessage("Банктын филиалы"),
+        "branchText": MessageLookupByLibrary.simpleMessage("Филиал"),
         "cancel": MessageLookupByLibrary.simpleMessage("Жокко чыгаруу"),
         "checkYourConnection": MessageLookupByLibrary.simpleMessage(
             "Сураныч, интернет байланышыңызды текшериңиз."),
+        "cityText": MessageLookupByLibrary.simpleMessage("Шаар"),
         "clientType":
             MessageLookupByLibrary.simpleMessage("Кардардын түрүн тандоо"),
+        "clientTypeText":
+            MessageLookupByLibrary.simpleMessage("Кардардын түрү"),
         "createaticket": MessageLookupByLibrary.simpleMessage("Талон түзүү"),
         "date": MessageLookupByLibrary.simpleMessage("Дата"),
         "deleteticket":
@@ -44,8 +48,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Сизде талон барбы?"),
         "documentFileNotFound":
             MessageLookupByLibrary.simpleMessage("Документтер табылган жок"),
+        "downloadedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Ийгиликтүү жүктөлүп алынды!"),
+        "electronicQueueText":
+            MessageLookupByLibrary.simpleMessage("ЭЛЕКТРОНДУК КЕЗЕК"),
         "errorPage": MessageLookupByLibrary.simpleMessage(
             "Сервер иштебей калды. \nСураныч, кийинчерээк кайра аракет кылыңыз!"),
+        "faxText": MessageLookupByLibrary.simpleMessage("Факс"),
         "friday": MessageLookupByLibrary.simpleMessage("Жума"),
         "hello": MessageLookupByLibrary.simpleMessage("Салам!"),
         "individual": MessageLookupByLibrary.simpleMessage("Жекелик жак"),
@@ -97,7 +106,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "thursday": MessageLookupByLibrary.simpleMessage("Бейшемби"),
         "ticketCreated":
             MessageLookupByLibrary.simpleMessage("Талон ийгиликтүү  түзүлдү."),
+        "ticketNumberText":
+            MessageLookupByLibrary.simpleMessage("Талон номери"),
         "time": MessageLookupByLibrary.simpleMessage("Убакыт"),
+        "timeText": MessageLookupByLibrary.simpleMessage("Убакыт"),
         "togetinline":
             MessageLookupByLibrary.simpleMessage("Кезектин аягына туруу"),
         "tuesday": MessageLookupByLibrary.simpleMessage("Шейшемби"),

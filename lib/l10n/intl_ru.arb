@@ -55,5 +55,13 @@
   "pleaseSelectADateAndTimeInTheFuture": "Пожалуйста, выберите дату и время в будущем!",
   "queueText": "Очередь",
   "noInternetConnection": "Нет соединения",
-  "checkYourConnection": "Пожалуйста, проверьте подключение."
+  "checkYourConnection": "Пожалуйста, проверьте подключение.",
+  "cityText": "Город",
+  "downloadedSuccessfully": "Успешно скачано!",
+  "electronicQueueText": "ЭЛЕКТРОННАЯ ОЧЕРЕДЬ",
+  "ticketNumberText": "Номер талона",
+  "branchText": "Филиал",
+  "clientTypeText": "Тип клиента",
+  "timeText": "Время",
+  "faxText": "Факс"
 }

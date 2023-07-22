@@ -31,11 +31,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "allFilesDownloaded":
             MessageLookupByLibrary.simpleMessage("Файлы успешно загружены!"),
         "bankbranch": MessageLookupByLibrary.simpleMessage("Филиал банка"),
+        "branchText": MessageLookupByLibrary.simpleMessage("Филиал"),
         "cancel": MessageLookupByLibrary.simpleMessage("Отменить"),
         "checkYourConnection": MessageLookupByLibrary.simpleMessage(
             "Пожалуйста, проверьте подключение."),
+        "cityText": MessageLookupByLibrary.simpleMessage("Город"),
         "clientType":
             MessageLookupByLibrary.simpleMessage("Выберите тип клиента"),
+        "clientTypeText": MessageLookupByLibrary.simpleMessage("Тип клиента"),
         "createaticket": MessageLookupByLibrary.simpleMessage("Создать талон"),
         "date": MessageLookupByLibrary.simpleMessage("Дата"),
         "deleteticket": MessageLookupByLibrary.simpleMessage("Удалить талон?"),
@@ -43,8 +46,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("У вас уже есть талон?"),
         "documentFileNotFound":
             MessageLookupByLibrary.simpleMessage("Документы не найдены"),
+        "downloadedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Успешно скачано!"),
+        "electronicQueueText":
+            MessageLookupByLibrary.simpleMessage("ЭЛЕКТРОННАЯ ОЧЕРЕДЬ"),
         "errorPage": MessageLookupByLibrary.simpleMessage(
             "Сервер не работает. \nПожалуйста повторите попытку позже!"),
+        "faxText": MessageLookupByLibrary.simpleMessage("Факс"),
         "friday": MessageLookupByLibrary.simpleMessage("Пятница"),
         "hello": MessageLookupByLibrary.simpleMessage("Привет!"),
         "individual": MessageLookupByLibrary.simpleMessage("Физическое лицо"),
@@ -94,7 +102,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "thursday": MessageLookupByLibrary.simpleMessage("Четверг"),
         "ticketCreated":
             MessageLookupByLibrary.simpleMessage("Талон успешно создан!"),
+        "ticketNumberText":
+            MessageLookupByLibrary.simpleMessage("Номер талона"),
         "time": MessageLookupByLibrary.simpleMessage("Время"),
+        "timeText": MessageLookupByLibrary.simpleMessage("Время"),
         "togetinline":
             MessageLookupByLibrary.simpleMessage("Встать в конец очереди"),
         "tuesday": MessageLookupByLibrary.simpleMessage("Вторник"),

@@ -619,6 +619,86 @@ class S {
       args: [],
     );
   }
+
+  /// `City`
+  String get cityText {
+    return Intl.message(
+      'City',
+      name: 'cityText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Downloaded successfully!`
+  String get downloadedSuccessfully {
+    return Intl.message(
+      'Downloaded successfully!',
+      name: 'downloadedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ELECTRONIC QUEUE`
+  String get electronicQueueText {
+    return Intl.message(
+      'ELECTRONIC QUEUE',
+      name: 'electronicQueueText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ticket number`
+  String get ticketNumberText {
+    return Intl.message(
+      'Ticket number',
+      name: 'ticketNumberText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Branch`
+  String get branchText {
+    return Intl.message(
+      'Branch',
+      name: 'branchText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Client type`
+  String get clientTypeText {
+    return Intl.message(
+      'Client type',
+      name: 'clientTypeText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time`
+  String get timeText {
+    return Intl.message(
+      'Time',
+      name: 'timeText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fax`
+  String get faxText {
+    return Intl.message(
+      'Fax',
+      name: 'faxText',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

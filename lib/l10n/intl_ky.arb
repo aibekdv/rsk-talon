@@ -55,5 +55,13 @@
   "pleaseSelectADateAndTimeInTheFuture": "Сураныч келечекте болуучу убакытты тандаңыз!",
   "queueText": "Кезек",
   "noInternetConnection": "Интернет байланышы жок",
-  "checkYourConnection": "Сураныч, интернет байланышыңызды текшериңиз."
+  "checkYourConnection": "Сураныч, интернет байланышыңызды текшериңиз.",
+  "cityText": "Шаар",
+  "downloadedSuccessfully": "Ийгиликтүү жүктөлүп алынды!",
+  "electronicQueueText": "ЭЛЕКТРОНДУК КЕЗЕК",
+  "ticketNumberText": "Талон номери",
+  "branchText": "Филиал",
+  "clientTypeText": "Кардардын түрү",
+  "timeText": "Убакыт",
+  "faxText": "Факс"
 }

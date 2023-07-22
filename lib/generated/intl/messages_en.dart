@@ -31,11 +31,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "allFilesDownloaded": MessageLookupByLibrary.simpleMessage(
             "Files uploaded successfully!"),
         "bankbranch": MessageLookupByLibrary.simpleMessage("Bank branch"),
+        "branchText": MessageLookupByLibrary.simpleMessage("Branch"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "checkYourConnection": MessageLookupByLibrary.simpleMessage(
             "Please check your connection."),
+        "cityText": MessageLookupByLibrary.simpleMessage("City"),
         "clientType":
             MessageLookupByLibrary.simpleMessage("Select client type"),
+        "clientTypeText": MessageLookupByLibrary.simpleMessage("Client type"),
         "createaticket":
             MessageLookupByLibrary.simpleMessage("Create a ticket"),
         "date": MessageLookupByLibrary.simpleMessage("Date"),
@@ -44,8 +47,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("You already have a ticket?"),
         "documentFileNotFound":
             MessageLookupByLibrary.simpleMessage("Documents not found"),
+        "downloadedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Downloaded successfully!"),
+        "electronicQueueText":
+            MessageLookupByLibrary.simpleMessage("ELECTRONIC QUEUE"),
         "errorPage": MessageLookupByLibrary.simpleMessage(
             "The server is down. \nPlease try again later!"),
+        "faxText": MessageLookupByLibrary.simpleMessage("Fax"),
         "friday": MessageLookupByLibrary.simpleMessage("Friday"),
         "hello": MessageLookupByLibrary.simpleMessage("Hello!"),
         "individual": MessageLookupByLibrary.simpleMessage("Individual"),
@@ -97,7 +105,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "thursday": MessageLookupByLibrary.simpleMessage("Thursday"),
         "ticketCreated": MessageLookupByLibrary.simpleMessage(
             "Ticket created successfully!"),
+        "ticketNumberText":
+            MessageLookupByLibrary.simpleMessage("Ticket number"),
         "time": MessageLookupByLibrary.simpleMessage("Time"),
+        "timeText": MessageLookupByLibrary.simpleMessage("Time"),
         "togetinline": MessageLookupByLibrary.simpleMessage(
             "Stand at the end of the queue"),
         "tuesday": MessageLookupByLibrary.simpleMessage("Tuesday"),
