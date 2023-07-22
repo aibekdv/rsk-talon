@@ -96,6 +96,7 @@ class _SelectBranchPageState extends State<SelectBranchPage> {
                               maxTalonWaitTime: branche.maxTalonWaitTime,
                               terminal: branche.terminal,
                               workTimeStart: branche.workTimeStart,
+                              workTimeEnd: branche.workTimeEnd,
                             );
                           }
                         }

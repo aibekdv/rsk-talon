@@ -62,7 +62,6 @@ final class TalonCubit extends Cubit<TalonState> {
 
   createNewTalon(TalonEntity talon) async {
     emit(TalonFromCacheLoading());
-    try {
       final brancheList = await createTalonUseCase(talon);
       brancheList.fold(
         (error) => emit(TalonFailure(_mapFailureToMessage(error))),
@@ -71,9 +70,6 @@ final class TalonCubit extends Cubit<TalonState> {
           emit(const TalonFromCacheSuccess(talonList: []));
         },
       );
-    } catch (e) {
-      debugPrint(e.toString());
-    }
   }
 
   getCachedTalons() async {

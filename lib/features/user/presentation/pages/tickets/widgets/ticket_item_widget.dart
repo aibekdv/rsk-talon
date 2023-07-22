@@ -1,13 +1,21 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:document_file_save_plus/document_file_save_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/features/user/domain/entities/talon_entity.dart';
 import 'package:rsk_talon/features/user/presentation/cubit/talon/talon_cubit.dart';
+import 'package:rsk_talon/features/user/presentation/pages/tickets/pdf/make_pdf.dart';
 import 'package:rsk_talon/generated/l10n.dart';
 import 'package:translit/translit.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 class TicketItemWidget extends StatefulWidget {
   final TalonEntity talonItem;
@@ -24,6 +32,8 @@ class TicketItemWidget extends StatefulWidget {
 }
 
 class _TicketItemWidgetState extends State<TicketItemWidget> {
+  bool isDownloadSuccess = false;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -247,8 +257,31 @@ class _TicketItemWidgetState extends State<TicketItemWidget> {
             Row(
               children: [
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.save_alt),
+                  onPressed: () async {
+                    setState(() => isDownloadSuccess = true);
+                    final pdf = await makePdf(widget.talonItem, context);
+                    bool isGranted = await requestStoragePermission();
+
+                    if (isGranted) {
+                      Future.delayed(const Duration(milliseconds: 600),
+                          () async {
+                        await savePdf(pdf, widget.talonItem).then((value) {
+                          toast(msg: S.of(context).downloadedSuccessfully);
+                          setState(() => isDownloadSuccess = false);
+                        });
+                      });
+                    }
+                  },
+                  icon: !isDownloadSuccess
+                      ? const Icon(Icons.save_alt)
+                      : const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 1,
+                            color: Colors.white,
+                          ),
+                        ),
                   color: AppColors.whiteColor,
                   iconSize: 22,
                 ),
@@ -333,4 +366,29 @@ class _TicketItemWidgetState extends State<TicketItemWidget> {
   String twoDigits(int n) => n.toString().padLeft(2, "0");
   String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
   return (duration.inHours.toString(), twoDigitMinutes);
+}
+
+Future<void> savePdf(pw.Document pdf, TalonEntity talon) async {
+  final directory = await getExternalStorageDirectory();
+  if (directory != null) {
+    final file = File("${directory.path}/ticket_${talon.token}.pdf");
+
+    final pdfFile = await pdf.save();
+    await file.writeAsBytes(pdfFile);
+
+    DocumentFileSavePlus().saveFile(
+      pdfFile,
+      'ticket_${talon.token}.pdf',
+      'ticket_${talon.token}/.pdf',
+    );
+  }
+}
+
+Future<bool> requestStoragePermission() async {
+  if (await Permission.storage.isGranted) {
+    return true;
+  } else {
+    final status = await Permission.storage.request();
+    return status.isGranted;
+  }
 }

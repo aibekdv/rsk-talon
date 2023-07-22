@@ -3,6 +3,7 @@
   final String? city;
   final String? address;
   final String? workTimeStart;
+  final String? workTimeEnd;
   final String? maxTalonWaitTime;
   final int? terminal;
 
@@ -11,6 +12,7 @@
     this.city,
     this.address,
     this.workTimeStart,
+    this.workTimeEnd,
     this.maxTalonWaitTime,
     this.terminal,
   });

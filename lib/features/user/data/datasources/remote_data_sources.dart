@@ -115,27 +115,34 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
         "appointment_date": talon.appointmentDate,
     };
 
-    var response = await dio.post(
-      'http://rskseo.pythonanywhere.com/talon/',
-      options: Options(
-        headers: {'Content-Type': 'application/json'},
-        responseType: ResponseType.bytes,
-      ),
-      data: json.encode(postTalon),
-    );
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      final body = json.decode(utf8.decode(response.data));
-      return TalonModel.fromJson(body);
-    } else if (response.statusCode == 400) {
-      final body = json.decode(utf8.decode(response.data));
-      toast(
-        msg: body["non_field_errors"][0].toString(),
-        isError: true,
+    try {
+      var response = await dio.post(
+        'http://rskseo.pythonanywhere.com/talon/',
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+          responseType: ResponseType.bytes,
+        ),
+        data: json.encode(postTalon),
       );
-      throw ServerExeption();
-    } else {
-      toast(msg: "Server failure", isError: true);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final body = json.decode(utf8.decode(response.data));
+        return TalonModel.fromJson(body);
+      } else {
+        toast(msg: "Server failure", isError: true);
+        throw ServerExeption();
+      }
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 400) {
+        final body = json.decode(utf8.decode(e.response?.data));
+        toast(
+          msg: body["non_field_errors"][0].toString(),
+          isError: true,
+        );
+      } else {
+        toast(msg: "Server failure", isError: true);
+        throw ServerExeption();
+      }
       throw ServerExeption();
     }
   }
@@ -151,20 +158,27 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
       "rating": rating,
     };
 
-    var response = await dio.post(
-      'http://rskseo.pythonanywhere.com/stats/rating/',
-      options: Options(
-        headers: {'Content-Type': 'application/json'},
-        responseType: ResponseType.bytes,
-      ),
-      data: json.encode(ratingPost),
-    );
+    try {
+      var response = await dio.post(
+        'http://rskseo.pythonanywhere.com/stats/rating/',
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+          responseType: ResponseType.bytes,
+        ),
+        data: json.encode(ratingPost),
+      );
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      prefs.remove(TOKEN_TALON);
-      toast(msg: succesMsg);
-    } else if (response.statusCode == 400) {
-      log(response.data.toString());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        prefs.remove(TOKEN_TALON);
+        toast(msg: succesMsg);
+      } else if (response.statusCode == 400) {
+        log(response.data.toString());
+      }
+    } on DioException catch (e) {
+      toast(
+        msg: e.response!.data.toString(),
+        isError: true,
+      );
     }
   }
 }

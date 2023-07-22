@@ -15,10 +15,10 @@ class ConnectionCubit extends Cubit<ConnectionStatus> {
 
   Future<void> _checkConnectionStatus() async {
     var result = await _connectivity.checkConnectivity();
-    if (result == ConnectivityResult.none) {
-      emit(ConnectionStatus.disconnected);
-    } else {
+    if (result != ConnectivityResult.none) {
       emit(ConnectionStatus.connected);
+    } else {
+      emit(ConnectionStatus.disconnected);
     }
   }
 }

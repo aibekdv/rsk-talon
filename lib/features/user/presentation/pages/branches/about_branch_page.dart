@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/features/user/domain/entities/branch_entity.dart';
 import 'package:rsk_talon/features/user/presentation/widgets/widgets.dart';
@@ -18,6 +21,8 @@ class AboutBranchPage extends StatefulWidget {
 }
 
 class _AboutBranchPageState extends State<AboutBranchPage> {
+
+
   @override
   Widget build(BuildContext context) {
     String langCode = Localizations.localeOf(context).languageCode;
@@ -25,23 +30,23 @@ class _AboutBranchPageState extends State<AboutBranchPage> {
     List<Map<String, dynamic>> schedule = [
       {
         'weekDay': S.of(context).monday,
-        'time': '09:00-17:00',
+        'time': '${DateFormat("jm").format(DateTime.parse(widget.branchItem.workTimeStart!))}-${DateFormat("jm").format(DateTime.parse(widget.branchItem.workTimeEnd!))}',
       },
       {
         'weekDay': S.of(context).tuesday,
-        'time': '09:00-17:00',
+        'time': '${DateFormat("jm").format(DateTime.parse(widget.branchItem.workTimeStart!))}-${DateFormat("jm").format(DateTime.parse(widget.branchItem.workTimeEnd!))}',
       },
       {
         'weekDay': S.of(context).wednesday,
-        'time': '09:00-17:00',
+        'time': '${DateFormat("jm").format(DateTime.parse(widget.branchItem.workTimeStart!))}-${DateFormat("jm").format(DateTime.parse(widget.branchItem.workTimeEnd!))}',
       },
       {
         'weekDay': S.of(context).thursday,
-        'time': '09:00-17:00',
+        'time': '${DateFormat("jm").format(DateTime.parse(widget.branchItem.workTimeStart!))}-${DateFormat("jm").format(DateTime.parse(widget.branchItem.workTimeEnd!))}',
       },
       {
         'weekDay': S.of(context).friday,
-        'time': '09:00-17:00',
+        'time': '${DateFormat("jm").format(DateTime.parse(widget.branchItem.workTimeStart!))}-${DateFormat("jm").format(DateTime.parse(widget.branchItem.workTimeEnd!))}',
       },
       {
         'weekDay': S.of(context).saturday,
