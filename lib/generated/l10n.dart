@@ -699,6 +699,326 @@ class S {
       args: [],
     );
   }
+
+  /// `Remember me`
+  String get rememberMe {
+    return Intl.message(
+      'Remember me',
+      name: 'rememberMe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My account`
+  String get myAccount {
+    return Intl.message(
+      'My account',
+      name: 'myAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View my tickets`
+  String get viewMyTickets {
+    return Intl.message(
+      'View my tickets',
+      name: 'viewMyTickets',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Back`
+  String get backText {
+    return Intl.message(
+      'Back',
+      name: 'backText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Next`
+  String get nextText {
+    return Intl.message(
+      'Next',
+      name: 'nextText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password recovery`
+  String get passwordRecovery {
+    return Intl.message(
+      'Password recovery',
+      name: 'passwordRecovery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the required information to update your password`
+  String get requiredInformationPassword {
+    return Intl.message(
+      'Enter the required information to update your password',
+      name: 'requiredInformationPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number`
+  String get phoneNumberText {
+    return Intl.message(
+      'Phone number',
+      name: 'phoneNumberText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter phone number`
+  String get enterPhoneNumberText {
+    return Intl.message(
+      'Enter phone number',
+      name: 'enterPhoneNumberText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Example: (996)123-456-789 or 0555-123-456`
+  String get examplePhoneNumberText {
+    return Intl.message(
+      'Example: (996)123-456-789 or 0555-123-456',
+      name: 'examplePhoneNumberText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get a ticket`
+  String get getTicketText {
+    return Intl.message(
+      'Get a ticket',
+      name: 'getTicketText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose an action`
+  String get chooseActionText {
+    return Intl.message(
+      'Choose an action',
+      name: 'chooseActionText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the code`
+  String get enterTheCodeText {
+    return Intl.message(
+      'Enter the code',
+      name: 'enterTheCodeText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Example: JG09FD`
+  String get exampleCodeText {
+    return Intl.message(
+      'Example: JG09FD',
+      name: 'exampleCodeText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Code sent to your phone number`
+  String get theCodeSentToPhoneText {
+    return Intl.message(
+      'Code sent to your phone number',
+      name: 'theCodeSentToPhoneText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter new passowrd`
+  String get enterNewPassword {
+    return Intl.message(
+      'Enter new passowrd',
+      name: 'enterNewPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `At least 8 characters. Example: sjFhdkok_56`
+  String get passwordInfoText {
+    return Intl.message(
+      'At least 8 characters. Example: sjFhdkok_56',
+      name: 'passwordInfoText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Example: Qwerty12345`
+  String get examplePassword {
+    return Intl.message(
+      'Example: Qwerty12345',
+      name: 'examplePassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm new password`
+  String get confirmNewPassword {
+    return Intl.message(
+      'Confirm new password',
+      name: 'confirmNewPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome!`
+  String get welcomeText {
+    return Intl.message(
+      'Welcome!',
+      name: 'welcomeText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the information you added during registration`
+  String get enterInfoForLogin {
+    return Intl.message(
+      'Enter the information you added during registration',
+      name: 'enterInfoForLogin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot your password?`
+  String get forgotPassword {
+    return Intl.message(
+      'Forgot your password?',
+      name: 'forgotPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get loginText {
+    return Intl.message(
+      'Login',
+      name: 'loginText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Or`
+  String get orText {
+    return Intl.message(
+      'Or',
+      name: 'orText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create an account`
+  String get createAccountText {
+    return Intl.message(
+      'Create an account',
+      name: 'createAccountText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the information to be used when logging into the application`
+  String get enterInfoForRegister {
+    return Intl.message(
+      'Enter the information to be used when logging into the application',
+      name: 'enterInfoForRegister',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter password`
+  String get enterPasswordText {
+    return Intl.message(
+      'Enter password',
+      name: 'enterPasswordText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm password`
+  String get repeatPassword {
+    return Intl.message(
+      'Confirm password',
+      name: 'repeatPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must match above`
+  String get passwordEqualPasswordText {
+    return Intl.message(
+      'Password must match above',
+      name: 'passwordEqualPasswordText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already have an account?`
+  String get doYouHaveAccount {
+    return Intl.message(
+      'Already have an account?',
+      name: 'doYouHaveAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Interface language:`
+  String get interfaceLanguage {
+    return Intl.message(
+      'Interface language:',
+      name: 'interfaceLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get passwordText {
+    return Intl.message(
+      'Password',
+      name: 'passwordText',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

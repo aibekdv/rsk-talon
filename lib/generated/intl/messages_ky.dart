@@ -30,20 +30,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "address": MessageLookupByLibrary.simpleMessage("Дареги:"),
         "allFilesDownloaded": MessageLookupByLibrary.simpleMessage(
             "Файлдар ийгиликтүү жүктөлдү!"),
+        "backText": MessageLookupByLibrary.simpleMessage("Артка"),
         "bankbranch": MessageLookupByLibrary.simpleMessage("Банктын филиалы"),
         "branchText": MessageLookupByLibrary.simpleMessage("Филиал"),
         "cancel": MessageLookupByLibrary.simpleMessage("Жокко чыгаруу"),
         "checkYourConnection": MessageLookupByLibrary.simpleMessage(
             "Сураныч, интернет байланышыңызды текшериңиз."),
+        "chooseActionText":
+            MessageLookupByLibrary.simpleMessage("Аракетти тандаңыз"),
         "cityText": MessageLookupByLibrary.simpleMessage("Шаар"),
         "clientType":
             MessageLookupByLibrary.simpleMessage("Кардардын түрүн тандоо"),
         "clientTypeText":
             MessageLookupByLibrary.simpleMessage("Кардардын түрү"),
+        "confirmNewPassword":
+            MessageLookupByLibrary.simpleMessage("Жаңы сырсөздү кайталаңыз"),
+        "createAccountText":
+            MessageLookupByLibrary.simpleMessage("Аккаунт түзүү"),
         "createaticket": MessageLookupByLibrary.simpleMessage("Талон түзүү"),
         "date": MessageLookupByLibrary.simpleMessage("Дата"),
         "deleteticket":
             MessageLookupByLibrary.simpleMessage("Талон жок кылынсынбы?"),
+        "doYouHaveAccount":
+            MessageLookupByLibrary.simpleMessage("Аккаунтуңуз барбы?"),
         "doYouHaveTicket":
             MessageLookupByLibrary.simpleMessage("Сизде талон барбы?"),
         "documentFileNotFound":
@@ -52,12 +61,35 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Ийгиликтүү жүктөлүп алынды!"),
         "electronicQueueText":
             MessageLookupByLibrary.simpleMessage("ЭЛЕКТРОНДУК КЕЗЕК"),
+        "enterInfoForLogin": MessageLookupByLibrary.simpleMessage(
+            "Каттоо учурунда кошкон маалыматты кийириңиз"),
+        "enterInfoForRegister": MessageLookupByLibrary.simpleMessage(
+            "Тиркемеге киргенде колдонулуучу маалыматты кийириңиз"),
+        "enterNewPassword":
+            MessageLookupByLibrary.simpleMessage("Жаңы сырсөз кийириңиз"),
+        "enterPasswordText":
+            MessageLookupByLibrary.simpleMessage("Сырсөздү кийириңиз"),
+        "enterPhoneNumberText":
+            MessageLookupByLibrary.simpleMessage("Телефон номурун кийириңиз"),
+        "enterTheCodeText":
+            MessageLookupByLibrary.simpleMessage("Кодду кийириңиз"),
         "errorPage": MessageLookupByLibrary.simpleMessage(
             "Сервер иштебей калды. \nСураныч, кийинчерээк кайра аракет кылыңыз!"),
+        "exampleCodeText":
+            MessageLookupByLibrary.simpleMessage("Мисалы: JG09FD"),
+        "examplePassword":
+            MessageLookupByLibrary.simpleMessage("Мисалы: Qwerty12345"),
+        "examplePhoneNumberText": MessageLookupByLibrary.simpleMessage(
+            "Мисалы: (996)123-456-789 же 0555-123-456"),
         "faxText": MessageLookupByLibrary.simpleMessage("Факс"),
+        "forgotPassword":
+            MessageLookupByLibrary.simpleMessage("Сырсөздү унуттуңузбу?"),
         "friday": MessageLookupByLibrary.simpleMessage("Жума"),
+        "getTicketText": MessageLookupByLibrary.simpleMessage("Талон алуу"),
         "hello": MessageLookupByLibrary.simpleMessage("Салам!"),
         "individual": MessageLookupByLibrary.simpleMessage("Жекелик жак"),
+        "interfaceLanguage":
+            MessageLookupByLibrary.simpleMessage("Интерфейс тили:"),
         "leavefeedback": MessageLookupByLibrary.simpleMessage("Пикир калтыруу"),
         "legal": MessageLookupByLibrary.simpleMessage("Юридикалык жак"),
         "listOfDocumentsRequiredForASpecificService":
@@ -66,20 +98,38 @@ class MessageLookup extends MessageLookupByLibrary {
         "listofdocuments":
             MessageLookupByLibrary.simpleMessage("Документтер тизмеси"),
         "loadingText": MessageLookupByLibrary.simpleMessage("Жүктөлүүдө"),
+        "loginText": MessageLookupByLibrary.simpleMessage("Кирүү"),
         "map": MessageLookupByLibrary.simpleMessage("Карта"),
         "monday": MessageLookupByLibrary.simpleMessage("Дүйшөмбү"),
+        "myAccount": MessageLookupByLibrary.simpleMessage("Менин аккаунтум"),
         "mytickets": MessageLookupByLibrary.simpleMessage("Менин талондорум"),
         "next": MessageLookupByLibrary.simpleMessage("Кийинки"),
+        "nextText": MessageLookupByLibrary.simpleMessage("Кийинки"),
         "noInternetConnection":
             MessageLookupByLibrary.simpleMessage("Интернет байланышы жок"),
         "notOpen": MessageLookupByLibrary.simpleMessage("Дем алуу"),
         "or": MessageLookupByLibrary.simpleMessage("же"),
+        "orText": MessageLookupByLibrary.simpleMessage("Же"),
+        "passwordEqualPasswordText": MessageLookupByLibrary.simpleMessage(
+            "Сырсөз жогорудагы сырсөзгө дал келиши керек"),
+        "passwordInfoText": MessageLookupByLibrary.simpleMessage(
+            "Кеминде 8 белги болуу керек. Мисалы: sjFhdkok_56"),
+        "passwordRecovery":
+            MessageLookupByLibrary.simpleMessage("Сырсөздү калыбына келтирүү"),
+        "passwordText": MessageLookupByLibrary.simpleMessage("Сырсөз"),
         "pensioner": MessageLookupByLibrary.simpleMessage("Мен пенсионермин"),
+        "phoneNumberText":
+            MessageLookupByLibrary.simpleMessage("Телефон номур"),
         "pleaseSelectADateAndTimeInTheFuture":
             MessageLookupByLibrary.simpleMessage(
                 "Сураныч келечекте болуучу убакытты тандаңыз!"),
         "queueText": MessageLookupByLibrary.simpleMessage("Кезек"),
         "remainingMin": m0,
+        "rememberMe": MessageLookupByLibrary.simpleMessage("Эстеп калуу"),
+        "repeatPassword":
+            MessageLookupByLibrary.simpleMessage("Сырсөздү кайталаңыз"),
+        "requiredInformationPassword": MessageLookupByLibrary.simpleMessage(
+            "Сырсөзүңүздү жаңыртуу үчүн керектүү маалыматты кийириңиз"),
         "reviewText": MessageLookupByLibrary.simpleMessage(
             "Сураныч банктын тейлөөсүн баалаңыз"),
         "saturday": MessageLookupByLibrary.simpleMessage("Ишемби"),
@@ -103,6 +153,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "theBankDoesNotWorkAtTheTimeYouHave":
             MessageLookupByLibrary.simpleMessage(
                 "Сиз тандаган убакытта банк иштебейт!"),
+        "theCodeSentToPhoneText":
+            MessageLookupByLibrary.simpleMessage("Код телефонуңузга жөнөтүлдү"),
         "thursday": MessageLookupByLibrary.simpleMessage("Бейшемби"),
         "ticketCreated":
             MessageLookupByLibrary.simpleMessage("Талон ийгиликтүү  түзүлдү."),
@@ -113,7 +165,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "togetinline":
             MessageLookupByLibrary.simpleMessage("Кезектин аягына туруу"),
         "tuesday": MessageLookupByLibrary.simpleMessage("Шейшемби"),
+        "viewMyTickets":
+            MessageLookupByLibrary.simpleMessage("Менин талондорум"),
         "wednesday": MessageLookupByLibrary.simpleMessage("Шаршемби"),
+        "welcomeText": MessageLookupByLibrary.simpleMessage("Кош келиңиз!"),
         "yes": MessageLookupByLibrary.simpleMessage("Ооба"),
         "youDontHaveTicketsYet": MessageLookupByLibrary.simpleMessage(
             "Сизде азырынча эч кандай талондор жок."),
