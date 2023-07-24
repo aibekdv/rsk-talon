@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:rsk_talon/features/auth/presentation/pages/pages.dart';
 import 'package:rsk_talon/features/user/presentation/cubit/cubit.dart';
 import 'package:rsk_talon/service_locator.dart' as di;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -82,7 +83,7 @@ class _MyAppState extends State<MyApp> {
                   return di.sl<SharedPreferences>().getString("CASHED_LANG") ==
                           null
                       ? const SelectLanguagePage()
-                      : const HomePage();
+                      : const SignInPage();
                 } else {
                   return const NoConnectionPage();
                 }

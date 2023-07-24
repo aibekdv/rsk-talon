@@ -1,36 +1,54 @@
-
 import 'package:dio/dio.dart';
 import 'package:rsk_talon/core/core.dart';
 import 'package:rsk_talon/features/auth/data/models/models.dart';
+import 'package:rsk_talon/features/auth/domain/entities/user_entity.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<UserModel> login(String email, String password);
-  // Other API calls related to authentication
+  Future<UserModel> login(UserEntity user);
+  Future register(UserEntity user);
+  Future activateAccount({required String phone, required String code});
+  Future<String> refreshToken(UserEntity user);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-  static const String baseUrl = 'https://your_api_base_url.com/auth'; // Replace with your actual API base URL
+  static const String baseUrl = 'http://rskseo.pythonanywhere.com/';
 
   final Dio dio;
 
   AuthRemoteDataSourceImpl({required this.dio});
 
   @override
-  Future<UserModel> login(String email, String password) async {
+  Future<UserModel> login(UserEntity user) async {
     final response = await dio.post(
       '$baseUrl/login',
       data: {
-        'email': email,
-        'password': password,
+        'email': user.phoneNumber,
+        'password': user.password,
       },
     );
 
     if (response.statusCode == 200) {
       return UserModel.fromJson(response.data);
     } else {
-      throw ServerExeption(); // Custom exception to handle server errors
+      throw ServerExeption();
     }
   }
 
-  // Implement other API calls for registration, user details, etc.
+  @override
+  Future activateAccount({required String phone, required String code}) async {
+    // TODO: implement activateAccount
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> refreshToken(UserEntity user) {
+    // TODO: implement refreshToken
+    throw UnimplementedError();
+  }
+
+  @override
+  Future register(UserEntity user) {
+    // TODO: implement register
+    throw UnimplementedError();
+  }
 }

@@ -5,3 +5,4 @@ export 'branches/branches.dart';
 export 'tickets/tickets.dart';
 export 'language/language.dart';
 export 'network/network.dart';
+export 'profile/profile.dart';

@@ -11,6 +11,7 @@ class CustomButtonWidget extends StatelessWidget {
   final double? borderRadius;
   final Color? borderColor;
   final bool? isSelectTime;
+  final Widget? leadingIcon;
 
   const CustomButtonWidget({
     super.key,
@@ -23,6 +24,7 @@ class CustomButtonWidget extends StatelessWidget {
     this.borderRadius = 15,
     this.borderColor,
     this.isSelectTime = false,
+    this.leadingIcon,
   });
 
   @override
@@ -40,8 +42,8 @@ class CustomButtonWidget extends StatelessWidget {
         ),
         child: isSelectTime!
             ? Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   const Icon(
                     Icons.calendar_month_outlined,
@@ -57,7 +59,20 @@ class CustomButtonWidget extends StatelessWidget {
                   )
                 ],
               )
-            : Center(child: Text(title, style: textStyle)),
+            : leadingIcon != null
+                ? Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      leadingIcon!,
+                      const SizedBox(width: 15),
+                      Text(
+                        title,
+                        style: textStyle,
+                      ),
+                    ],
+                  )
+                : Center(child: Text(title, style: textStyle)),
       ),
     );
   }

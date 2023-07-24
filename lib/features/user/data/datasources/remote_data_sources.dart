@@ -29,12 +29,13 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
   static const TOKEN_TALON = 'TOKEN_TALON';
   static const CASHED_LANG = 'CASHED_LANG';
   static const CASHED_TALONS_LIST = 'CASHED_TALONS_LIST';
+  static const String baseUrl = 'http://rskseo.pythonanywhere.com';
 
   @override
   Future<List<BranchEntity>> getAllBranches() async {
     try {
       var response = await dio.get(
-        'http://rskseo.pythonanywhere.com/branch/list',
+        '$baseUrl/branch/list',
         options: Options(
           responseType: ResponseType.bytes,
         ),
@@ -58,7 +59,7 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
   Future<List<ServiceEntity>> getAllServices() async {
     try {
       var response = await dio.get(
-        'http://rskseo.pythonanywhere.com/base/services',
+        '$baseUrl/base/services',
         options: Options(
           headers: {'Content-Type': 'application/json'},
           responseType: ResponseType.bytes,
@@ -74,7 +75,9 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
         throw ServerExeption();
       }
     } catch (e) {
-      toast(msg: e.toString());
+      if (e is DioException) {
+        toast(msg: e.message.toString(), isError: true);
+      }
       throw ServerExeption();
     }
   }
@@ -83,7 +86,7 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
   Future<List<TalonEntity>> getAllTalons() async {
     try {
       var response = await dio.get(
-        'http://rskseo.pythonanywhere.com/talon',
+        '$baseUrl/talon',
         options: Options(
           headers: {'Content-Type': 'application/json'},
           responseType: ResponseType.bytes,
@@ -117,7 +120,7 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
 
     try {
       var response = await dio.post(
-        'http://rskseo.pythonanywhere.com/talon/',
+        '$baseUrl/talon/',
         options: Options(
           headers: {'Content-Type': 'application/json'},
           responseType: ResponseType.bytes,
@@ -160,7 +163,7 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
 
     try {
       var response = await dio.post(
-        'http://rskseo.pythonanywhere.com/stats/rating/',
+        '$baseUrl/stats/rating/',
         options: Options(
           headers: {'Content-Type': 'application/json'},
           responseType: ResponseType.bytes,

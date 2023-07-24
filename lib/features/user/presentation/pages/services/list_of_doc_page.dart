@@ -38,122 +38,161 @@ class _ListOfDocPageState extends State<ListOfDocPage> {
       backgroundColor: const Color.fromARGB(255, 37, 90, 166),
       body: SafeArea(
         child: Container(
+          height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/bg.png'),
               fit: BoxFit.cover,
+              alignment: Alignment.topCenter,
             ),
             color: AppColors.primary,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 25),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    RouteConst.homePage,
-                  );
-                },
-                child: Image.asset(
-                  'assets/icons/appar.png',
-                  width: 162.0,
-                ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              CustomAppBarWidget(
-                title:
-                    ' ${widget.clientType} < ${S.of(context).listofdocuments}',
-                centerTitle: true,
-              ),
-              const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 25),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white.withOpacity(.1),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${S
-                                .of(context)
-                                .listOfDocumentsRequiredForASpecificService}:",
-                            style: const TextStyle(
-                              color: AppColors.whiteColor,
-                              fontSize: 16.0,
-                              height: 2,
-                            ),
-                          ),
-                          if (widget.serviceItem.documents != null)
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 10),
-                                  ...widget.serviceItem.documents!.map(
-                                    (e) => Text(
-                                      "• ${getLangText(e.langNames!, lang!)}",
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    CustomButtonWidget(
+                    GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(
                           context,
-                          RouteConst.selectQueuePage,
-                          arguments: ScreenRouteArgs(
-                            clientType: widget.clientType,
-                            isPensioner: widget.isPensioner,
-                            selectBranchItem: widget.branchItem,
-                            selectServiceItem: widget.serviceItem,
-                          ),
+                          RouteConst.homePage,
                         );
                       },
-                      title: S.of(context).selectqueue,
-                      width: double.infinity,
-                      height: 50.0,
-                      bgColor: AppColors.primaryBtnColor,
-                      borderRadius: 20,
-                      textStyle: const TextStyle(
-                        color: AppColors.whiteColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
+                      child: Image.asset(
+                        'assets/icons/appar.png',
+                        width: 162.0,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15.0),
+                      child: InkWell(
+                        child: Container(
+                          width: 35,
+                          height: 35,
+                          decoration: const ShapeDecoration(
+                            color: Color(0x33D9D9D9),
+                            shape: OvalBorder(),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RouteConst.profilePage);
+                              },
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, RouteConst.profilePage);
+                                },
+                                child: Image.asset(
+                                  "assets/icons/user.png",
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
+                const SizedBox(
+                  height: 25,
+                ),
+                CustomAppBarWidget(
+                  title:
+                      ' ${widget.clientType} < ${S.of(context).listofdocuments}',
+                  centerTitle: true,
+                ),
+                const SizedBox(height: 30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white.withOpacity(.1),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${S.of(context).listOfDocumentsRequiredForASpecificService}:",
+                              style: const TextStyle(
+                                color: AppColors.whiteColor,
+                                fontSize: 16.0,
+                                height: 2,
+                              ),
+                            ),
+                            if (widget.serviceItem.documents != null)
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 10),
+                                    ...widget.serviceItem.documents!.map(
+                                      (e) => Text(
+                                        "• ${getLangText(e.langNames!, lang!)}",
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      CustomButtonWidget(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            RouteConst.selectQueuePage,
+                            arguments: ScreenRouteArgs(
+                              clientType: widget.clientType,
+                              isPensioner: widget.isPensioner,
+                              selectBranchItem: widget.branchItem,
+                              selectServiceItem: widget.serviceItem,
+                            ),
+                          );
+                        },
+                        title: S.of(context).selectqueue,
+                        width: double.infinity,
+                        height: 50.0,
+                        bgColor: AppColors.primaryBtnColor,
+                        borderRadius: 20,
+                        textStyle: const TextStyle(
+                          color: AppColors.whiteColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

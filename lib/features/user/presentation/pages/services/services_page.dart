@@ -43,6 +43,7 @@ class _ServicesPageState extends State<ServicesPage> {
             image: DecorationImage(
               image: AssetImage('assets/images/bg.png'),
               fit: BoxFit.cover,
+              alignment: Alignment.topCenter,
             ),
             color: AppColors.primary,
           ),
@@ -50,17 +51,48 @@ class _ServicesPageState extends State<ServicesPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 25),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    RouteConst.homePage,
-                  );
-                },
-                child: Image.asset(
-                  'assets/icons/appar.png',
-                  width: 162.0,
-                ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        RouteConst.homePage,
+                      );
+                    },
+                    child: Image.asset(
+                      'assets/icons/appar.png',
+                      width: 162.0,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: InkWell(
+                      child: Container(
+                        width: 35,
+                        height: 35,
+                        decoration: const ShapeDecoration(
+                          color: Color(0x33D9D9D9),
+                          shape: OvalBorder(),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, RouteConst.profilePage);
+                            },
+                            child: Image.asset(
+                              "assets/icons/user.png",
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 25,
@@ -89,7 +121,16 @@ class _ServicesPageState extends State<ServicesPage> {
                       ),
                     );
                   } else if (state is ServiceFailure) {
-                    return ErrorPage(message: state.message);
+                    return Center(
+                      child: Text(
+                        S.of(context).servicesNotFound,
+                        style: const TextStyle(
+                          color: AppColors.whiteColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    );
                   } else if (state is ServiceSuccess) {
                     serviceList = state.serviceList;
                   }

@@ -62,12 +62,15 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
       backgroundColor: const Color.fromARGB(255, 37, 90, 166),
       body: SafeArea(
         child: Container(
+          height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/bg.png'),
-                fit: BoxFit.cover,
-              ),
-              color: AppColors.primary),
+            image: DecorationImage(
+              image: AssetImage('assets/images/bg.png'),
+              fit: BoxFit.cover,
+              alignment: Alignment.topCenter,
+            ),
+            color: AppColors.primary,
+          ),
           child: BlocBuilder<TalonCubit, TalonState>(
             builder: (context, state) {
               if (state is TalonFromServerLoading) {
@@ -99,17 +102,47 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 25),
-        GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              RouteConst.homePage,
-            );
-          },
-          child: Image.asset(
-            'assets/icons/appar.png',
-            width: 162.0,
-          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  RouteConst.homePage,
+                );
+              },
+              child: Image.asset(
+                'assets/icons/appar.png',
+                width: 162.0,
+              ),
+            ),
+            Row(
+              children: [
+                Container(
+                  width: 35,
+                  height: 35,
+                  decoration: const ShapeDecoration(
+                    color: Color(0x33D9D9D9),
+                    shape: OvalBorder(),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, RouteConst.profilePage);
+                      },
+                      child: Image.asset(
+                        "assets/icons/user.png",
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 15),
+              ],
+            ),
+          ],
         ),
         const SizedBox(
           height: 25,
@@ -205,12 +238,47 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         const SizedBox(height: 25),
-        GestureDetector(
-          onTap: () => Navigator.pushNamed(context, RouteConst.homePage),
-          child: Image.asset(
-            'assets/icons/appar.png',
-            width: 162.0,
-          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  RouteConst.homePage,
+                );
+              },
+              child: Image.asset(
+                'assets/icons/appar.png',
+                width: 162.0,
+              ),
+            ),
+            Row(
+              children: [
+                Container(
+                  width: 35,
+                  height: 35,
+                  decoration: const ShapeDecoration(
+                    color: Color(0x33D9D9D9),
+                    shape: OvalBorder(),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, RouteConst.profilePage);
+                      },
+                      child: Image.asset(
+                        "assets/icons/user.png",
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 15),
+              ],
+            ),
+          ],
         ),
         const SizedBox(
           height: 25,
