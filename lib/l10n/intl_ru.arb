@@ -95,5 +95,7 @@
   "passwordEqualPasswordText": "Пароль должен совпадать с паролем выше",
   "doYouHaveAccount": "Уже есть аккаунт?",
   "interfaceLanguage": "Язык интерфейса:",
-  "passwordText": "Пароль"
+  "passwordText": "Пароль",
+  "successfullyRemoved": "Успешно удалено!",
+  "logout": "Выйти"
 }

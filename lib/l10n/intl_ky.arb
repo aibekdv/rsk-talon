@@ -95,5 +95,7 @@
   "passwordEqualPasswordText": "Сырсөз жогорудагы сырсөзгө дал келиши керек",
   "doYouHaveAccount": "Аккаунтуңуз барбы?",
   "interfaceLanguage": "Интерфейс тили:",
-  "passwordText": "Сырсөз"
+  "passwordText": "Сырсөз",
+  "successfullyRemoved": "Ийгиликтүү өчүрүлдү!",
+  "logout": "Чыгуу"
 }

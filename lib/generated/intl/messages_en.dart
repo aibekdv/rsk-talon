@@ -98,6 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("List of Documents"),
         "loadingText": MessageLookupByLibrary.simpleMessage("Loading"),
         "loginText": MessageLookupByLibrary.simpleMessage("Login"),
+        "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "map": MessageLookupByLibrary.simpleMessage("Map"),
         "minutes": MessageLookupByLibrary.simpleMessage("19 minutes left"),
         "monday": MessageLookupByLibrary.simpleMessage("Monday"),
@@ -145,6 +146,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Services not found"),
         "statusText": m1,
         "step": MessageLookupByLibrary.simpleMessage("Step"),
+        "successfullyRemoved":
+            MessageLookupByLibrary.simpleMessage("Successfully removed!"),
         "sunday": MessageLookupByLibrary.simpleMessage("Sunday"),
         "thanksForYourFeedback":
             MessageLookupByLibrary.simpleMessage("Thanks for your feedback!"),

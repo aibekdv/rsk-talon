@@ -96,6 +96,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Список документов"),
         "loadingText": MessageLookupByLibrary.simpleMessage("Загрузка"),
         "loginText": MessageLookupByLibrary.simpleMessage("Войти"),
+        "logout": MessageLookupByLibrary.simpleMessage("Выйти"),
         "map": MessageLookupByLibrary.simpleMessage("Карта"),
         "monday": MessageLookupByLibrary.simpleMessage("Понедельник"),
         "myAccount": MessageLookupByLibrary.simpleMessage("Мой аккаунт"),
@@ -142,6 +143,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Услуги не найдены"),
         "statusText": m1,
         "step": MessageLookupByLibrary.simpleMessage("Шаг"),
+        "successfullyRemoved":
+            MessageLookupByLibrary.simpleMessage("Успешно удалено!"),
         "sunday": MessageLookupByLibrary.simpleMessage("Воскресенье"),
         "thanksForYourFeedback":
             MessageLookupByLibrary.simpleMessage("Спасибо за ваш отзыв!"),

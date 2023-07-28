@@ -95,5 +95,7 @@
   "passwordEqualPasswordText": "Password must match above",
   "doYouHaveAccount": "Already have an account?",
   "interfaceLanguage": "Interface language:",
-  "passwordText": "Password"
+  "passwordText": "Password",
+  "successfullyRemoved": "Successfully removed!",
+  "logout": "Logout"
 }

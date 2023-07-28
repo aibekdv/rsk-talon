@@ -1019,6 +1019,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Successfully removed!`
+  String get successfullyRemoved {
+    return Intl.message(
+      'Successfully removed!',
+      name: 'successfullyRemoved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Logout`
+  String get logout {
+    return Intl.message(
+      'Logout',
+      name: 'logout',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

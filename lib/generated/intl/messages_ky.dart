@@ -99,6 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Документтер тизмеси"),
         "loadingText": MessageLookupByLibrary.simpleMessage("Жүктөлүүдө"),
         "loginText": MessageLookupByLibrary.simpleMessage("Кирүү"),
+        "logout": MessageLookupByLibrary.simpleMessage("Чыгуу"),
         "map": MessageLookupByLibrary.simpleMessage("Карта"),
         "monday": MessageLookupByLibrary.simpleMessage("Дүйшөмбү"),
         "myAccount": MessageLookupByLibrary.simpleMessage("Менин аккаунтум"),
@@ -147,6 +148,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Кызматтар табылган жок"),
         "statusText": m1,
         "step": MessageLookupByLibrary.simpleMessage("Кадам"),
+        "successfullyRemoved":
+            MessageLookupByLibrary.simpleMessage("Ийгиликтүү өчүрүлдү!"),
         "sunday": MessageLookupByLibrary.simpleMessage("Жекшемби"),
         "thanksForYourFeedback":
             MessageLookupByLibrary.simpleMessage("Пикириңиз үчүн рахмат!"),
