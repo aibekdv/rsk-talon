@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/features/auth/presentation/widgets/widgets.dart';
@@ -200,8 +198,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   _submitPhone() {
     if (_formKey.currentState!.validate()) {
-      print(passwordController.text);
-      print(phoneController.text);
+      debugPrint(passwordController.text);
+      debugPrint(phoneController.text);
     }
   }
 }

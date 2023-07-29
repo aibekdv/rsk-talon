@@ -1,44 +1,34 @@
-// import 'package:rsk_talon/features/auth/domain/repositories/repositories.dart';
+import 'package:rsk_talon/features/auth/data/datasources/datasources.dart';
+import 'package:rsk_talon/features/auth/domain/entities/user_entity.dart';
+import 'package:rsk_talon/features/auth/domain/repositories/repositories.dart';
 
-// class AuthRepositoryImpl implements AuthRepository {
-//   final AuthRemoteDataSource remoteDataSource;
-//   final AuthLocalDataSource localDataSource;
-//   final NetworkInfo networkInfo;
+class AuthRepositoryImpl implements AuthRepository {
+  final AuthRemoteDataSource remoteDataSource;
 
-//   AuthRepositoryImpl({
-//     required this.remoteDataSource,
-//     required this.localDataSource,
-//     required this.networkInfo,
-//   });
+  AuthRepositoryImpl({
+    required this.remoteDataSource,
+  });
 
-//   @override
-//   Future<Either<Failure, User>> login(String email, String password) async {
-//     // Check if the device is online
-//     if (await networkInfo.isConnected) {
-//       try {
-//         final remoteUser = await remoteDataSource.login(email, password);
-//         localDataSource.cacheUser(remoteUser);
-//         return Right(remoteUser);
-//       } on ServerException {
-//         return Left(ServerFailure());
-//       }
-//     } else {
-//       return Left(NetworkFailure());
-//     }
-//   }
+  @override
+  Future<void> login(UserEntity user) async {
+    return await remoteDataSource.login(user);
+  }
 
-//   @override
-//   Future<Either<Failure, User>> register(String email, String password) async {
-//     // Similar implementation as login method, handling registration
-//   }
+  @override
+  Future<void> logout() => remoteDataSource.logout();
 
-//   @override
-//   Future<Either<Failure, User>> getCurrentUser() async {
-//     // Implementation to retrieve the currently logged-in user from local storage
-//   }
+  @override
+  Future<void> register(UserEntity user) async {
+    return await remoteDataSource.register(user);
+  }
 
-//   @override
-//   Future<void> logout() async {
-//     // Implementation to log out the user, clear local data, etc.
-//   }
-// }
+  @override
+  String? getAuthTokenFromCache() => remoteDataSource.getAuthTokenFromCache();
+
+  @override
+  UserEntity? getUserFromCache() => remoteDataSource.getUserFromCache();
+
+  @override
+  Future<void> refreshToken() async =>
+      await remoteDataSource.refreshToken();
+}

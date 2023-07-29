@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/common/values/values.dart';
+import 'package:rsk_talon/common/common.dart';
 
 class CustomInputWidget extends StatefulWidget {
   final TextEditingController? controller;
@@ -32,14 +32,11 @@ class CustomInputWidget extends StatefulWidget {
 class _CustomInputWidgetState extends State<CustomInputWidget> {
   bool _obsecureText = true;
   final GlobalKey _key = GlobalKey();
-  bool isFirstError = true;
-
-  OverlayEntry? entry;
 
   void _showOverlay(context) async {
     final box = _key.currentContext?.findRenderObject() as RenderBox;
     final offset = box.localToGlobal(Offset.zero);
-    entry = OverlayEntry(
+    final entry = OverlayEntry(
       builder: (context) => Positioned(
         top: offset.dy - 20,
         left: offset.dx + 25,
@@ -72,17 +69,16 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
       ),
     );
 
-    Overlay.of(context).insert(entry!);
+    Overlay.of(context).insert(entry);
     await Future.delayed(const Duration(seconds: 3));
-    entry!.remove();
+    entry.remove();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.isError == true && isFirstError) {
+    if (widget.isError == true) {
       Future.delayed(const Duration(seconds: 1), () {
         _showOverlay(context);
-        setState(() => isFirstError = false);
       });
     }
 

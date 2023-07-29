@@ -150,7 +150,7 @@ class _ResetPasswordPage3State extends State<ResetPasswordPage3> {
 
   _submitPhone() {
     if (_formKey.currentState!.validate()) {
-      print(passwordController.text);
+      debugPrint(passwordController.text);
     }
   }
 }

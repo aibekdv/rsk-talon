@@ -129,7 +129,7 @@ class _ResetPasswordPage1State extends State<ResetPasswordPage1> {
 
   _submitPhone() {
     if (_formKey.currentState!.validate()) {
-      print(phoneController.text);
+      debugPrint(phoneController.text);
     }
   }
 }

@@ -10,6 +10,7 @@ class CustomButtonWidget extends StatelessWidget {
   final bool? isSubmitBtn;
   final EdgeInsetsGeometry? padding;
   final Color? borderColor;
+  final bool? isLoading;
 
   const CustomButtonWidget({
     super.key,
@@ -21,6 +22,7 @@ class CustomButtonWidget extends StatelessWidget {
     this.isSubmitBtn = false,
     this.padding,
     this.borderColor,
+    this.isLoading = false,
   });
 
   @override
@@ -51,15 +53,24 @@ class CustomButtonWidget extends StatelessWidget {
         padding: padding,
         elevation: borderColor != null ? 0 : null,
       ),
-      child: Text(
-        title,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 18,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w600,
-        ),
-      ),
+      child: isLoading == true
+          ? const SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                color: Colors.white,
+                strokeWidth: 1,
+              ),
+            )
+          : Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
     );
   }
 }
