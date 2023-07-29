@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/features/auth/presentation/cubit/cubit.dart';
 import 'package:rsk_talon/features/user/presentation/cubit/language/language_cubit.dart';
 import 'package:rsk_talon/features/user/presentation/pages/language/widgets/widgets.dart';
 import 'package:rsk_talon/generated/l10n.dart';
@@ -31,11 +32,17 @@ class _SelectLanguagePageState extends State<SelectLanguagePage> {
           child: BlocListener<LanguageCubit, LanguageState>(
             listener: (context, state) {
               if (state is ChangeLanguage) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  RouteConst.homePage,
-                  (route) => false,
-                );
+                BlocProvider.of<SignInCubit>(context).getUserToken() == null
+                    ? Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        RouteConst.signInPage,
+                        (route) => false,
+                      )
+                    : Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        RouteConst.homePage,
+                        (route) => false,
+                      );
               }
             },
             child: SingleChildScrollView(

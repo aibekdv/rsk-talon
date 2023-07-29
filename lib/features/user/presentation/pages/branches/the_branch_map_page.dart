@@ -34,7 +34,6 @@ class _TheBranchMapPageState extends State<TheBranchMapPage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/bg.png'),
@@ -43,46 +42,44 @@ class _TheBranchMapPageState extends State<TheBranchMapPage> {
             ),
             color: AppColors.primary,
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(height: 25),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      RouteConst.homePage,
-                    );
-                  },
-                  child: Image.asset(
-                    'assets/icons/appar.png',
-                    width: 162.0,
-                  ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(height: 25),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    RouteConst.homePage,
+                  );
+                },
+                child: Image.asset(
+                  'assets/icons/appar.png',
+                  width: 162.0,
                 ),
-                const SizedBox(
-                  height: 25,
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              CustomAppBarWidget(
+                title: S.of(context).map,
+                centerTitle: true,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: GoogleMap(
+                  onMapCreated: _onMapCreated,
+                  initialCameraPosition: kGooglePlex,
+                  markers: Set<Marker>.of(_markers),
+                  myLocationButtonEnabled: true,
+                  minMaxZoomPreference: const MinMaxZoomPreference(0, 19),
+                  padding: const EdgeInsets.all(10),
                 ),
-                CustomAppBarWidget(
-                  title: S.of(context).map,
-                  centerTitle: true,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  child: GoogleMap(
-                    onMapCreated: _onMapCreated,
-                    initialCameraPosition: kGooglePlex,
-                    markers: Set<Marker>.of(_markers),
-                    myLocationButtonEnabled: true,
-                    minMaxZoomPreference: const MinMaxZoomPreference(0, 19),
-                    padding: const EdgeInsets.all(10),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

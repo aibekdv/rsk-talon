@@ -17,12 +17,10 @@ import 'package:pdf/widgets.dart' as pw;
 
 class TicketItemWidget extends StatefulWidget {
   final TalonEntity talonItem;
-  final String status;
 
   const TicketItemWidget({
     super.key,
     required this.talonItem,
-    required this.status,
   });
 
   @override
@@ -36,9 +34,9 @@ class _TicketItemWidgetState extends State<TicketItemWidget> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    Future.delayed(const Duration(seconds: 1), () {
-      String status = widget.status.toLowerCase();
+    String status = widget.talonItem.status!.toLowerCase();
 
+    Future.delayed(const Duration(milliseconds: 500), () {
       if (status == 'complited' || status == 'completed') {
         BlocProvider.of<TalonCubit>(context)
             .setTokenToCache(widget.talonItem.token!);
@@ -48,9 +46,9 @@ class _TicketItemWidgetState extends State<TicketItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime dateTime = DateTime.parse(widget.talonItem.appointmentDate!);
-    final DateTime currentDateTime = DateTime.now();
-    var res = dateTime.difference(currentDateTime);
+    DateTime dateTime = DateTime.parse(widget.talonItem.appointmentDate!);
+    DateTime currentDateTime = DateTime.now();
+    var res = dateTime.difference(currentDateTime) - const Duration(hours: 4);
     String langCode = Localizations.localeOf(context).languageCode;
 
     return Column(
@@ -241,7 +239,7 @@ class _TicketItemWidgetState extends State<TicketItemWidget> {
                             formatDurationTime(res).$1,
                             formatDurationTime(res).$2,
                           )
-                      : S.of(context).statusText(widget.status),
+                      : S.of(context).statusText(widget.talonItem.status!),
                   style: const TextStyle(
                     color: AppColors.whiteColor,
                     fontSize: 16,
@@ -333,7 +331,10 @@ class _TicketItemWidgetState extends State<TicketItemWidget> {
                 ),
               ),
               onPressed: () {
-                BlocProvider.of<TalonCubit>(context).deleteTalonItem(talon);
+                BlocProvider.of<TalonCubit>(context).removeTalon(
+                  talon,
+                  msg: S.of(context).successfullyRemoved,
+                );
                 Navigator.pop(context);
               },
             ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/features/auth/domain/entities/entities.dart';
+import 'package:rsk_talon/features/auth/presentation/cubit/sign_in/sign_in_cubit.dart';
 import 'package:rsk_talon/features/user/presentation/cubit/cubit.dart';
 import 'package:rsk_talon/features/user/presentation/widgets/widgets.dart';
 import 'package:rsk_talon/generated/l10n.dart';
@@ -16,8 +18,12 @@ class _ProfilePageState extends State<ProfilePage> {
   Map<String, dynamic> lang = {};
   String langCode = '';
 
+  UserEntity? userInfo;
+
   @override
   void didChangeDependencies() {
+    BlocProvider.of<TalonCubit>(context).getUserInfo();
+
     langCode = Localizations.localeOf(context).languageCode;
 
     if (langCode.isNotEmpty) {
@@ -49,17 +55,58 @@ class _ProfilePageState extends State<ProfilePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 25),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    RouteConst.homePage,
-                  );
-                },
-                child: Image.asset(
-                  'assets/icons/appar.png',
-                  width: 162.0,
-                ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        RouteConst.homePage,
+                      );
+                    },
+                    child: Image.asset(
+                      'assets/icons/appar.png',
+                      width: 162.0,
+                    ),
+                  ),
+                  PopupMenuButton(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(0),
+                    enableFeedback: false,
+                    itemBuilder: (context) {
+                      return [
+                        PopupMenuItem(
+                          onTap: () async {
+                            await BlocProvider.of<SignInCubit>(context)
+                                .logout();
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              RouteConst.signInPage,
+                              (route) => false,
+                            );
+                          },
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                S.of(context).logout,
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              const Icon(Icons.logout_outlined),
+                            ],
+                          ),
+                        ),
+                      ];
+                    },
+                  )
+                ],
               ),
               const SizedBox(
                 height: 25,
@@ -79,7 +126,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                         Text(
+                        Text(
                           S.of(context).interfaceLanguage,
                           textAlign: TextAlign.left,
                           style: const TextStyle(
@@ -97,7 +144,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                         Text(
+                        Text(
                           '${S.of(context).phoneNumberText}:',
                           textAlign: TextAlign.left,
                           style: const TextStyle(
@@ -108,33 +155,41 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Container(
-                          height: 50,
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              side: const BorderSide(
-                                  width: 0.50, color: Colors.white),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          child: const Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(width: 15),
-                              Text(
-                                '0706-331-028',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: Color(0xFF5C5C5C),
-                                  fontSize: 15,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
+                        BlocBuilder<TalonCubit, TalonState>(
+                          builder: (context, state) {
+                            if (state is UserFromCacheLoaded) {
+                              userInfo = state.user;
+                            }
+
+                            return Container(
+                              height: 50,
+                              decoration: ShapeDecoration(
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  side: const BorderSide(
+                                      width: 0.50, color: Colors.white),
+                                  borderRadius: BorderRadius.circular(15),
                                 ),
                               ),
-                            ],
-                          ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(width: 15),
+                                  Text(
+                                    userInfo?.phoneNumber ?? "0777665544",
+                                    textAlign: TextAlign.left,
+                                    style: const TextStyle(
+                                      color: Color(0xFF5C5C5C),
+                                      fontSize: 15,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -143,7 +198,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                         Text(
+                        Text(
                           '${S.of(context).passwordText}:',
                           textAlign: TextAlign.left,
                           style: const TextStyle(

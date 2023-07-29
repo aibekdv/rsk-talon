@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                      Text(
                       S.of(context).chooseActionText,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontFamily: 'Inter',
