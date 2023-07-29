@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:rsk_talon/features/auth/presentation/cubit/cubit.dart';
 import 'package:rsk_talon/features/auth/presentation/pages/pages.dart';
 import 'package:rsk_talon/features/user/presentation/cubit/cubit.dart';
 import 'package:rsk_talon/service_locator.dart' as di;
@@ -31,9 +32,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // INIT STATE
   @override
   void initState() {
     super.initState();
+    // REMOVE SPLASH SCREEN AFTER 1 SECOND
     Future.delayed(
       const Duration(seconds: 1),
       () => FlutterNativeSplash.remove(),
@@ -42,15 +45,21 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    // MULTI BLOC PROVIDER
     return MultiBlocProvider(
       providers: [
         BlocProvider<BranchCubit>(
-            create: (context) => di.sl<BranchCubit>()..loadBranches()),
+          create: (context) => di.sl<BranchCubit>()..loadBranches(),
+        ),
         BlocProvider<TalonCubit>(create: (context) => di.sl<TalonCubit>()),
         BlocProvider<ConnectionCubit>(
             create: (context) => di.sl<ConnectionCubit>()),
+        BlocProvider<SignInCubit>(
+          create: (context) => di.sl<SignInCubit>()..refreshToken(),
+        ),
         BlocProvider<LanguageCubit>(
-            create: (context) => di.sl<LanguageCubit>()..getCachedLanguage()),
+          create: (context) => di.sl<LanguageCubit>()..getCachedLanguage(),
+        ),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, state) {
@@ -77,13 +86,24 @@ class _MyAppState extends State<MyApp> {
             locale: locale,
             initialRoute: '/',
             onGenerateRoute: OnGenerateRoute.route,
+            // CHECK LANGUAGE AND ACCESS TOKEN
             home: BlocBuilder<ConnectionCubit, ConnectionStatus>(
               builder: (context, state) {
                 if (state == ConnectionStatus.connected) {
                   return di.sl<SharedPreferences>().getString("CASHED_LANG") ==
                           null
                       ? const SelectLanguagePage()
-                      : const SignInPage();
+                      : BlocBuilder<SignInCubit, SignInState>(
+                          builder: (context, state) {
+                            if (state is RefreshTokenLoading) {
+                              return const LoadingPage();
+                            } else if (state is RefreshTokenLoaded) {
+                              return const HomePage();
+                            } else {
+                              return const SignInPage();
+                            }
+                          },
+                        );
                 } else {
                   return const NoConnectionPage();
                 }
