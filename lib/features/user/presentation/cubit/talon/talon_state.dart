@@ -81,3 +81,13 @@ final class ReviewSucces extends TalonState {
 
   const ReviewSucces({this.token});
 }
+
+final class UserFromCacheLoading extends TalonState {}
+
+final class UserFromCacheLoaded extends TalonState {
+  final UserEntity user;
+
+  const UserFromCacheLoaded({required this.user});
+}
+
+final class UserFromCacheFailure extends TalonState {}

@@ -35,7 +35,7 @@ final class TalonModel extends TalonEntity {
       isPensioner: json['is_pensioner'],
       registeredAt: json['registered_at'],
       updatedAt: json['updated_at'],
-      service: json['service'],
+      service: (json['service'] is int) ? json['service'] : null,
       branch: (json['branch'] is int)
           ? null
           : json['branch'] != null
@@ -44,7 +44,8 @@ final class TalonModel extends TalonEntity {
       queue: json['queue'],
       talonsInQueue: json['talons_in_queue'],
       estimatedTimeInMin: json['estimated_time_in_min'],
-      serviceName: json['service_name'],
+      serviceName:
+          json['service'] is int ? json['service_name'] : json['service'],
     );
   }
 

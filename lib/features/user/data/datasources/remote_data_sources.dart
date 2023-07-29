@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/core/core.dart';
+import 'package:rsk_talon/features/auth/domain/entities/entities.dart';
 import 'package:rsk_talon/features/user/data/models/models.dart';
 import 'package:rsk_talon/features/user/domain/entities/entities.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,8 +12,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 abstract final class RemoteDataSource {
   Future<List<BranchEntity>> getAllBranches();
   Future<List<ServiceEntity>> getAllServices();
-  Future<List<TalonEntity>> getAllTalons();
   Future<TalonEntity> createTalon(TalonEntity talon);
+  Future<List<TalonEntity>> getUserTalons();
+  Future<void> removeTalonFromServer(TalonEntity talon, {required String msg});
+  Future<UserEntity?> getUserInforFromCache();
+
   Future<void> sendReviewToServer({
     required String token,
     required int rating,
@@ -26,16 +30,12 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
 
   RemoteDataSourceImpl({required this.dio, required this.prefs});
 
-  static const TOKEN_TALON = 'TOKEN_TALON';
-  static const CASHED_LANG = 'CASHED_LANG';
-  static const CASHED_TALONS_LIST = 'CASHED_TALONS_LIST';
-  static const String baseUrl = 'http://rskseo.pythonanywhere.com';
-
+  // GET ALL BRANCHES FROM SERVER
   @override
   Future<List<BranchEntity>> getAllBranches() async {
     try {
       var response = await dio.get(
-        '$baseUrl/branch/list',
+        '/branch/list/',
         options: Options(
           responseType: ResponseType.bytes,
         ),
@@ -55,13 +55,18 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
     }
   }
 
+  // GET ALL SERVICES FROM SERVER
   @override
   Future<List<ServiceEntity>> getAllServices() async {
     try {
       var response = await dio.get(
-        '$baseUrl/base/services',
+        '/base/services',
         options: Options(
-          headers: {'Content-Type': 'application/json'},
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization':
+                'Bearer ${prefs.getString(AppConsts.ACCESS_TOKEN)}',
+          },
           responseType: ResponseType.bytes,
         ),
       );
@@ -82,31 +87,7 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
     }
   }
 
-  @override
-  Future<List<TalonEntity>> getAllTalons() async {
-    try {
-      var response = await dio.get(
-        '$baseUrl/talon',
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-          responseType: ResponseType.bytes,
-        ),
-      );
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final branches = json.decode(utf8.decode(response.data));
-        return branches
-            .map<TalonEntity>((e) => TalonModel.fromJson(e))
-            .toList();
-      } else {
-        toast(msg: "Server failure");
-        throw ServerExeption();
-      }
-    } catch (e) {
-      toast(msg: e.toString());
-      throw ServerExeption();
-    }
-  }
-
+  // CREATE TALON FOR CURRENT ${USER}
   @override
   Future<TalonEntity> createTalon(TalonEntity talon) async {
     final Map<String, dynamic> postTalon = {
@@ -120,9 +101,13 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
 
     try {
       var response = await dio.post(
-        '$baseUrl/talon/',
+        '/talon/',
         options: Options(
-          headers: {'Content-Type': 'application/json'},
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization':
+                'Bearer ${prefs.getString(AppConsts.ACCESS_TOKEN)}',
+          },
           responseType: ResponseType.bytes,
         ),
         data: json.encode(postTalon),
@@ -150,6 +135,7 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
     }
   }
 
+  // SEND REVIEW TO SERVER
   @override
   Future<void> sendReviewToServer({
     required String token,
@@ -163,16 +149,20 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
 
     try {
       var response = await dio.post(
-        '$baseUrl/stats/rating/',
+        '/stats/rating/',
         options: Options(
-          headers: {'Content-Type': 'application/json'},
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization':
+                'Bearer ${prefs.getString(AppConsts.ACCESS_TOKEN)}',
+          },
           responseType: ResponseType.bytes,
         ),
         data: json.encode(ratingPost),
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        prefs.remove(TOKEN_TALON);
+        prefs.remove(AppConsts.TOKEN_TALON);
         toast(msg: succesMsg);
       } else if (response.statusCode == 400) {
         log(response.data.toString());
@@ -182,6 +172,79 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
         msg: e.response!.data.toString(),
         isError: true,
       );
+    }
+  }
+
+  // GET CURRENT USER'S TALONS
+  @override
+  Future<List<TalonEntity>> getUserTalons() async {
+    try {
+      var response = await dio.get(
+        '/client/talons',
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization':
+                'Bearer ${prefs.getString(AppConsts.ACCESS_TOKEN)}',
+          },
+          responseType: ResponseType.bytes,
+        ),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final branches = json.decode(utf8.decode(response.data));
+        return branches
+            .map<TalonEntity>((e) => TalonModel.fromJson(e))
+            .toList();
+      } else {
+        toast(msg: 'Server failure');
+        throw ServerExeption();
+      }
+    } catch (e) {
+      if (e is DioException) {
+        toast(msg: e.message.toString(), isError: true);
+      }
+      log(e.toString());
+      throw ServerExeption();
+    }
+  }
+
+  // REMOVE TALON FROM SERVER
+  @override
+  Future<void> removeTalonFromServer(TalonEntity talon,
+      {required String msg}) async {
+    try {
+      var response = await dio.delete(
+        '/client/talon-delete/${talon.id!}/',
+        options: Options(
+          responseType: ResponseType.bytes,
+          headers: {
+            // BEARER TOKEN
+            'Authorization':
+                'Bearer ${prefs.getString(AppConsts.ACCESS_TOKEN)}',
+          },
+        ),
+      );
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        toast(msg: msg);
+      } else {
+        toast(msg: "Server failure", isError: true);
+        throw ServerExeption();
+      }
+    } catch (e) {
+      toast(msg: "$e", isError: true);
+      throw ServerExeption();
+    }
+  }
+
+  @override
+  Future<UserEntity?> getUserInforFromCache() async {
+    try {
+      final user = prefs.getString(AppConsts.USER);
+      UserEntity userInfo = jsonDecode(user!);
+      return userInfo;
+    } catch (e) {
+      log("Cache error: $e");
+      throw CacheExeption();
     }
   }
 }
