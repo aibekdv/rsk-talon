@@ -1,10 +1,13 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/core/core.dart';
 import 'package:rsk_talon/features/auth/domain/entities/user_entity.dart';
 import 'package:rsk_talon/features/auth/domain/usecases/usecases.dart';
+import 'package:rsk_talon/features/user/data/models/models.dart';
 import 'package:rsk_talon/features/user/domain/entities/entities.dart';
 import 'package:rsk_talon/features/user/domain/usecases/usecases.dart';
 
@@ -71,7 +74,7 @@ final class TalonCubit extends Cubit<TalonState> {
   }
 
   sendReviewToServer({
-    required String token,
+    required TalonEntity talon,
     required int rating,
     required String successMsg,
   }) async {
@@ -80,11 +83,18 @@ final class TalonCubit extends Cubit<TalonState> {
       await sendReviewToServerUseCase(
         rating: rating,
         succesMsg: successMsg,
-        token: token,
+        talon: talon,
       );
-      emit(ReviewSucces(token: await getTokenFromCache()));
+      final talonCache = await getTokenFromCache();
+      final talonItem = TalonModel.fromJson(
+        jsonDecode(talonCache!),
+      );
+      emit(ReviewSucces(talon: talonItem));
+      Future.delayed(const Duration(seconds: 2), () async {
+        await removeTalonFromServerUseCase(talonItem, msg: '');
+      });
     } catch (e) {
-      toast(msg: e.toString(), isError: true);
+      log(e.toString());
     }
   }
 
@@ -92,8 +102,8 @@ final class TalonCubit extends Cubit<TalonState> {
     return await getTokenFromCacheUseCase();
   }
 
-  setTokenToCache(String token) async {
-    await tokenToCacheUseCase(token);
+  setTokenToCache(TalonEntity talon) async {
+    await tokenToCacheUseCase(talon);
   }
 
   removeTalon(TalonEntity talon, {required String msg}) async {

@@ -29,19 +29,17 @@ class TicketItemWidget extends StatefulWidget {
 
 class _TicketItemWidgetState extends State<TicketItemWidget> {
   bool isDownloadSuccess = false;
+  bool isComplete = false;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
+  void initState() {
+    super.initState();
     String status = widget.talonItem.status!.toLowerCase();
 
-    Future.delayed(const Duration(milliseconds: 500), () {
-      if (status == 'complited' || status == 'completed') {
-        BlocProvider.of<TalonCubit>(context)
-            .setTokenToCache(widget.talonItem.token!);
-      }
-    });
+    if (status == 'complited' || status == 'completed') {
+      BlocProvider.of<TalonCubit>(context)
+          .setTokenToCache(widget.talonItem);
+    }
   }
 
   @override

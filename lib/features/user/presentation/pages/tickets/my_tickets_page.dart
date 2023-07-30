@@ -73,6 +73,7 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
                 isLoading = true;
               } else if (state is TalonFromServerSuccess) {
                 talonList = state.talonList;
+                talonList =  List.from(talonList.reversed);
                 isLoading = false;
               }
               return isSuccess != null && isSuccess == true
@@ -255,13 +256,4 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
       ),
     );
   }
-}
-
-String? getActiveStatus(List<TalonEntity> arr, TalonEntity? talon) {
-  for (var item in arr) {
-    if (item.id == talon?.id) {
-      return item.status.toString();
-    }
-  }
-  return null;
 }

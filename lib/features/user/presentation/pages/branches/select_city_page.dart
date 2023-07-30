@@ -1,14 +1,18 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/features/user/data/models/models.dart';
 import 'package:rsk_talon/features/user/domain/entities/entities.dart';
 import 'package:rsk_talon/features/user/presentation/cubit/cubit.dart';
 import 'package:rsk_talon/features/user/presentation/widgets/widgets.dart';
 import 'package:rsk_talon/generated/l10n.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:star_rating/star_rating.dart';
 import 'package:translit/translit.dart';
+import 'package:rsk_talon/service_locator.dart' as di;
 
 class SelectCityPage extends StatefulWidget {
   const SelectCityPage({super.key});
@@ -25,7 +29,7 @@ class _SelectCityPageState extends State<SelectCityPage> {
   bool isOpenDropdown = false;
   List<String> cityOfList = [];
   List<BranchEntity>? branchesList;
-  String? tokenCache;
+  TalonEntity? talonItem;
   String? langCode;
 
   @override
@@ -53,10 +57,16 @@ class _SelectCityPageState extends State<SelectCityPage> {
   void didChangeDependencies() async {
     super.didChangeDependencies();
     BlocProvider.of<BranchCubit>(context).loadBranches();
-    tokenCache = await BlocProvider.of<TalonCubit>(context).getTokenFromCache();
+    String? tokenCache =
+        await BlocProvider.of<TalonCubit>(context).getTokenFromCache();
+    talonItem = tokenCache != null
+        ? TalonModel.fromJson(
+            jsonDecode(tokenCache),
+          )
+        : null;
     langCode = Localizations.localeOf(context).languageCode;
 
-    log(tokenCache.toString());
+    log(talonItem.toString());
   }
 
   @override
@@ -76,12 +86,12 @@ class _SelectCityPageState extends State<SelectCityPage> {
           child: BlocBuilder<TalonCubit, TalonState>(
             builder: (context, state) {
               if (state is ReviewSucces) {
-                tokenCache = state.token;
+                talonItem = state.talon;
               }
 
               return Stack(
                 children: [
-                  if (tokenCache != null)
+                  if (talonItem != null)
                     GestureDetector(
                       onTap: () {
                         isReviewVisible = !isReviewVisible;
@@ -130,14 +140,27 @@ class _SelectCityPageState extends State<SelectCityPage> {
                                         Future.delayed(
                                           const Duration(seconds: 2),
                                           () {
-                                            BlocProvider.of<TalonCubit>(context)
-                                                .sendReviewToServer(
-                                              token: tokenCache!,
-                                              rating: rating.toInt(),
-                                              successMsg: S
-                                                  .of(context)
-                                                  .thanksForYourFeedback,
-                                            );
+                                            if (talonItem != null) {
+                                              BlocProvider.of<TalonCubit>(
+                                                      context)
+                                                  .sendReviewToServer(
+                                                talon: talonItem!,
+                                                rating: rating.toInt(),
+                                                successMsg: S
+                                                    .of(context)
+                                                    .thanksForYourFeedback,
+                                              );
+                                              Future.delayed(
+                                                  const Duration(seconds: 2),
+                                                  () {
+                                                di
+                                                    .sl<SharedPreferences>()
+                                                    .remove(
+                                                      AppConsts.TOKEN_TALON,
+                                                    );
+                                              });
+                                              setState(() => talonItem = null);
+                                            }
                                             Future.delayed(
                                                 const Duration(
                                                     milliseconds: 700), () {
@@ -194,7 +217,7 @@ class _SelectCityPageState extends State<SelectCityPage> {
                             : MainAxisAlignment.center,
                         children: [
                           const SizedBox(height: 25),
-                          if (cityOfList.isNotEmpty)
+                          if (cityOfList.isNotEmpty && talonItem == null)
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.end,

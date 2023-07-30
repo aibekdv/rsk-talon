@@ -77,9 +77,9 @@ final class TalonCacheSuccess extends TalonState {
 final class ReviewLoading extends TalonState {}
 
 final class ReviewSucces extends TalonState {
-  final String? token;
+  final TalonEntity? talon;
 
-  const ReviewSucces({this.token});
+  const ReviewSucces({this.talon});
 }
 
 final class UserFromCacheLoading extends TalonState {}
