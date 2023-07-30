@@ -37,8 +37,7 @@ class _TicketItemWidgetState extends State<TicketItemWidget> {
     String status = widget.talonItem.status!.toLowerCase();
 
     if (status == 'complited' || status == 'completed') {
-      BlocProvider.of<TalonCubit>(context)
-          .setTokenToCache(widget.talonItem);
+      BlocProvider.of<TalonCubit>(context).setTokenToCache(widget.talonItem);
     }
   }
 
@@ -207,7 +206,7 @@ class _TicketItemWidgetState extends State<TicketItemWidget> {
                         context,
                         RouteConst.mapBranchPage,
                         arguments: ScreenRouteArgs(
-                          selectBranchItem: widget.talonItem.branch,
+                          talon: widget.talonItem,
                         ),
                       );
                     },

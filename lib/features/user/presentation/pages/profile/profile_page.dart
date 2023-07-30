@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsk_talon/common/common.dart';
@@ -301,11 +303,15 @@ class _ProfilePageState extends State<ProfilePage> {
         itemBuilder: (context) {
           return [
             PopupMenuItem(
-              onTap: () {
-                BlocProvider.of<LanguageCubit>(context).changeLanguage("ky");
-                setState(() {
+              onTap: () async {
+                try {
+                  await BlocProvider.of<LanguageCubit>(context)
+                      .changeLanguage("ky");
                   lang = {"code": "ky", "text": "Кыргызча"};
-                });
+                  setState(() {});
+                } catch (e) {
+                  log(e.toString());
+                }
               },
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -322,11 +328,15 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             PopupMenuItem(
-              onTap: () {
-                BlocProvider.of<LanguageCubit>(context).changeLanguage("ru");
-                setState(() {
+              onTap: () async {
+                try {
+                  await BlocProvider.of<LanguageCubit>(context)
+                      .changeLanguage("ru");
                   lang = {"code": "ru", "text": "Русский"};
-                });
+                  setState(() {});
+                } catch (e) {
+                  log(e.toString());
+                }
               },
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -343,11 +353,15 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             PopupMenuItem(
-              onTap: () {
-                BlocProvider.of<LanguageCubit>(context).changeLanguage("en");
-                setState(() {
+              onTap: () async {
+                try {
+                  await BlocProvider.of<LanguageCubit>(context)
+                      .changeLanguage("en");
                   lang = {"code": "en", "text": "English"};
-                });
+                  setState(() {});
+                } catch (e) {
+                  log(e.toString());
+                }
               },
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0),

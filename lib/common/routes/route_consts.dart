@@ -15,5 +15,5 @@ final class RouteConst {
   static const String signUpPage = 'signUpPage';
   static const String resetStepOne = 'resetStepOne';
   static const String resetStepTwo = 'resetStepTwo';
-  static const String resetStepThree = 'resetStepThree';
+  static const String activateAccountPage = 'activateAccountPage';
 }

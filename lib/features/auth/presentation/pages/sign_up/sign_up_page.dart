@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/features/auth/domain/entities/user_entity.dart';
+import 'package:rsk_talon/features/auth/presentation/cubit/cubit.dart';
 import 'package:rsk_talon/features/auth/presentation/widgets/widgets.dart';
 import 'package:rsk_talon/generated/l10n.dart';
 
@@ -105,11 +110,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           inputType: TextInputType.text,
                           isError: isValidatePassword,
                           validator: (value) {
-                            if (value != null &&
-                                value.length > 7 &&
-                                passwordPattern.hasMatch(
-                                  value,
-                                )) {
+                            if (value != null && value.length > 2) {
                               setState(() => isValidatePassword = false);
                               return null;
                             } else {
@@ -139,21 +140,51 @@ class _SignUpPageState extends State<SignUpPage> {
                           },
                         ),
                         const SizedBox(height: 40),
-                        CustomButtonWidget(
-                          title: S.of(context).createAccountText,
-                          onPressed: phoneController.text.length > 9 &&
-                                  passwordController.text.length > 7
-                              ? _submitPhone
-                              : null,
-                          width: double.infinity,
-                          height: 54,
+                        BlocBuilder<SignUpCubit, SignUpState>(
+                          builder: (context, state) {
+                            bool isLoading = false;
+
+                            if (state is SignUpLoading) {
+                              isLoading = true;
+                            } else if (state is SignUpLoaded) {
+                              isLoading = false;
+                              log("Register loaded...");
+                              Future.delayed(
+                                const Duration(milliseconds: 50),
+                                () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    RouteConst.activateAccountPage,
+                                    arguments: ScreenRouteArgs(
+                                      phoneNumber: phoneController.text,
+                                    ),
+                                  );
+                                },
+                              );
+                            } else if (state is SignUpFailure) {
+                              isLoading = false;
+                            }
+
+                            return CustomButtonWidget(
+                              isLoading: isLoading,
+                              title: S.of(context).createAccountText,
+                              onPressed: phoneController.text.length > 9 &&
+                                      passwordController.text.length > 2
+                                  ? isLoading == true
+                                      ? null
+                                      : _submitRegisterForm
+                                  : null,
+                              width: double.infinity,
+                              height: 54,
+                            );
+                          },
                         ),
                         const SizedBox(height: 5),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                             Text(
+                            Text(
                               S.of(context).doYouHaveAccount,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
@@ -166,9 +197,12 @@ class _SignUpPageState extends State<SignUpPage> {
                             const SizedBox(width: 5),
                             TextButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, RouteConst.signInPage);
+                                Navigator.pushNamed(
+                                  context,
+                                  RouteConst.signInPage,
+                                );
                               },
-                              child:  Text(
+                              child: Text(
                                 S.of(context).loginText,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
@@ -196,10 +230,19 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  _submitPhone() {
+  _submitRegisterForm() {
     if (_formKey.currentState!.validate()) {
       debugPrint(passwordController.text);
       debugPrint(phoneController.text);
+
+      BlocProvider.of<SignUpCubit>(context).register(
+        user: UserEntity(
+          phoneNumber: phoneController.text,
+          password: passwordController.text,
+          confirmPassword: passwordConfirmController.text,
+        ),
+        successMsg: S.of(context).sendCodeSuccess,
+      );
     }
   }
 }

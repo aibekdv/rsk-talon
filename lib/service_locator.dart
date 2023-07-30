@@ -5,6 +5,7 @@ import 'package:rsk_talon/features/auth/data/repositories/repositories.dart';
 import 'package:rsk_talon/features/auth/domain/repositories/repositories.dart';
 import 'package:rsk_talon/features/auth/domain/usecases/usecases.dart';
 import 'package:rsk_talon/features/auth/presentation/cubit/cubit.dart';
+import 'package:rsk_talon/features/auth/presentation/cubit/reset/reset_cubit.dart';
 import 'package:rsk_talon/features/user/data/datasources/datasources.dart';
 import 'package:rsk_talon/features/user/data/repositories/repositories.dart';
 import 'package:rsk_talon/features/user/domain/repositories/repositories.dart';
@@ -18,6 +19,8 @@ final sl = GetIt.instance;
 // DEPENDENCY INJECTION
 Future<void> init() async {
   // CUBIT (BLOC)
+
+  // USER CUBITS
   sl.registerFactory(
     () => BranchCubit(
       getAllBranches: sl(),
@@ -57,6 +60,20 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerFactory(
+    () => SignUpCubit(
+      signUpUseCase: sl(),
+      activateAccountUseCase: sl(),
+    ),
+  );
+
+  sl.registerFactory(
+    () => ResetCubit(
+      restorePasswordUseCase: sl(),
+      setRestorePasswordUseCase: sl(),
+    ),
+  );
+
   // USER USECASES
   sl.registerLazySingleton(() => GetAllBranches(repository: sl()));
   sl.registerLazySingleton(() => GetServicesUseCase(repository: sl()));
@@ -67,7 +84,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetUserTalonUseCase(repository: sl()));
   sl.registerLazySingleton(() => TokenToCacheUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetTokenFromCacheUseCase(repository: sl()));
-  sl.registerLazySingleton(() => RemoveTalonFromServerUseCase(repository: sl()));
+  sl.registerLazySingleton(
+      () => RemoveTalonFromServerUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetUserFromCacheUseCase(repository: sl()));
 
   // AUTH USECASES
@@ -76,6 +94,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetAuthTokenFromCache(repository: sl()));
   sl.registerLazySingleton(() => LogoutUseCase(repository: sl()));
   sl.registerLazySingleton(() => RefreshTokenUseCase(repository: sl()));
+  sl.registerLazySingleton(() => ActivateAccountUseCase(repository: sl()));
+  sl.registerLazySingleton(() => RestorePasswordUseCase(repository: sl()));
+  sl.registerLazySingleton(() => SetRestorePasswordUseCase(repository: sl()));
 
   // USER REPOSITORIES
   sl.registerLazySingleton<RemoteDataSource>(

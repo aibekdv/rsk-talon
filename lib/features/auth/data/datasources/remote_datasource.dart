@@ -10,7 +10,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class AuthRemoteDataSource {
   Future<void> login(UserEntity user);
-  Future<void> register(UserEntity user);
+  Future<void> register({required UserEntity user, required String successMsg});
+  Future<void> activateAccount({
+    required String phone,
+    required String code,
+    required successMsg,
+  });
+  Future<void> restorePassword({required String phone});
+  Future<void> setRestorePassword({
+    required String phone,
+    required String code,
+    required String password,
+    required String confirmPassword,
+    required String successMsg,
+  });
   UserEntity? getUserFromCache();
   String? getAuthTokenFromCache();
   Future<void> refreshToken();
@@ -70,7 +83,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           );
           throw ServerExeption();
         }
-        toast(msg: e.message.toString(), isError: true);
+        toast(msg: "Server failure", isError: true);
         throw ServerExeption();
       } else {
         toast(msg: e.toString(), isError: true);
@@ -89,7 +102,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
 // Register user
   @override
-  Future<void> register(UserEntity user) async {
+  Future<void> register({
+    required UserEntity user,
+    required String successMsg,
+  }) async {
     try {
       Response response = await dio.post(
         '/client/registration/',
@@ -101,12 +117,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        toast(msg: "Succesfuly");
+        toast(msg: successMsg);
       }
     } catch (e) {
       if (e is DioException) {
-        toast(msg: e.message.toString(), isError: true);
+        log(e.message.toString());
+        // log(e.response!.data.toString());
       }
+      toast(msg: "Server failure", isError: true);
       throw ServerExeption();
     }
   }
@@ -147,6 +165,76 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (e is DioException) {
         log(e.message.toString());
       }
+      throw ServerExeption();
+    }
+  }
+
+  // Activate account with specific code
+  @override
+  Future<void> activateAccount({
+    required String phone,
+    required String code,
+    required successMsg,
+  }) async {
+    try {
+      var response = await dio.post('/client/activate/', data: {
+        "phone": phone,
+        "code": code,
+      });
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        toast(msg: successMsg);
+      }
+    } catch (e) {
+      toast(msg: "Incorrect code :)", isError: true);
+      log("Activate account error: $e");
+      toast(msg: "Server failure", isError: true);
+      throw ServerExeption();
+    }
+  }
+
+  // Restore password with phone number
+  @override
+  Future<void> restorePassword({required String phone}) async {
+    try {
+      var response = await dio.post('/client/restore-password/', data: {
+        "phone": phone,
+      });
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        log(response.data.toString());
+      }
+    } catch (e) {
+      log("Restore password error: $e");
+      toast(msg: "Server failure", isError: true);
+      throw ServerExeption();
+    }
+  }
+
+  // Set resoted password
+  @override
+  Future<void> setRestorePassword({
+    required String phone,
+    required String code,
+    required String password,
+    required String confirmPassword,
+    required String successMsg,
+  }) async {
+    try {
+      var response = await dio.post('/client/set-restored-password/', data: {
+        "phone": phone,
+        "code": code,
+        "new_password": password,
+        "new_pass_confirm": confirmPassword,
+      });
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        toast(msg: successMsg);
+        log("Restored password body: ${response.data}");
+      }
+    } catch (e) {
+      log("Activate account error: $e");
+      toast(msg: "Server failure", isError: true);
       throw ServerExeption();
     }
   }

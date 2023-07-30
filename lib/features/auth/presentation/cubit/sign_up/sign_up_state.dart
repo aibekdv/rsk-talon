@@ -8,3 +8,15 @@ abstract class SignUpState extends Equatable {
 }
 
 class SignUpInitial extends SignUpState {}
+
+class SignUpLoading extends SignUpState {}
+
+class SignUpLoaded extends SignUpState {}
+
+class SignUpFailure extends SignUpState {}
+
+class ActivateAccountLoading extends SignUpState {}
+
+class ActivateAccountLoaded extends SignUpState {}
+
+class ActivateAccountFailure extends SignUpState {}

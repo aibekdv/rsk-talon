@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsk_talon/common/common.dart';
+import 'package:rsk_talon/features/auth/presentation/cubit/reset/reset_cubit.dart';
 import 'package:rsk_talon/features/auth/presentation/widgets/widgets.dart';
 import 'package:rsk_talon/generated/l10n.dart';
 
@@ -53,7 +55,7 @@ class _ResetPasswordPage1State extends State<ResetPasswordPage1> {
                     key: _formKey,
                     child: Column(
                       children: [
-                         Text(
+                        Text(
                           S.of(context).passwordRecovery,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
@@ -90,30 +92,65 @@ class _ResetPasswordPage1State extends State<ResetPasswordPage1> {
                           },
                         ),
                         const SizedBox(height: 30),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomButtonWidget(
-                              title: S.of(context).backText,
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 25,
-                                vertical: 10,
-                              ),
-                              borderColor: Colors.white,
-                            ),
-                            CustomButtonWidget(
-                              title: S.of(context).nextText,
-                              onPressed: _submitPhone,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 40,
-                                vertical: 10,
-                              ),
-                            ),
-                          ],
+                        BlocBuilder<ResetCubit, ResetState>(
+                          builder: (context, state) {
+                            bool isLoading = false;
+
+                            if (state is ResetPhoneLoading) {
+                              isLoading = true;
+                            } else if (state is ResetPhoneLoaded) {
+                              isLoading = false;
+                              Future.delayed(
+                                const Duration(milliseconds: 50),
+                                () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    RouteConst.resetStepTwo,
+                                    arguments: ScreenRouteArgs(
+                                      phoneNumber: phoneController.text,
+                                    ),
+                                  );
+                                },
+                              );
+                            } else if (state is ResetPhoneFailure) {
+                              isLoading = false;
+                            }
+
+                            return Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomButtonWidget(
+                                  title: S.of(context).backText,
+                                  width:
+                                      MediaQuery.of(context).size.width / 3.5,
+                                  height: 50,
+                                  onPressed: isLoading
+                                      ? null
+                                      : () {
+                                          Navigator.pop(context);
+                                        },
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 25,
+                                    vertical: 10,
+                                  ),
+                                  borderColor: Colors.white,
+                                ),
+                                CustomButtonWidget(
+                                  title: S.of(context).nextText,
+                                  isLoading: isLoading,
+                                  onPressed: isLoading ? null : _submitForm,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.4,
+                                  height: 50,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 40,
+                                    vertical: 10,
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -127,9 +164,12 @@ class _ResetPasswordPage1State extends State<ResetPasswordPage1> {
     );
   }
 
-  _submitPhone() {
+  _submitForm() {
     if (_formKey.currentState!.validate()) {
       debugPrint(phoneController.text);
+      BlocProvider.of<ResetCubit>(context).sendCodeToPhone(
+        phone: phoneController.text,
+      );
     }
   }
 }

@@ -1,34 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rsk_talon/common/common.dart';
-import 'package:rsk_talon/features/auth/presentation/cubit/reset/reset_cubit.dart';
+import 'package:rsk_talon/features/auth/presentation/cubit/sign_up/sign_up_cubit.dart';
 import 'package:rsk_talon/features/auth/presentation/widgets/widgets.dart';
 import 'package:rsk_talon/generated/l10n.dart';
 
-class ResetPasswordPage2 extends StatefulWidget {
+class ActivateAccountPage extends StatefulWidget {
   final String phone;
-  const ResetPasswordPage2({super.key, required this.phone});
+
+  const ActivateAccountPage({super.key, required this.phone});
 
   @override
-  State<ResetPasswordPage2> createState() => _ResetPasswordPage2State();
+  State<ActivateAccountPage> createState() => _ActivateAccountPageState();
 }
 
-class _ResetPasswordPage2State extends State<ResetPasswordPage2> {
+class _ActivateAccountPageState extends State<ActivateAccountPage> {
   final _formKey = GlobalKey<FormState>();
   final codeController = TextEditingController();
-  final passwordController = TextEditingController();
-  final passwordConfirmController = TextEditingController();
 
   bool isCompleted = false;
   bool isValidateCode = false;
-  bool isValidatePassword = false;
-  bool isValidateConfirmPassword = false;
 
   @override
   void dispose() {
     codeController.dispose();
-    passwordController.dispose();
-    passwordConfirmController.dispose();
     super.dispose();
   }
 
@@ -63,7 +58,7 @@ class _ResetPasswordPage2State extends State<ResetPasswordPage2> {
                     child: Column(
                       children: [
                         Text(
-                          S.of(context).passwordRecovery,
+                          S.of(context).activateAccount,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.white,
@@ -72,7 +67,7 @@ class _ResetPasswordPage2State extends State<ResetPasswordPage2> {
                           ),
                         ),
                         Text(
-                          S.of(context).requiredInformationPassword,
+                          S.of(context).infoToActivateYourAccount,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.white,
@@ -89,7 +84,7 @@ class _ResetPasswordPage2State extends State<ResetPasswordPage2> {
                           inputType: TextInputType.phone,
                           isError: isValidateCode,
                           validator: (value) {
-                            if (isValidPhoneNumber(value!) == null) {
+                            if (value == null) {
                               setState(() => isValidateCode = true);
                               return '';
                             } else {
@@ -98,70 +93,14 @@ class _ResetPasswordPage2State extends State<ResetPasswordPage2> {
                             }
                           },
                         ),
-                        const SizedBox(height: 15),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            InkWell(
-                              onTap: () {},
-                              child: const Text(
-                                'Не получили код?',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  letterSpacing: -0.50,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        CustomInputWidget(
-                          labelText: S.of(context).enterNewPassword,
-                          hinText: S.of(context).examplePassword,
-                          infoText: S.of(context).passwordInfoText,
-                          controller: passwordController,
-                          inputType: TextInputType.phone,
-                          isError: isValidatePassword,
-                          validator: (value) {
-                            if (isValidPhoneNumber(value!) == null) {
-                              setState(() => isValidatePassword = true);
-                              return '';
-                            } else {
-                              setState(() => isValidatePassword = false);
-                              return null;
-                            }
-                          },
-                        ),
                         const SizedBox(height: 30),
-                        CustomInputWidget(
-                          labelText: S.of(context).confirmNewPassword,
-                          hinText: S.of(context).examplePassword,
-                          infoText: S.of(context).passwordInfoText,
-                          controller: passwordConfirmController,
-                          inputType: TextInputType.phone,
-                          isError: isValidateConfirmPassword,
-                          validator: (value) {
-                            if (isValidPhoneNumber(value!) == null) {
-                              setState(() => isValidateConfirmPassword = true);
-                              return '';
-                            } else {
-                              setState(() => isValidateConfirmPassword = false);
-                              return null;
-                            }
-                          },
-                        ),
-                        const SizedBox(height: 40),
-                        BlocBuilder<ResetCubit, ResetState>(
+                        BlocBuilder<SignUpCubit, SignUpState>(
                           builder: (context, state) {
                             bool isLoading = false;
 
-                            if (state is ResetPasswordLoading) {
+                            if (state is ActivateAccountLoading) {
                               isLoading = true;
-                            } else if (state is ResetPasswordLoaded) {
+                            } else if (state is ActivateAccountLoaded) {
                               isLoading = false;
                               Future.delayed(
                                 const Duration(milliseconds: 50),
@@ -172,7 +111,7 @@ class _ResetPasswordPage2State extends State<ResetPasswordPage2> {
                                   );
                                 },
                               );
-                            } else if (state is ResetPasswordFailure) {
+                            } else if (state is ActivateAccountFailure) {
                               isLoading = false;
                             }
 
@@ -182,9 +121,6 @@ class _ResetPasswordPage2State extends State<ResetPasswordPage2> {
                               children: [
                                 CustomButtonWidget(
                                   title: S.of(context).backText,
-                                  width:
-                                      MediaQuery.of(context).size.width / 3.5,
-                                  height: 50,
                                   onPressed: isLoading
                                       ? null
                                       : () {
@@ -197,12 +133,9 @@ class _ResetPasswordPage2State extends State<ResetPasswordPage2> {
                                   borderColor: Colors.white,
                                 ),
                                 CustomButtonWidget(
-                                  title: S.of(context).confirmText,
                                   isLoading: isLoading,
-                                  onPressed: isLoading ? null : _submitForm,
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.4,
-                                  height: 50,
+                                  title: S.of(context).confirmText,
+                                  onPressed: isLoading ? null : _submitPhone,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 40,
                                     vertical: 10,
@@ -212,7 +145,6 @@ class _ResetPasswordPage2State extends State<ResetPasswordPage2> {
                             );
                           },
                         ),
-                        const SizedBox(height: 30),
                       ],
                     ),
                   ),
@@ -225,9 +157,15 @@ class _ResetPasswordPage2State extends State<ResetPasswordPage2> {
     );
   }
 
-  _submitForm() {
+  _submitPhone() {
     if (_formKey.currentState!.validate()) {
       debugPrint(codeController.text);
+
+      BlocProvider.of<SignUpCubit>(context).activateAccount(
+        phone: widget.phone,
+        code: codeController.text,
+        successMsg: S.of(context).accountActivated,
+      );
     }
   }
 }

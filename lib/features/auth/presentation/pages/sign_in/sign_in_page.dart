@@ -203,12 +203,14 @@ class _SignInPageState extends State<SignInPage> {
                                   ),
                                 ),
                                 TextButton(
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      RouteConst.resetStepOne,
-                                    );
-                                  },
+                                  onPressed: isLoading
+                                      ? null
+                                      : () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            RouteConst.resetStepOne,
+                                          );
+                                        },
                                   child: Text(
                                     S.of(context).forgotPassword,
                                     textAlign: TextAlign.center,
@@ -271,10 +273,14 @@ class _SignInPageState extends State<SignInPage> {
                             ),
                             const SizedBox(height: 20),
                             CustomButtonWidget(
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                    context, RouteConst.signUpPage);
-                              },
+                              onPressed: isLoading
+                                  ? null
+                                  : () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        RouteConst.signUpPage,
+                                      );
+                                    },
                               title: S.of(context).createAccountText,
                               width: double.infinity,
                               height: 54,

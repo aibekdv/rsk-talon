@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rsk_talon/common/common.dart';
 import 'package:rsk_talon/features/auth/presentation/pages/pages.dart';
-import 'package:rsk_talon/features/user/domain/entities/branch_entity.dart';
-import 'package:rsk_talon/features/user/domain/entities/service_entity.dart';
+import 'package:rsk_talon/features/user/domain/entities/entities.dart';
 import 'package:rsk_talon/features/user/presentation/pages/pages.dart';
 import 'package:rsk_talon/generated/l10n.dart';
 
@@ -123,7 +122,11 @@ final class OnGenerateRoute {
       // Map branch page route
       case RouteConst.mapBranchPage:
         return PageTransition(
-          child: const NetworkWrapper(child: TheBranchMapPage()),
+          child: NetworkWrapper(
+            child: TheBranchMapPage(
+              talon: args!.talon!,
+            ),
+          ),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
@@ -155,15 +158,23 @@ final class OnGenerateRoute {
       // Reset password 2 page route
       case RouteConst.resetStepTwo:
         return PageTransition(
-          child: const NetworkWrapper(child: ResetPasswordPage2()),
+          child: NetworkWrapper(
+            child: ResetPasswordPage2(
+              phone: args!.phoneNumber!,
+            ),
+          ),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
 
-      // Reset password 3 page route
-      case RouteConst.resetStepThree:
+      // Activate account page route
+      case RouteConst.activateAccountPage:
         return PageTransition(
-          child: const NetworkWrapper(child: ResetPasswordPage3()),
+          child: NetworkWrapper(
+            child: ActivateAccountPage(
+              phone: args!.phoneNumber!,
+            ),
+          ),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 100),
         );
@@ -216,6 +227,8 @@ class ScreenRouteArgs {
   final String? clientType;
   final bool? isPensioner;
   final String? cityName;
+  final String? phoneNumber;
+  final TalonEntity? talon;
 
   ScreenRouteArgs({
     this.branchItems,
@@ -225,5 +238,7 @@ class ScreenRouteArgs {
     this.isPensioner,
     this.selectServiceItem,
     this.cityName,
+    this.phoneNumber,
+    this.talon,
   });
 }

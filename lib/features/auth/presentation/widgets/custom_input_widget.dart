@@ -31,6 +31,8 @@ class CustomInputWidget extends StatefulWidget {
 
 class _CustomInputWidgetState extends State<CustomInputWidget> {
   bool _obsecureText = true;
+  bool isFirstError = true;
+
   final GlobalKey _key = GlobalKey();
 
   void _showOverlay(context) async {
@@ -76,10 +78,11 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.isError == true) {
+    if (widget.isError == true && isFirstError) {
       Future.delayed(const Duration(seconds: 1), () {
         _showOverlay(context);
       });
+      setState(() => isFirstError = false);
     }
 
     return Column(

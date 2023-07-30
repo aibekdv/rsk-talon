@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:rsk_talon/common/values/values.dart';
+import 'package:rsk_talon/core/error/error.dart';
 import 'package:rsk_talon/features/user/domain/entities/entities.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,11 +26,15 @@ final class LocalDataSourcesImpl implements LocalDataSources {
   // GET LANGUAGE CODE FROM CACHE
   @override
   String? getCachedLanguage() {
-    final code = prefs.getString(AppConsts.CASHED_LANG);
-    if (code != null) {
-      return code;
+    try {
+      final code = prefs.getString(AppConsts.CASHED_LANG);
+      if (code != null) {
+        return code;
+      }
+      return null;
+    } catch (e) {
+      throw CacheExeption();
     }
-    return null;
   }
 
   // SET TALON TOKEN FOR SEND REVIEW TO SERVERS

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:rsk_talon/features/auth/presentation/cubit/cubit.dart';
+import 'package:rsk_talon/features/auth/presentation/cubit/reset/reset_cubit.dart';
 import 'package:rsk_talon/features/auth/presentation/pages/pages.dart';
 import 'package:rsk_talon/features/user/presentation/cubit/cubit.dart';
 import 'package:rsk_talon/service_locator.dart' as di;
@@ -52,6 +53,8 @@ class _MyAppState extends State<MyApp> {
           create: (context) => di.sl<BranchCubit>()..loadBranches(),
         ),
         BlocProvider<TalonCubit>(create: (context) => di.sl<TalonCubit>()),
+        BlocProvider<SignUpCubit>(create: (context) => di.sl<SignUpCubit>()),
+        BlocProvider<ResetCubit>(create: (context) => di.sl<ResetCubit>()),
         BlocProvider<ConnectionCubit>(
             create: (context) => di.sl<ConnectionCubit>()),
         BlocProvider<SignInCubit>(
