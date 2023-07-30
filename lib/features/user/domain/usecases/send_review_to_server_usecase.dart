@@ -1,3 +1,4 @@
+import 'package:rsk_talon/features/user/domain/entities/entities.dart';
 import 'package:rsk_talon/features/user/domain/repositories/repositories.dart';
 
 class SendReviewToServerUseCase {
@@ -6,12 +7,12 @@ class SendReviewToServerUseCase {
   SendReviewToServerUseCase({required this.repository});
 
   Future<void> call({
-    required String token,
+    required TalonEntity talon,
     required int rating,
     required String succesMsg,
   }) async {
     return repository.sendReviewToServer(
-      token: token,
+      talon: talon,
       rating: rating,
       succesMsg: succesMsg,
     );

@@ -8,7 +8,7 @@ abstract class MainRepository {
   Future<Either<Failure, List<ServiceEntity>>> getAllServices();
   Future<Either<Failure, List<TalonEntity>>> getUserTalons();
   Future<Either<Failure, TalonEntity>> createTalon(TalonEntity talon);
-  Future<void> setTokenToCache(String token);
+  Future<void> setTokenToCache(TalonEntity talon);
   Future<void> removeTalonFromServer(TalonEntity talon,{required String msg});
   Future<String?> getTokenFromCache();
   Future<UserEntity?> getUserInforFromCache();
@@ -16,7 +16,7 @@ abstract class MainRepository {
   String? getCachedLanguage();
   Future<void> changeLanguage(String code);
   Future<void> sendReviewToServer({
-    required String token,
+    required TalonEntity talon,
     required int rating,
     required String succesMsg,
   });

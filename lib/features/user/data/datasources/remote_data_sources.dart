@@ -18,7 +18,7 @@ abstract final class RemoteDataSource {
   Future<UserEntity?> getUserInforFromCache();
 
   Future<void> sendReviewToServer({
-    required String token,
+    required TalonEntity talon,
     required int rating,
     required String succesMsg,
   });
@@ -138,12 +138,12 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
   // SEND REVIEW TO SERVER
   @override
   Future<void> sendReviewToServer({
-    required String token,
+    required TalonEntity talon,
     required int rating,
     required String succesMsg,
   }) async {
     Map<String, dynamic> ratingPost = {
-      "token": token,
+      "token": talon.token,
       "rating": rating,
     };
 
@@ -153,8 +153,6 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
         options: Options(
           headers: {
             'Content-Type': 'application/json',
-            'Authorization':
-                'Bearer ${prefs.getString(AppConsts.ACCESS_TOKEN)}',
           },
           responseType: ResponseType.bytes,
         ),
@@ -162,16 +160,12 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        prefs.remove(AppConsts.TOKEN_TALON);
         toast(msg: succesMsg);
-      } else if (response.statusCode == 400) {
-        log(response.data.toString());
       }
-    } on DioException catch (e) {
-      toast(
-        msg: e.response!.data.toString(),
-        isError: true,
-      );
+    } on DioException catch (_) {
+      log("Send review to server error...");
+      prefs.remove(AppConsts.TOKEN_TALON);
+      throw ServerExeption();
     }
   }
 
@@ -225,13 +219,16 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
         ),
       );
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        toast(msg: msg);
+        msg.isNotEmpty
+            ? toast(msg: msg)
+            : log("${talon.token} removed talon...");
       } else {
         toast(msg: "Server failure", isError: true);
         throw ServerExeption();
       }
     } catch (e) {
       toast(msg: "$e", isError: true);
+      log("Remove error: $e");
       throw ServerExeption();
     }
   }

@@ -35,12 +35,12 @@ final class MainRepositoryImpl implements MainRepository {
 
   @override
   Future<void> sendReviewToServer({
-    required String token,
+    required TalonEntity talon,
     required int rating,
     required String succesMsg,
   }) async =>
       remoteDataSource.sendReviewToServer(
-        token: token,
+        talon: talon,
         rating: rating,
         succesMsg: succesMsg,
       );
@@ -55,8 +55,8 @@ final class MainRepositoryImpl implements MainRepository {
       localDataSources.getTokenFromCache();
 
   @override
-  Future<void> setTokenToCache(String token) async =>
-      localDataSources.setTokenToCache(token);
+  Future<void> setTokenToCache(TalonEntity talon) async =>
+      localDataSources.setTokenToCache(talon);
 
   @override
   Future<void> removeTalonFromServer(TalonEntity talon,
