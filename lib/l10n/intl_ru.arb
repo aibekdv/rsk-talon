@@ -97,5 +97,11 @@
   "interfaceLanguage": "Язык интерфейса:",
   "passwordText": "Пароль",
   "successfullyRemoved": "Успешно удалено!",
-  "logout": "Выйти"
+  "logout": "Выйти",
+  "sendCodeSuccess": "На ваш номер отправлено SMS с кодом активации аккаунта.",
+  "infoToActivateYourAccount": "Введите необходимую информацию для активации учетной записи",
+  "activateAccount": "Активировать аккаунт",
+  "accountActivated": "Аккаунт успешно активирован!",
+  "confirmText": "Подтвердить",
+  "notFoundOnTheMap": "Адрес этого филиала не найден на карте."
 }

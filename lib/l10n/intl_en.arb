@@ -97,5 +97,11 @@
   "interfaceLanguage": "Interface language:",
   "passwordText": "Password",
   "successfullyRemoved": "Successfully removed!",
-  "logout": "Logout"
+  "logout": "Logout",
+  "sendCodeSuccess": "An SMS with an account activation code has been sent to your number.",
+  "infoToActivateYourAccount": "Enter the required information to activate your account",
+  "activateAccount": "Activate account",
+  "accountActivated": "Account activated successfully!",
+  "confirmText": "Confirm",
+  "notFoundOnTheMap": "This branch address was not found on the map."
 }

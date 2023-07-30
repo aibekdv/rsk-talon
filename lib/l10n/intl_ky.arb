@@ -97,5 +97,11 @@
   "interfaceLanguage": "Интерфейс тили:",
   "passwordText": "Сырсөз",
   "successfullyRemoved": "Ийгиликтүү өчүрүлдү!",
-  "logout": "Чыгуу"
+  "logout": "Чыгуу",
+  "sendCodeSuccess": "Сиздин номериңизге эсепти активдештирүү коду менен SMS жөнөтүлдү.",
+  "infoToActivateYourAccount": "Аккаунтуңузду активдештирүү үчүн керектүү маалыматты кийириңиз",
+  "activateAccount": "Аккаунтту активдештирүү",
+  "accountActivated": "Аккаунт ийгиликтүү активдештирилди!",
+  "confirmText": "Ырастоо",
+  "notFoundOnTheMap": "Бул филиалдын дареги картадан табылган жок."
 }

@@ -1039,6 +1039,66 @@ class S {
       args: [],
     );
   }
+
+  /// `An SMS with an account activation code has been sent to your number.`
+  String get sendCodeSuccess {
+    return Intl.message(
+      'An SMS with an account activation code has been sent to your number.',
+      name: 'sendCodeSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the required information to activate your account`
+  String get infoToActivateYourAccount {
+    return Intl.message(
+      'Enter the required information to activate your account',
+      name: 'infoToActivateYourAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Activate account`
+  String get activateAccount {
+    return Intl.message(
+      'Activate account',
+      name: 'activateAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account activated successfully!`
+  String get accountActivated {
+    return Intl.message(
+      'Account activated successfully!',
+      name: 'accountActivated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm`
+  String get confirmText {
+    return Intl.message(
+      'Confirm',
+      name: 'confirmText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This branch address was not found on the map.`
+  String get notFoundOnTheMap {
+    return Intl.message(
+      'This branch address was not found on the map.',
+      name: 'notFoundOnTheMap',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

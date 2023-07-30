@@ -26,6 +26,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "accountActivated": MessageLookupByLibrary.simpleMessage(
+            "Аккаунт ийгиликтүү активдештирилди!"),
+        "activateAccount":
+            MessageLookupByLibrary.simpleMessage("Аккаунтту активдештирүү"),
         "add": MessageLookupByLibrary.simpleMessage("Кошуу"),
         "address": MessageLookupByLibrary.simpleMessage("Дареги:"),
         "allFilesDownloaded": MessageLookupByLibrary.simpleMessage(
@@ -45,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Кардардын түрү"),
         "confirmNewPassword":
             MessageLookupByLibrary.simpleMessage("Жаңы сырсөздү кайталаңыз"),
+        "confirmText": MessageLookupByLibrary.simpleMessage("Ырастоо"),
         "createAccountText":
             MessageLookupByLibrary.simpleMessage("Аккаунт түзүү"),
         "createaticket": MessageLookupByLibrary.simpleMessage("Талон түзүү"),
@@ -88,6 +93,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "getTicketText": MessageLookupByLibrary.simpleMessage("Талон алуу"),
         "hello": MessageLookupByLibrary.simpleMessage("Салам!"),
         "individual": MessageLookupByLibrary.simpleMessage("Жекелик жак"),
+        "infoToActivateYourAccount": MessageLookupByLibrary.simpleMessage(
+            "Аккаунтуңузду активдештирүү үчүн керектүү маалыматты кийириңиз"),
         "interfaceLanguage":
             MessageLookupByLibrary.simpleMessage("Интерфейс тили:"),
         "leavefeedback": MessageLookupByLibrary.simpleMessage("Пикир калтыруу"),
@@ -108,6 +115,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextText": MessageLookupByLibrary.simpleMessage("Кийинки"),
         "noInternetConnection":
             MessageLookupByLibrary.simpleMessage("Интернет байланышы жок"),
+        "notFoundOnTheMap": MessageLookupByLibrary.simpleMessage(
+            "Бул филиалдын дареги картадан табылган жок."),
         "notOpen": MessageLookupByLibrary.simpleMessage("Дем алуу"),
         "or": MessageLookupByLibrary.simpleMessage("же"),
         "orText": MessageLookupByLibrary.simpleMessage("Же"),
@@ -143,6 +152,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectbranch":
             MessageLookupByLibrary.simpleMessage("Филиалды танданыз"),
         "selectqueue": MessageLookupByLibrary.simpleMessage("Кезекти тандаңыз"),
+        "sendCodeSuccess": MessageLookupByLibrary.simpleMessage(
+            "Сиздин номериңизге эсепти активдештирүү коду менен SMS жөнөтүлдү."),
         "serviceText": MessageLookupByLibrary.simpleMessage("Кызмат"),
         "servicesNotFound":
             MessageLookupByLibrary.simpleMessage("Кызматтар табылган жок"),

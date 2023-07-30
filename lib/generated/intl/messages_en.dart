@@ -26,6 +26,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "accountActivated": MessageLookupByLibrary.simpleMessage(
+            "Account activated successfully!"),
+        "activateAccount":
+            MessageLookupByLibrary.simpleMessage("Activate account"),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "address": MessageLookupByLibrary.simpleMessage("Address:"),
         "allFilesDownloaded": MessageLookupByLibrary.simpleMessage(
@@ -44,6 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "clientTypeText": MessageLookupByLibrary.simpleMessage("Client type"),
         "confirmNewPassword":
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
+        "confirmText": MessageLookupByLibrary.simpleMessage("Confirm"),
         "createAccountText":
             MessageLookupByLibrary.simpleMessage("Create an account"),
         "createaticket":
@@ -87,6 +92,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "getTicketText": MessageLookupByLibrary.simpleMessage("Get a ticket"),
         "hello": MessageLookupByLibrary.simpleMessage("Hello!"),
         "individual": MessageLookupByLibrary.simpleMessage("Individual"),
+        "infoToActivateYourAccount": MessageLookupByLibrary.simpleMessage(
+            "Enter the required information to activate your account"),
         "interfaceLanguage":
             MessageLookupByLibrary.simpleMessage("Interface language:"),
         "leavefeedback": MessageLookupByLibrary.simpleMessage("Leave feedback"),
@@ -108,6 +115,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextText": MessageLookupByLibrary.simpleMessage("Next"),
         "noInternetConnection":
             MessageLookupByLibrary.simpleMessage("No connection"),
+        "notFoundOnTheMap": MessageLookupByLibrary.simpleMessage(
+            "This branch address was not found on the map."),
         "notOpen": MessageLookupByLibrary.simpleMessage("Doesn\'t work"),
         "or": MessageLookupByLibrary.simpleMessage("or"),
         "orText": MessageLookupByLibrary.simpleMessage("Or"),
@@ -141,6 +150,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectTime": MessageLookupByLibrary.simpleMessage("Select time"),
         "selectbranch": MessageLookupByLibrary.simpleMessage("Select branch"),
         "selectqueue": MessageLookupByLibrary.simpleMessage("Select queue"),
+        "sendCodeSuccess": MessageLookupByLibrary.simpleMessage(
+            "An SMS with an account activation code has been sent to your number."),
         "serviceText": MessageLookupByLibrary.simpleMessage("Service"),
         "servicesNotFound":
             MessageLookupByLibrary.simpleMessage("Services not found"),

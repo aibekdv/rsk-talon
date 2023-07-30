@@ -26,6 +26,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "accountActivated": MessageLookupByLibrary.simpleMessage(
+            "Аккаунт успешно активирован!"),
+        "activateAccount":
+            MessageLookupByLibrary.simpleMessage("Активировать аккаунт"),
         "add": MessageLookupByLibrary.simpleMessage("Добавить"),
         "address": MessageLookupByLibrary.simpleMessage("Адрес:"),
         "allFilesDownloaded":
@@ -44,6 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "clientTypeText": MessageLookupByLibrary.simpleMessage("Тип клиента"),
         "confirmNewPassword":
             MessageLookupByLibrary.simpleMessage("Повторите новый пароль"),
+        "confirmText": MessageLookupByLibrary.simpleMessage("Подтвердить"),
         "createAccountText":
             MessageLookupByLibrary.simpleMessage("Создать аккаунт"),
         "createaticket": MessageLookupByLibrary.simpleMessage("Создать талон"),
@@ -85,6 +90,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "getTicketText": MessageLookupByLibrary.simpleMessage("Получить талон"),
         "hello": MessageLookupByLibrary.simpleMessage("Привет!"),
         "individual": MessageLookupByLibrary.simpleMessage("Физическое лицо"),
+        "infoToActivateYourAccount": MessageLookupByLibrary.simpleMessage(
+            "Введите необходимую информацию для активации учетной записи"),
         "interfaceLanguage":
             MessageLookupByLibrary.simpleMessage("Язык интерфейса:"),
         "leavefeedback": MessageLookupByLibrary.simpleMessage("Оставить отзыв"),
@@ -105,6 +112,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextText": MessageLookupByLibrary.simpleMessage("Далее"),
         "noInternetConnection":
             MessageLookupByLibrary.simpleMessage("Нет соединения"),
+        "notFoundOnTheMap": MessageLookupByLibrary.simpleMessage(
+            "Адрес этого филиала не найден на карте."),
         "notOpen": MessageLookupByLibrary.simpleMessage("Не работает"),
         "or": MessageLookupByLibrary.simpleMessage("или"),
         "orText": MessageLookupByLibrary.simpleMessage("Или"),
@@ -138,6 +147,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectTime": MessageLookupByLibrary.simpleMessage("Выбрать время"),
         "selectbranch": MessageLookupByLibrary.simpleMessage("Выберите филиал"),
         "selectqueue": MessageLookupByLibrary.simpleMessage("Выбрать очередь"),
+        "sendCodeSuccess": MessageLookupByLibrary.simpleMessage(
+            "На ваш номер отправлено SMS с кодом активации аккаунта."),
         "serviceText": MessageLookupByLibrary.simpleMessage("Услуга"),
         "servicesNotFound":
             MessageLookupByLibrary.simpleMessage("Услуги не найдены"),
