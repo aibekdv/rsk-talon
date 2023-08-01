@@ -50,10 +50,6 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    allWarnings {
-        warningsAsErrors false
-    }
-
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.rsk_talon"
